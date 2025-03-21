@@ -1,0 +1,14 @@
+services:
+  web:
+    build:  
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    container_name: kara-local
+    restart: "unless-stopped"
+    volumes:
+      - .:/app:z
+    ports:
+      - 8000:8000
+
+volumes:
+  web:
