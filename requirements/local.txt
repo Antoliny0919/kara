@@ -1,0 +1,25 @@
+-r base.txt
+
+Werkzeug[watchdog]==3.0.6 # https://github.com/pallets/werkzeug
+ipdb==0.13.13  # https://github.com/gotcha/ipdb
+
+# Django
+# ------------------------------------------------------------------------------
+django-debug-toolbar==4.4.6  # https://github.com/jazzband/django-debug-toolbar
+
+# Testing
+# ------------------------------------------------------------------------------
+pytest==8.3.3  # https://github.com/pytest-dev/pytest
+pytest-lazy-fixtures==1.1.2  # https://github.com/dev-petrov/pytest-lazy-fixtures
+factory-boy==3.3.1  # https://github.com/FactoryBoy/factory_boy
+pytest-sugar==1.0.0  # https://github.com/Frozenball/pytest-sugar
+pytest-django==4.9.0  # https://github.com/pytest-dev/pytest-django
+pytest-cov==6.0.0  # https://github.com/pytest-dev/pytest-cov
+moto[s3]==5.0.23  # https://github.com/getmoto/moto
+
+# Code quality
+# ------------------------------------------------------------------------------
+flake8==7.1.1 # https://github.com/PyCQA/flake8
+isort==5.13.2 # https://github.com/PyCQA/isort
+black==25.1.0 # https://github.com/psf/black
+pre-commit==4.0.1  # https://github.com/pre-commit/pre-commit
