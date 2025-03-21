@@ -7,6 +7,8 @@ services:
     restart: "unless-stopped"
     volumes:
       - .:/app:z
+    env_file:
+      - .envs/.local/.django
     ports:
       - 8000:8000
 
