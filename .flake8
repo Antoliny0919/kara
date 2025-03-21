@@ -1,0 +1,16 @@
+[flake8]
+exclude =
+  */migrations/*,
+  __pycache__,
+max-line-length = 88
+indent-size = 4
+show-source = True
+extend-ignore =
+  E303,
+  F811,
+per-file-ignores =
+  */settings/*:
+  E501,
+  F401,
+  F403,
+  F405,

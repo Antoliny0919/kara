@@ -1,0 +1,26 @@
+# ==== pytest ====
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--ds=config.settings.test --reuse-db --import-mode=importlib"
+python_files = [
+  "tests.py",
+  "test_*.py",
+]
+
+# ==== black ====
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+exclude = '''
+/(
+  migrations
+)
+'''
+
+# ==== isort ====
+[tool.isort]
+profile = "black"
+line_length = 88
+combine_as_imports = true
+default_section = "THIRDPARTY"
+skip = ["__init__.py"]
