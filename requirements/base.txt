@@ -1,3 +1,4 @@
+psycopg2==2.9.10  # https://github.com/psycopg/psycopg2
 python-slugify==8.0.4  # https://github.com/un33k/python-slugify
 Pillow==11.0.0  # https://github.com/python-pillow/Pillow
 argon2-cffi==23.1.0  # https://github.com/hynek/argon2_cffi
@@ -9,3 +10,4 @@ wagtail==v6.4  # https://github.com/wagtail/wagtail
 django-environ==0.11.2  # https://github.com/joke2k/django-environ
 django-extensions==3.2.3  # https://github.com/django-extensions/django-extensions
 django-tailwind==3.8.0  # https://github.com/timonweb/django-tailwind
+dj-database-url==v2.3.0  # https://github.com/jazzband/dj-database-url

@@ -3,14 +3,28 @@ services:
     build:  
       context: .
       dockerfile: ./compose/local/django/Dockerfile
-    container_name: kara-local
+    container_name: kara-local-web
     restart: "unless-stopped"
     volumes:
       - .:/app:z
     env_file:
       - .envs/.local/.django
+      - .envs/.local/.postgres
+    depends_on:
+      - db
     ports:
       - 8000:8000
 
+  db:
+    image: postgres:17
+    container_name: kara-local-db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .envs/.local/.postgres
+    ports:
+      - 5432:5432
+
 volumes:
+  postgres_data:
   web:

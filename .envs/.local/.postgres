@@ -1,0 +1,6 @@
+# Postgres Environment Variables Configuration
+# -------------------------------------------------------------------------
+DATABASE_URL=postgres://kara:kara@kara-local-db:5432/kara
+POSTGRES_USER=kara
+POSTGRES_PASSWORD=kara
+POSTGRES_DB=kara
