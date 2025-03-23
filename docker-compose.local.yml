@@ -9,6 +9,7 @@ services:
       - .:/app:z
     env_file:
       - .envs/.local/.django
+      - .envs/.local/.postgres
     depends_on:
       - db
     ports:
