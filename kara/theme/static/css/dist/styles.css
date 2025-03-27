@@ -792,12 +792,32 @@ select {
   margin-right: auto;
 }
 
+.mb-auto {
+  margin-bottom: auto;
+}
+
+.block {
+  display: block;
+}
+
 .flex {
   display: flex;
 }
 
 .h-screen {
   height: 100vh;
+}
+
+.w-4\/5 {
+  width: 80%;
+}
+
+.max-w-screen-xl {
+  max-width: 1280px;
+}
+
+.flex-col {
+  flex-direction: column;
 }
 
 .items-center {
