@@ -72,11 +72,13 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    "tailwind",
     "allauth",
     "allauth.account",
 ]
 
 LOCAL_APPS = [
+    "kara.theme",
     "kara.accounts",
 ]
 
@@ -209,6 +211,10 @@ LOGGING = {
     "root": {"level": "INFO", "handlers": ["console"]},
 }
 
+# TAILWIND
+# ------------------------------------------------------------------------------
+TAILWIND_APP_NAME = "kara.theme"
+NPM_BIN_PATH = "/usr/bin/npm"
 
 # DJANGO_ALLAUTH
 # ------------------------------------------------------------------------------

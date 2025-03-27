@@ -1,19 +1,31 @@
+x-app: &default-app
+  build:
+    context: .
+    dockerfile: ./compose/local/django/Dockerfile
+  restart: "unless-stopped"
+  volumes:
+    - .:/app:z
+  env_file:
+    - .envs/.local/.django
+    - .envs/.local/.postgres
+  depends_on:
+    - db
+
 services:
   web:
-    build:  
-      context: .
-      dockerfile: ./compose/local/django/Dockerfile
+    <<: *default-app
     container_name: kara-local-web
-    restart: "unless-stopped"
-    volumes:
-      - .:/app:z
-    env_file:
-      - .envs/.local/.django
-      - .envs/.local/.postgres
-    depends_on:
-      - db
+    command: "python manage.py runserver_plus 0.0.0.0:8000"
     ports:
-      - 8000:8000
+      - "8000:8000"
+
+  tailwind:
+    <<: *default-app
+    container_name: kara-local-tailwind
+    command: "python manage.py tailwind start"
+    # Without tty, no stdin, and tailwind watcher aborts
+    # https://github.com/tailwindlabs/tailwindcss/issues/5324
+    tty: true
 
   db:
     image: postgres:17
