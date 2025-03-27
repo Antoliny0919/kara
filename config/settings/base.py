@@ -10,12 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+MAIN_DIR = os.path.join(BASE_DIR, "kara")
 
 env = environ.Env()
 
@@ -141,6 +144,13 @@ MIDDLEWARE = [
 # ------------------------------------------------------------------------------
 STATIC_URL = "static/"
 
+STATIC_ROOT = MAIN_DIR / "static"
+
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
+
 # MEDIA
 # ------------------------------------------------------------------------------
 
@@ -150,7 +160,7 @@ STATIC_URL = "static/"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(MAIN_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
