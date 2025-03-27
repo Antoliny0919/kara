@@ -77,6 +77,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     "tailwind",
+    "widget_tweaks",
     "allauth",
     "allauth.account",
 ]
