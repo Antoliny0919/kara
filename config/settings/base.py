@@ -45,7 +45,7 @@ USE_TZ = True
 # LANGUAGE
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ko-kr"
 USE_I18N = True
 
 # DATABASES
@@ -59,7 +59,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # URLS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
-# ROOT_URLCONF = "config.urls"
 ROOT_URLCONF = "config.urls"
 # https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = "config.wsgi.application"
@@ -73,6 +72,7 @@ DJANGO_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.forms",
 ]
 
 THIRD_PARTY_APPS = [
@@ -224,6 +224,11 @@ LOGGING = {
     "root": {"level": "INFO", "handlers": ["console"]},
 }
 
+# TAILWIND
+# ------------------------------------------------------------------------------
+TAILWIND_APP_NAME = "kara.theme"
+NPM_BIN_PATH = "/usr/bin/npm"
+
 
 # TEMPLATE RENDER
 # ------------------------------------------------------------------------------
@@ -240,3 +245,12 @@ NPM_BIN_PATH = "/usr/bin/npm"
 
 # DJANGO_ALLAUTH
 # ------------------------------------------------------------------------------
+
+
+# TEMPLATE RENDER
+# ------------------------------------------------------------------------------
+class FormRenderer(TemplatesSetting):
+    field_template_name = "forms/field.html"
+
+
+FORM_RENDERER = "config.settings.base.FormRenderer"
