@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 
 import environ
+from django.forms.renderers import TemplatesSetting
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -220,6 +221,15 @@ LOGGING = {
     },
     "root": {"level": "INFO", "handlers": ["console"]},
 }
+
+
+# TEMPLATE RENDER
+# ------------------------------------------------------------------------------
+class FormRenderer(TemplatesSetting):
+    field_template_name = "forms/field.html"
+
+
+FORM_RENDERER = "config.settings.base.FormRenderer"
 
 # TAILWIND
 # ------------------------------------------------------------------------------
