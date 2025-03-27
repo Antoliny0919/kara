@@ -12,3 +12,4 @@ django-extensions==3.2.3  # https://github.com/django-extensions/django-extensio
 django-tailwind==3.8.0  # https://github.com/timonweb/django-tailwind
 dj-database-url==v2.3.0  # https://github.com/jazzband/dj-database-url
 django-allauth==65.5.0  # https://github.com/pennersr/django-allauth
+django-widget-tweaks==1.5.0  # https://github.com/jazzband/django-widget-tweaks
