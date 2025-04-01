@@ -146,7 +146,7 @@ MIDDLEWARE = [
 # ------------------------------------------------------------------------------
 STATIC_URL = "static/"
 
-STATIC_ROOT = MAIN_DIR / "static"
+STATIC_ROOT = os.path.join(MAIN_DIR, "static")
 
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
