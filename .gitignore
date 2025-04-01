@@ -5,3 +5,4 @@ media/*
 
 # misc
 .DS_Store
+.production

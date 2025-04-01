@@ -822,6 +822,11 @@ select {
   margin-bottom: 1.25rem;
 }
 
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
 .mb-auto {
   margin-bottom: auto;
 }
@@ -838,6 +843,18 @@ select {
   display: flex;
 }
 
+.table {
+  display: table;
+}
+
+.hidden {
+  display: none;
+}
+
+.h-full {
+  height: 100%;
+}
+
 .h-screen {
   height: 100vh;
 }
@@ -846,12 +863,20 @@ select {
   width: 80%;
 }
 
+.w-full {
+  width: 100%;
+}
+
 .max-w-screen-xl {
   max-width: 1280px;
 }
 
 .flex-1 {
   flex: 1 1 0%;
+}
+
+.border-collapse {
+  border-collapse: collapse;
 }
 
 .origin-\[0\] {
@@ -901,6 +926,10 @@ select {
   border-radius: 0.5rem;
 }
 
+.border {
+  border-width: 1px;
+}
+
 .border-2 {
   border-width: 2px;
 }
@@ -939,6 +968,11 @@ select {
   padding-right: 0.625rem;
 }
 
+.px-20 {
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -956,8 +990,17 @@ select {
   padding-top: 1rem;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .font-serif {
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 .text-5xl {
@@ -983,9 +1026,19 @@ select {
   color: rgb(17 24 39 / var(--tw-text-opacity, 1));
 }
 
+.text-kara-deep {
+  --tw-text-opacity: 1;
+  color: rgb(227 130 130 / var(--tw-text-opacity, 1));
+}
+
 .text-kara-shallow {
   --tw-text-opacity: 1;
   color: rgb(245 200 200 / var(--tw-text-opacity, 1));
+}
+
+.text-kara-strong {
+  --tw-text-opacity: 1;
+  color: rgb(243 176 176 / var(--tw-text-opacity, 1));
 }
 
 .text-state-fail {
@@ -996,6 +1049,15 @@ select {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+.underline {
+  text-decoration-line: underline;
+}
+
+.antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .transition-colors {
@@ -1015,6 +1077,11 @@ select {
 .hover\:bg-kara-very-shallow:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(255 238 238 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:text-kara-deep:hover {
+  --tw-text-opacity: 1;
+  color: rgb(227 130 130 / var(--tw-text-opacity, 1));
 }
 
 .hover\:text-kara-strong:hover {

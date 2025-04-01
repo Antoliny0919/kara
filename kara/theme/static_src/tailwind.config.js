@@ -48,6 +48,7 @@ module.exports = {
                     "very-shallow": "#FFEEEE",
                     shallow: "#F5C8C8",
                     strong: "#F3B0B0",
+                    deep: "#E38282",
                     base: "#f3AEAE",
                 },
                 state: {

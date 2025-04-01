@@ -1,0 +1,7 @@
+{% extends "emails/base.html" %}
+{% block preheader %}Kara - Verify your email{% endblock preheader %}
+{% block before_cta %}
+<p>Please enter the 6-digit email verification code on the email verification page.</p>
+{% endblock before_cta %}
+{% block verification_code%}<p>{{ code }}</p>{% endblock verification_code %}
+{% block after_cta %}{% endblock after_cta %}
