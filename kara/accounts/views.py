@@ -7,7 +7,7 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.crypto import get_random_string
-from django.views.generic import FormView
+from django.views.generic import FormView, TemplateView
 
 from .forms import CustomUserCreationForm, EmailVerificationCodeForm
 from .models import User
@@ -54,25 +54,6 @@ def clear_confirmation_state(request):
     request.session.pop(PENDING_EMAIL_CONFIRMATION_SESSION_KEY, None)
 
 
-class SignupView(FormView):
-    form_class = CustomUserCreationForm
-    template_name = "registration/signup.html"
-
-    def get_success_url(self):
-        messages.add_message(
-            self.request,
-            messages.INFO,
-            "Your registration was successful. Please check "
-            "your email provided for a confirmation link.",
-        )
-        return reverse("email_confirmation")
-
-    def form_valid(self, form):
-        user = form.save()
-        send_user_confirmation_email(self.request, user)
-        return super().form_valid(form)
-
-
 class EmailConfirmationView(FormView):
     form_class = EmailVerificationCodeForm
     template_name = "registration/email_confirmation.html"
@@ -110,3 +91,26 @@ class EmailConfirmationView(FormView):
             }
         )
         return context
+
+
+class SignupView(FormView):
+    form_class = CustomUserCreationForm
+    template_name = "registration/signup.html"
+
+    def get_success_url(self):
+        messages.add_message(
+            self.request,
+            messages.INFO,
+            "Your registration was successful. Please check "
+            "your email provided for a confirmation link.",
+        )
+        return reverse("email_confirmation")
+
+    def form_valid(self, form):
+        user = form.save()
+        send_user_confirmation_email(self.request, user)
+        return super().form_valid(form)
+
+
+class LoginView(TemplateView):
+    template_name = "registration/login.html"
