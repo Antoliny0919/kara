@@ -1,0 +1,7 @@
+Hello {{ name }}, Welcome to Kara!
+
+Please enter the 6-digit email verification code on the email verification page.
+
+{{ code }}
+
+Don't like these emails? Unsubscribe: {{ unsubscribe_link }}
