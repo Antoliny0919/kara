@@ -10,9 +10,12 @@ class User(AbstractUser):
 
 
 class UserProfile(models.Model):
-    user = DefaultOneToOneField(User, create=True, on_delete=models.CASCADE)
+    user = DefaultOneToOneField(
+        User, create=True, on_delete=models.CASCADE, related_name="profile"
+    )
     bio = models.TextField(blank=True, null=True)
     bio_image = models.ImageField(blank=True, null=True)
+    email_confirmed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username

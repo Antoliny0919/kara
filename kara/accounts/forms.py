@@ -12,6 +12,29 @@ from .models import User
 from .widgets import FloatingLabelInput
 
 
+class EmailVerificationCodeForm(forms.Form):
+    code = forms.CharField(
+        widget=FloatingLabelInput(attrs={"label": _("Confirmation Code")}),
+        max_length=6,
+        help_text=_("Enter the 6-digit verification code sent to your email."),
+    )
+
+    def __init__(self, *args, **kwargs):
+        self.code = kwargs.pop("code")
+        super().__init__(*args, **kwargs)
+
+    def compare_code(self, server, client):
+        server_code = server.replace(" ", "").lower()
+        client_code = client.replace(" ", "").lower()
+        return server_code and server_code == client_code
+
+    def clean_code(self):
+        code = self.cleaned_data.get("code")
+        if not self.compare_code(server=self.code, client=code):
+            raise ValueError()
+        return code
+
+
 class CustomSetPasswordMixin(SetPasswordMixin):
     @staticmethod
     def create_password_fields(label1=_("Password"), label2=_("Password confirmation")):

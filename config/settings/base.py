@@ -98,7 +98,6 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = "accounts.User"
@@ -234,10 +233,12 @@ class FormRenderer(TemplatesSetting):
 
 FORM_RENDERER = "config.settings.base.FormRenderer"
 
+# EMAIL
+# ------------------------------------------------------------------------------
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "antoliny@kara.com"
+
 # TAILWIND
 # ------------------------------------------------------------------------------
 TAILWIND_APP_NAME = "kara.theme"
 NPM_BIN_PATH = "/usr/bin/npm"
-
-# DJANGO_ALLAUTH
-# ------------------------------------------------------------------------------
