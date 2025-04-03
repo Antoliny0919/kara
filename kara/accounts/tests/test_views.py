@@ -62,12 +62,22 @@ class ConfirmEmailVerificationCodeViewTests(TestCase):
         self.verification_code = self.client.session["pending_email_confirmation"][
             "code"
         ]
+        self.button_class = (
+            "text-kara-strong hover:text-kara-deep transition-colors duration-500"
+        )
 
     def test_email_verification_template_render(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Please check your inbox!")
         self.assertContains(response, "watermelon@farm.com")
+        # Check later confirm button
+        login_link = reverse("login")
+        self.assertContains(
+            response,
+            '<a href="%s" class="%s">I\'ll confirm later!</a>'
+            % (login_link, self.button_class),
+        )
 
     def test_email_verification_success(self):
         response = self.client.post(
