@@ -1,0 +1,29 @@
+<div class="relative">
+    <input
+        id="{{ widget.name }}"
+        type="{{ widget.type }}"
+        name="{{ widget.name }}"
+        {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}
+        {% include "django/forms/widgets/attrs.html" %}
+        class="
+        block px-2.5 pb-2.5 pt-4 w-full text-lg text-gray-900 bg-transparent rounded-lg border-2 border-kara-shallow appearance-none
+        dark:text-white dark:border-gray-600 dark:focus:border-blue-500
+        focus:outline-none focus:ring-0 focus:border-kara-strong peer
+        "
+        placeholder=" "
+    >
+    <label
+        for="{{ widget.name }}"
+        class="
+        absolute text-lg text-kara-shallow duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2
+        dark:bg-gray-900 dark:text-gray-400
+        peer-focus:px-2 peer-focus:text-kara-strong peer-focus:dark:text-blue-500
+        peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2
+        peer-[&:not(:placeholder-shown)]:text-kara-strong 
+        peer-[&:not(:placeholder-shown)]:-translate-y-6
+        peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-6  rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1
+        "
+    >
+    {{ widget.attrs.label }}
+    </label>
+</div>
