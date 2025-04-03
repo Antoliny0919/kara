@@ -42,7 +42,22 @@ module.exports = {
         // '../../**/*.py'
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                kara: {
+                    "very-shallow": "#FFEEEE",
+                    shallow: "#F5C8C8",
+                    strong: "#F3B0B0",
+                    deep: "#E38282",
+                    base: "#f3AEAE",
+                },
+                state: {
+                    "success": "#4BA324",
+                    "warning": "#DF9F2F",
+                    "fail": "#E3372F",
+                }
+            }
+        },
     },
     plugins: [
         /**
