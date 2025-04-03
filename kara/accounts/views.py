@@ -88,7 +88,7 @@ class EmailConfirmationView(FormView):
         context.update(
             {
                 "email": self.verification.get("email"),
-                "later_confirm_link": reverse("home"),
+                "later_confirm_link": reverse("login"),
             }
         )
         return context
