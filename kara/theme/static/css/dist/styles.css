@@ -154,7 +154,7 @@ html,
   -o-tab-size: 4;
      tab-size: 4;
   /* 3 */
-  font-family: "Pretendard-Regular", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   /* 4 */
   font-feature-settings: normal;
   /* 5 */
@@ -827,13 +827,12 @@ select {
   margin-bottom: 1.5rem;
 }
 
-.my-8 {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
 .mb-2 {
   margin-bottom: 0.5rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
 }
 
 .mb-auto {
@@ -850,14 +849,6 @@ select {
 
 .mt-4 {
   margin-top: 1rem;
-}
-
-.mb-6 {
-  margin-bottom: 1.5rem;
-}
-
-.mt-8 {
-  margin-top: 2rem;
 }
 
 .block {
@@ -1019,17 +1010,25 @@ select {
   text-align: center;
 }
 
+.font-common {
+  font-family: Pretendard-Regular;
+}
+
 .font-serif {
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
+.font-title {
+  font-family: LeeSeoyun;
 }
 
 .text-5xl {
   font-size: 3rem;
+  line-height: 1;
+}
+
+.text-6xl {
+  font-size: 3.75rem;
   line-height: 1;
 }
 
@@ -1047,6 +1046,14 @@ select {
   line-height: 1.5;
 }
 
+.tracking-\[\.07em\] {
+  letter-spacing: .07em;
+}
+
+.tracking-\[\.2em\] {
+  letter-spacing: .2em;
+}
+
 .tracking-normal {
   letter-spacing: 0em;
 }
@@ -1059,6 +1066,11 @@ select {
 .text-kara-deep {
   --tw-text-opacity: 1;
   color: rgb(227 130 130 / var(--tw-text-opacity, 1));
+}
+
+.text-kara-light-deep {
+  --tw-text-opacity: 1;
+  color: rgb(244 132 132 / var(--tw-text-opacity, 1));
 }
 
 .text-kara-shallow {
@@ -1262,11 +1274,4 @@ select {
     --tw-text-opacity: 1;
     color: rgb(59 130 246 / var(--tw-text-opacity, 1));
   }
-}
-
-@font-face {
-  font-family: 'Pretendard-Regular';
-  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
 }
