@@ -2,6 +2,7 @@ db.sqlite3
 __pycache__
 node_modules/
 media/*
+*.mo
 
 # misc
 .DS_Store

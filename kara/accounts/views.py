@@ -11,6 +11,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.crypto import get_random_string
 from django.utils.decorators import method_decorator
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView, TemplateView, View
 
 from .forms import CustomUserCreationForm, EmailVerificationCodeForm
@@ -71,7 +72,7 @@ class EmailConfirmationView(FormView):
         res = None
         if request.method == "POST":
             if "action_resend" in request.POST:
-                view = ResendEmailConfirmationView.as_view()
+                view = ResendEmailVerificationCodeView.as_view()
                 res = view(request)
             elif "action_confirm" in request.POST:
                 res = super().post(request, *args, **kwargs)
@@ -81,7 +82,7 @@ class EmailConfirmationView(FormView):
         messages.add_message(
             self.request,
             messages.INFO,
-            "Email verification is complete!",
+            _("Email verification is complete!"),
         )
         return reverse("home")
 
@@ -108,12 +109,12 @@ class EmailConfirmationView(FormView):
         return context
 
 
-class ResendEmailConfirmationView(LoginRequiredMixin, View):
+class ResendEmailVerificationCodeView(LoginRequiredMixin, View):
     def post(self, request):
         user = request.user
         send_user_confirmation_email(request, user)
         messages.add_message(
-            request, messages.INFO, "The email confirmation code has been resent."
+            request, messages.INFO, _("The email verification code has been resent.")
         )
         return redirect("email_confirmation")
 
@@ -126,8 +127,10 @@ class SignupView(FormView):
         messages.add_message(
             self.request,
             messages.INFO,
-            "Your registration was successful. Please check "
-            "your email provided for a confirmation link.",
+            _(
+                "Your registration was successful. Please check "
+                "your email provided for a verification code."
+            ),
         )
         return reverse("email_confirmation")
 

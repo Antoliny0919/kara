@@ -12,7 +12,7 @@ urlpatterns = [
     ),
     path(
         "email/confirmation/resend/",
-        views.ResendEmailConfirmationView.as_view(),
+        views.ResendEmailVerificationCodeView.as_view(),
         name="email_confirmation_resend",
     ),
 ]

@@ -1,0 +1,67 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-04 08:08+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: kara/accounts/forms.py:17
+msgid "Confirmation Code"
+msgstr "인증 코드"
+
+#: kara/accounts/forms.py:19
+msgid "Enter the 6-digit verification code sent to your email."
+msgstr "이메일로 전송된 6자리 인증 코드를 입력하세요."
+
+#: kara/accounts/forms.py:35
+msgid "The verification code does not match."
+msgstr "인증 코드가 일치하지 않습니다."
+
+#: kara/accounts/forms.py:41
+msgid "Password"
+msgstr "비밀번호"
+
+#: kara/accounts/forms.py:41
+msgid "Password confirmation"
+msgstr "비밀번호 확인"
+
+#: kara/accounts/forms.py:65
+msgid "Enter the same password as before, for verification."
+msgstr "확인을 위해 앞에서 입력한 비밀번호와 동일한 값을 입력하세요."
+
+#: kara/accounts/forms.py:74
+msgid "Username"
+msgstr "사용자 이름"
+
+#: kara/accounts/forms.py:80
+msgid "Email"
+msgstr "이메일"
+
+#: kara/accounts/views.py:85
+msgid "Email verification is complete!"
+msgstr "이메일 인증이 완료되었습니다!"
+
+#: kara/accounts/views.py:117
+msgid "The email verification code has been resent."
+msgstr "이메일 인증 코드가 다시 전송되었습니다."
+
+#: kara/accounts/views.py:130
+msgid ""
+"Your registration was successful. Please check your email provided for a "
+"verification code."
+msgstr ""
+"회원가입이 완료되었습니다. 입력하신 이메일로 전송된 인증 코드를 확인해 주세"
+"요."
