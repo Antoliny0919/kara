@@ -10,4 +10,9 @@ urlpatterns = [
         views.EmailConfirmationView.as_view(),
         name="email_confirmation",
     ),
+    path(
+        "email/confirmation/resend/",
+        views.ResendEmailConfirmationView.as_view(),
+        name="email_confirmation_resend",
+    ),
 ]

@@ -17,6 +17,7 @@ class EmailVerificationCodeForm(forms.Form):
         widget=FloatingLabelInput(attrs={"label": _("Confirmation Code")}),
         max_length=6,
         help_text=_("Enter the 6-digit verification code sent to your email."),
+        required=False,
     )
 
     def __init__(self, *args, **kwargs):
