@@ -1,6 +1,6 @@
 {{ field }}
 {% if field.errors %}
-    <ul class="mt-2 pl-1 text-state-fail w-inherit">{% for error in field.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+    <ul class="text-sm mt-2 pl-1 text-state-fail w-inherit">{% for error in field.errors %}<li>{{ error }}</li>{% endfor %}</ul>
 {% elif field.help_text%}
-    <div class="helptext mt-2 pl-1 w-inherit"{% if field.auto_id %} id="{{ field.auto_id }}_helptext"{% endif %}>{{ field.help_text|safe }}</div>
+    <div class="text-sm helptext mt-2 pl-1 w-inherit"{% if field.auto_id %} id="{{ field.auto_id }}_helptext"{% endif %}>{{ field.help_text|safe }}</div>
 {% endif %}

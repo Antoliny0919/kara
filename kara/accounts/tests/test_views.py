@@ -91,6 +91,16 @@ class ConfirmEmailVerificationCodeViewTests(TestCase):
         self.assertTrue(user.profile.email_confirmed)
         self.assertNotIn("pending_email_confirmation", self.client.session)
 
+    def test_email_verification_fail(self):
+        response = self.client.post(
+            self.url,
+            data={"code": 123456, "action_confirm": "1"},
+            follow=True,
+        )
+        self.assertContains(
+            response, "<li>The verification code does not match.</li>", html=True
+        )
+
     def test_resend_email_confirmation_code(self):
         mail_cnt = len(mail.outbox)
         response = self.client.post(
