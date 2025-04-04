@@ -32,7 +32,7 @@ class EmailVerificationCodeForm(forms.Form):
     def clean_code(self):
         code = self.cleaned_data.get("code")
         if not self.compare_code(server=self.code, client=code):
-            raise ValueError()
+            self.add_error("code", _("The verification code does not match."))
         return code
 
 
