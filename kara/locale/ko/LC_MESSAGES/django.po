@@ -1,0 +1,67 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-04 08:08+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: kara/templates/registration/email_confirmation.html:4
+#: kara/templates/registration/email_confirmation.html:6
+msgid "Email Confirmation | Kara "
+msgstr "이메일 확인 | Kara"
+
+#: kara/templates/registration/email_confirmation.html:11
+msgid "Please check your inbox!"
+msgstr "이메일을 확인해 주세요!"
+
+#: kara/templates/registration/email_confirmation.html:12
+#, python-format
+msgid ""
+"To complete your registration, please enter the 6-digit code sent to <span "
+"class=\"text-kara-deep\">%(email)s</span>"
+msgstr ""
+"회원가입을 완료하려면 <span class=\"text-kara-deep\">%(email)s</span>로 전송"
+"된 6자리 인증 코드를 입력해 주세요."
+
+#: kara/templates/registration/email_confirmation.html:31
+msgid "Resend Code"
+msgstr "인증 코드 재전송"
+
+#: kara/templates/registration/email_confirmation.html:43
+msgid "Verify Code"
+msgstr "코드 확인"
+
+#: kara/templates/registration/email_confirmation.html:47
+msgid "I'll confirm later!"
+msgstr "나중에 인증할게요!"
+
+#: kara/templates/registration/signup.html:4
+#: kara/templates/registration/signup.html:6
+msgid "Registration | Kara"
+msgstr "회원가입 | Kara"
+
+#: kara/templates/registration/signup.html:11
+msgid "Registration"
+msgstr "회원가입"
+
+#: kara/templates/registration/signup.html:19
+#, python-format
+msgid "Already have an account? Then please %(link)ssign in%(end_link)s."
+msgstr "이미 계정이 있으신가요? 그렇다면 %(link)s로그인%(end_link)s 해주세요."
+
+#: kara/templates/registration/signup.html:37
+msgid "Signup"
+msgstr "가입하기"
