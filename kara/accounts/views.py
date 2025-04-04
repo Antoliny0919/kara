@@ -3,11 +3,15 @@ import string
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
+from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.crypto import get_random_string
-from django.views.generic import FormView, TemplateView
+from django.utils.decorators import method_decorator
+from django.views.generic import FormView, TemplateView, View
 
 from .forms import CustomUserCreationForm, EmailVerificationCodeForm
 from .models import User
@@ -54,6 +58,7 @@ def clear_confirmation_state(request):
     request.session.pop(PENDING_EMAIL_CONFIRMATION_SESSION_KEY, None)
 
 
+@method_decorator(login_required, name="dispatch")
 class EmailConfirmationView(FormView):
     form_class = EmailVerificationCodeForm
     template_name = "registration/email_confirmation.html"
@@ -61,6 +66,16 @@ class EmailConfirmationView(FormView):
     def dispatch(self, request, *args, **kwargs):
         self.verification = request.session.get(PENDING_EMAIL_CONFIRMATION_SESSION_KEY)
         return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        res = None
+        if request.method == "POST":
+            if "action_resend" in request.POST:
+                view = ResendEmailConfirmationView.as_view()
+                res = view(request)
+            elif "action_confirm" in request.POST:
+                res = super().post(request, *args, **kwargs)
+        return res
 
     def get_success_url(self):
         messages.add_message(
@@ -75,7 +90,6 @@ class EmailConfirmationView(FormView):
         user.profile.email_confirmed = True
         user.profile.save()
         clear_confirmation_state(self.request)
-        login(self.request, user)
         return super().form_valid(form)
 
     def get_form_kwargs(self):
@@ -94,6 +108,16 @@ class EmailConfirmationView(FormView):
         return context
 
 
+class ResendEmailConfirmationView(LoginRequiredMixin, View):
+    def post(self, request):
+        user = request.user
+        send_user_confirmation_email(request, user)
+        messages.add_message(
+            request, messages.INFO, "The email confirmation code has been resent."
+        )
+        return redirect("email_confirmation")
+
+
 class SignupView(FormView):
     form_class = CustomUserCreationForm
     template_name = "registration/signup.html"
@@ -109,6 +133,7 @@ class SignupView(FormView):
 
     def form_valid(self, form):
         user = form.save()
+        login(self.request, user)
         send_user_confirmation_email(self.request, user)
         return super().form_valid(form)
 

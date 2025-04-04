@@ -19,17 +19,31 @@
                             {{ field.as_field_group }}
                         </div>
                     {% endfor %}
+                    <div class="pl-1 flex mt-4 mb-2">
+                        <button 
+                        type="submit"
+                        name="action_resend"
+                        class="
+                        resend-code text-kara-strong hover:text-kara-deep transition-colors duration-500 mr-4
+                        disabled:text-kara-shallow disabled:cursor-default disabled:opacity-80
+                        "
+                        >
+                        {% translate "Resend Code" %}
+                        </button>
+                        <div class="timer"></div>
+                    </div>
                     <button
                     type="submit"
+                    name="action_confirm"
                     class="
-                    w-full text-lg my-6 bg-kara-shallow py-3 rounded-lg text-white transition-colors duration-500
+                    w-full text-lg bg-kara-shallow py-3 rounded-lg text-white transition-colors duration-500
                     hover:bg-kara-very-shallow hover:text-kara-strong
                     "
                     >
                     {% translate "Verify Code" %}
                     </button>
                 </form>
-                <div class="flex items-center justify-center">
+                <div class="flex items-center justify-center mt-4">
                     <a href="{{ later_confirm_link }}" class="text-kara-strong hover:text-kara-deep transition-colors duration-500">{% translate "I'll confirm later!"%}</a>
                 </div>
             </div>
