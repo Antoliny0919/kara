@@ -1,0 +1,18 @@
+{% load static %}
+
+{% if messages %}
+    <script src="{% static 'js/auto_dismiss.js' %}"></script>
+    {% for message in messages %}
+        <div class="message-container relative">
+            <div class="auto-dismiss my-2 px-4 py-3 absolute w-full border
+            animate-slide-down
+            {% if "error" in message.tags %}bg-red-100 border-red-400 text-red-700
+            {% elif "warning" in message.tags %}bg-orange-100 border-orange-400 text-orange-700
+            {% elif "success" in message.tags %}bg-green-100 border-green-500 text-green-700
+            {% else %}bg-kara-very-shallow border-kara-strong text-kara-deep{% endif %}"
+            role="alert">
+                <div class="{{ message.tags }}">{{ message}}</div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
