@@ -45,23 +45,37 @@ module.exports = {
         extend: {
             colors: {
                 kara: {
-                    "very-shallow": "#FFEEEE",
-                    "shallow": "#F5C8C8",
-                    "strong": "#F3B0B0",
-                    "deep": "#E38282",
-                    "light-deep": "#f48484",
-                    "base": "#f3AEAE",
+                    'very-shallow': '#FFEEEE',
+                    'shallow': '#F5C8C8',
+                    'strong': '#F3B0B0',
+                    'deep': '#E38282',
+                    'light-deep': '#f48484',
+                    'base': '#f3AEAE',
                 },
                 state: {
-                    "success": "#4BA324",
-                    "warning": "#DF9F2F",
-                    "fail": "#E3372F",
+                    'success': '#4BA324',
+                    'warning': '#DF9F2F',
+                    'fail': '#E3372F',
                 },
             },
             fontFamily: {
-                title: ["LeeSeoyun"],
-                common: ["Pretendard-Regular"],
-            }
+                title: ['LeeSeoyun'],
+                common: ['Pretendard-Regular'],
+            },
+            keyframes: {
+                'slide-down': {
+                    '0%': { opacity: '0', transform: 'translateY(-30px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' },
+                },
+                'slide-up-fade': {
+                    '0%': { opacity: '1', transform: 'translateY(0)' },
+                    '100%': { opacity: '0', transform: 'translateY(-30px)' },
+                },
+              },
+              animation: {
+                'slide-down': 'slide-down 0.5s ease-out',
+                'slide-up-fade': 'slide-up-fade 0.5s ease-in forwards',
+            },
         },
     },
     plugins: [
