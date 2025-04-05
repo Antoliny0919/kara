@@ -52,11 +52,6 @@ module.exports = {
                     'light-deep': '#f48484',
                     'base': '#f3AEAE',
                 },
-                state: {
-                    'success': '#4BA324',
-                    'warning': '#DF9F2F',
-                    'fail': '#E3372F',
-                },
             },
             fontFamily: {
                 title: ['LeeSeoyun'],
