@@ -243,6 +243,7 @@ LOGGING = {
 # ------------------------------------------------------------------------------
 class FormRenderer(TemplatesSetting):
     field_template_name = "forms/field.html"
+    form_template_name = "forms/form.html"
 
 
 FORM_RENDERER = "config.settings.base.FormRenderer"
