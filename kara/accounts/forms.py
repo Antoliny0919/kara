@@ -72,7 +72,7 @@ class CustomSetPasswordMixin(SetPasswordMixin):
 class CustomAuthenticationForm(AuthenticationForm):
     username = UsernameField(
         widget=FloatingLabelInput(
-            attrs={"label": _("Username"), "type": "text", "autofocus": True}
+            attrs={"label": _("Username or Email"), "type": "text", "autofocus": True}
         )
     )
     password = forms.CharField(
