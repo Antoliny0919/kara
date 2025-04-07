@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-07 14:05+0900\n"
+"POT-Creation-Date: 2025-04-07 16:35+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,15 +49,16 @@ msgid "I'll confirm later!"
 msgstr "나중에 인증할게요!"
 
 #: kara/templates/registration/login.html:4
+#: kara/templates/registration/login.html:6
 msgid "Login | kara"
 msgstr "로그인 | Kara"
 
-#: kara/templates/registration/login.html:21
+#: kara/templates/registration/login.html:20
 #, python-format
 msgid "Don't have an account you? %(link)ssignup%(end_link)s"
 msgstr "아직 계정이 없나요? %(link)s회원가입%(end_link)s"
 
-#: kara/templates/registration/login.html:33
+#: kara/templates/registration/login.html:32
 msgid "Login"
 msgstr "로그인"
 

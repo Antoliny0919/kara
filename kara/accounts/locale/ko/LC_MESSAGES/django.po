@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-07 13:56+0900\n"
+"POT-Creation-Date: 2025-04-07 16:35+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgstr "이메일로 전송된 6자리 인증 코드를 입력하세요."
 msgid "The verification code does not match."
 msgstr "인증 코드가 일치하지 않습니다."
 
-#: kara/accounts/forms.py:43 kara/accounts/forms.py:80
+#: kara/accounts/forms.py:43 kara/accounts/forms.py:82
 msgid "Password"
 msgstr "비밀번호"
 
@@ -42,23 +42,27 @@ msgstr "비밀번호 확인"
 msgid "Enter the same password as before, for verification."
 msgstr "확인을 위해 앞에서 입력한 비밀번호와 동일한 값을 입력하세요."
 
-#: kara/accounts/forms.py:74 kara/accounts/forms.py:92
+#: kara/accounts/forms.py:75
+msgid "Username or Email"
+msgstr "아이디 또는 이메일"
+
+#: kara/accounts/forms.py:94
 msgid "Username"
 msgstr "사용자 이름"
 
-#: kara/accounts/forms.py:98
+#: kara/accounts/forms.py:100
 msgid "Email"
 msgstr "이메일"
 
-#: kara/accounts/views.py:86
+#: kara/accounts/views.py:89
 msgid "Email verification is complete!"
 msgstr "이메일 인증이 완료되었습니다!"
 
-#: kara/accounts/views.py:118
+#: kara/accounts/views.py:121
 msgid "The email verification code has been resent."
 msgstr "이메일 인증 코드가 다시 전송되었습니다."
 
-#: kara/accounts/views.py:137
+#: kara/accounts/views.py:140
 msgid ""
 "Your registration was successful. Please check your email provided for a "
 "verification code."
