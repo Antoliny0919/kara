@@ -15,29 +15,26 @@
             {% setvar end_link %}
             </a>
         {% endsetvar %}
-        <p class="pt-4">
+        <p class="my-6">
             {% blocktranslate %}Already have an account? Then please {{ link }}sign in{{ end_link }}.{% endblocktranslate %}
         </p>
-        <div class="row">
-            <div class="col">
-                <form class="space-y-8" method="post">
-                    {% csrf_token %}
-                    {{ form }}
-                    <button
-                    type="submit"
-                    class="
-                    text-lg w-full bg-kara-shallow py-3 rounded-lg text-white transition-colors duration-500
-                    hover:bg-kara-very-shallow hover:text-kara-deep
-                    "
-                    >
-                    {% translate "Signup" %}
-                    </button>
-                </form>
-            </div>
-            <div class="col"></div>
+        <div class="w-full max-w-sm">
+            <form method="post">
+                {% csrf_token %}
+                {{ form }}
+                <button
+                type="submit"
+                class="
+                text-lg w-[24rem] mt-10 bg-kara-shallow py-3 rounded-lg text-white transition-colors duration-500
+                hover:bg-kara-very-shallow hover:text-kara-deep
+                "
+                >
+                {% translate "Signup" %}
+                </button>
+            </form>
         </div>
     </div>
     <div class="flex-1">
-    </div>    
+    </div>
 </main>
 {% endblock content %}

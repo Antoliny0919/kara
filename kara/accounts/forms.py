@@ -1,9 +1,11 @@
 from django import forms
 from django.contrib.auth import password_validation
 from django.contrib.auth.forms import (
+    AuthenticationForm,
     BaseUserCreationForm,
     SetPasswordMixin,
     UserCreationForm,
+    UsernameField,
 )
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
@@ -65,6 +67,24 @@ class CustomSetPasswordMixin(SetPasswordMixin):
             help_text=_("Enter the same password as before, for verification."),
         )
         return password, password_confirmation
+
+
+class CustomAuthenticationForm(AuthenticationForm):
+    username = UsernameField(
+        widget=FloatingLabelInput(
+            attrs={"label": _("Username"), "type": "text", "autofocus": True}
+        )
+    )
+    password = forms.CharField(
+        strip=False,
+        widget=FloatingLabelInput(
+            attrs={
+                "label": _("Password"),
+                "type": "password",
+                "autocomplete": "current-password",
+            }
+        ),
+    )
 
 
 class CustomUserCreationForm(UserCreationForm, forms.ModelForm):
