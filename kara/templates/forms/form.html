@@ -1,0 +1,14 @@
+<div class="space-y-8">
+    {% for field in form %}
+        <div class="field-container">
+            {{ field.as_field_group }}
+        </div>
+    {% endfor %}
+</div>
+{% if form.non_field_errors %}
+  <ul>
+    {% for error in form.non_field_errors %}
+      <li class="pl-1 mt-2 text-red-700 text-sm">{{ error }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}

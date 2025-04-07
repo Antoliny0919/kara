@@ -848,6 +848,10 @@ select {
   margin-right: 1rem;
 }
 
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -884,12 +888,20 @@ select {
   width: 80%;
 }
 
+.w-\[24rem\] {
+  width: 24rem;
+}
+
 .w-full {
   width: 100%;
 }
 
 .max-w-screen-xl {
   max-width: 1280px;
+}
+
+.max-w-sm {
+  max-width: 24rem;
 }
 
 .flex-1 {
@@ -1086,6 +1098,11 @@ select {
 
 .font-title {
   font-family: LeeSeoyun;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .text-5xl {
