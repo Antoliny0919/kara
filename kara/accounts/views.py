@@ -2,8 +2,8 @@ import string
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, views as django_views
+from django.contrib.auth.decorators import login_not_required, login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import redirect
@@ -12,9 +12,13 @@ from django.urls import reverse
 from django.utils.crypto import get_random_string
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import FormView, TemplateView, View
+from django.views.generic import FormView, View
 
-from .forms import CustomUserCreationForm, EmailVerificationCodeForm
+from .forms import (
+    CustomAuthenticationForm,
+    CustomUserCreationForm,
+    EmailVerificationCodeForm,
+)
 from .models import User
 
 PENDING_EMAIL_CONFIRMATION_SESSION_KEY = "pending_email_confirmation"
@@ -119,6 +123,11 @@ class ResendEmailVerificationCodeView(LoginRequiredMixin, View):
         return redirect("email_confirmation")
 
 
+@method_decorator(login_not_required, name="dispatch")
+class LoginView(django_views.LoginView):
+    form_class = CustomAuthenticationForm
+
+
 class SignupView(FormView):
     form_class = CustomUserCreationForm
     template_name = "registration/signup.html"
@@ -139,7 +148,3 @@ class SignupView(FormView):
         login(self.request, user)
         send_user_confirmation_email(self.request, user)
         return super().form_valid(form)
-
-
-class LoginView(TemplateView):
-    template_name = "registration/login.html"
