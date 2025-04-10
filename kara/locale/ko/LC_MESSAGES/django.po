@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-07 16:35+0900\n"
+"POT-Creation-Date: 2025-04-10 17:13+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: kara/templates/includes/nav.html:12 kara/templates/includes/nav.html:63
+msgid "Program Information"
+msgstr "프로그램 정보"
+
+#: kara/templates/includes/nav.html:17 kara/templates/includes/nav.html:68
+msgid "Gift Tracker"
+msgstr "축의금 기록하기"
+
+#: kara/templates/includes/nav.html:22 kara/templates/includes/nav.html:73
+msgid "My Wedding Expenses"
+msgstr "나의 결혼 비용"
+
+#: kara/templates/includes/nav.html:31
+#: kara/templates/registration/login.html:32
+msgid "Login"
+msgstr "로그인"
+
+#: kara/templates/includes/nav.html:34
+msgid "Sign Up"
+msgstr "가입하기"
 
 #: kara/templates/registration/email_confirmation.html:4
 #: kara/templates/registration/email_confirmation.html:6
@@ -57,10 +78,6 @@ msgstr "로그인 | Kara"
 #, python-format
 msgid "Don't have an account you? %(link)ssignup%(end_link)s"
 msgstr "아직 계정이 없나요? %(link)s회원가입%(end_link)s"
-
-#: kara/templates/registration/login.html:32
-msgid "Login"
-msgstr "로그인"
 
 #: kara/templates/registration/signup.html:4
 #: kara/templates/registration/signup.html:6
