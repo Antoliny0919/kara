@@ -1,0 +1,45 @@
+.brand-icon {
+    height: 4rem;
+    width: 8rem;
+    object-fit: cover;
+}
+
+.burger-menu {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.burger-menu span {
+    display: block;
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background-color: currentColor;
+    border-radius: 2px;
+    transition: transform 0.3s ease-in-out, opacity 0.2s ease;
+}
+
+.burger-menu span:nth-child(1) {
+    transform: translateY(-6px);
+}
+
+.burger-menu span:nth-child(3) {
+    transform: translateY(6px);
+}
+
+.burger-menu.active span:nth-child(1) {
+    transform: rotate(45deg);
+}
+
+.burger-menu.active span:nth-child(2) {
+    opacity: 0;
+    transform: scale(0.2);
+}
+
+.burger-menu.active span:nth-child(3) {
+    transform: rotate(-45deg);
+}

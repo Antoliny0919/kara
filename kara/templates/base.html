@@ -8,10 +8,13 @@
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta name="title" content="{% block meta_title %}{% endblock meta_title %}"/>
         <link rel="stylesheet" href="{% static "css/dist/fonts.css" %}">
+        <link rel="stylesheet" href="{% static "css/kara.css" %}">
         {% tailwind_css %}
 	</head>
     <body class="flex flex-col h-screen font-common {% block body_class %}{% endblock %}">
+        {% include 'includes/nav.html' %}
         {% include 'includes/messages.html' %}
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <div class="container flex justify-center mb-auto mx-auto max-w-screen-xl">
             <div class="w-4/5">
                 {% block content %}
