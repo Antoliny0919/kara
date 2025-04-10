@@ -8,4 +8,4 @@ media/*
 .DS_Store
 
 # style
-theme/static/css/dist/styles.css
+kara/theme/static/css/dist/styles.css
