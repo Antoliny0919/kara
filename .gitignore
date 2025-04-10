@@ -6,3 +6,6 @@ media/*
 
 # misc
 .DS_Store
+
+# style
+theme/static/css/dist/styles.css
