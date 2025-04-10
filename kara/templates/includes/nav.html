@@ -34,9 +34,6 @@
                   {% trans 'Sign Up' %}
                 </a>
             </div>
-        {% else %}
-            <div class="profile"></div>
-        {% endif %}
             <div class="relative block md:hidden" x-data="{ showSidePanel: false }">
                 <button
                 class="block rounded bg-kara-very-shallow p-2.5 text-kara-deep transition md:hidden"
@@ -57,25 +54,33 @@
                 x-transition:enter-end="opacity-100 transform translate-x-0"
                 class="fixed inset-y-0 right-0 top-16 z-50 w-screen bg-white shadow-xl"
                 >
-                    <ul class="py-2">
-                        <li class="hover:bg-gray-100">
-                            <a class="block p-4 outline-link text-gray-500 transition hover:text-kara-strong" target="_blank" href="https://github.com/Antoliny0919/kara">
-                            {% trans 'Program Information' %}
-                            </a>
-                        </li>
-                        <li class="hover:bg-gray-100">
-                            <a class="block p-4 outline-link text-gray-500 transition hover:text-kara-strong" href="">
-                            {% trans 'Gift Tracker' %}
-                            </a>
-                        </li>
-                        <li class="hover:bg-gray-100">
-                            <a class="block p-4 outline-link text-gray-500 transition hover:text-kara-strong" href="">
-                            {% trans 'My Wedding Expenses' %}
-                            </a>
-                        </li>
-                    </ul>
+                    <div class="py-10 px-10 font-bold">
+                        <ul>
+                            <li class="hover:bg-kara-shallow/20 border-t-2 border-t-kara-shallow/60">
+                                <a class="block p-4 outline-link text-kara-strong transition hover:text-kara-deep" target="_blank" href="https://github.com/Antoliny0919/kara">
+                                {% trans 'Program Information' %}
+                                </a>
+                            </li>
+                            <li class="hover:bg-kara-shallow/20 border-t-2 border-t-kara-shallow/60">
+                                <a class="block p-4 outline-link text-kara-strong transition hover:text-kara-deep" href="">
+                                {% trans 'Gift Tracker' %}
+                                </a>
+                            </li>
+                            <li class="hover:bg-kara-shallow/20 border-t-2 border-t-kara-shallow/60">
+                                <a class="block p-4 outline-link text-kara-strong transition hover:text-kara-deep" href="">
+                                {% trans 'My Wedding Expenses' %}
+                                </a>
+                            </li>
+                            <li>
+                            </li>
+                        </ul>
+                        <a class="block w-full py-3 mt-10 bg-kara-strong text-white text-center transition-color duration-500 border rounded-lg border-kara-strong hover:bg-white hover:text-kara-strong" role="button" href="{% url 'login' %}">{% trans 'Get started!' %}</a>
+                    </div>
                 </div>
             </div>
+        {% else %}
+            <div class="profile"></div>
+        {% endif %}
         </div>
     </div>
 </nav>

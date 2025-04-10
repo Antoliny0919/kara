@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-10 17:13+0900\n"
+"POT-Creation-Date: 2025-04-10 17:48+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: kara/templates/includes/nav.html:12 kara/templates/includes/nav.html:63
+#: kara/templates/includes/nav.html:12 kara/templates/includes/nav.html:61
 msgid "Program Information"
 msgstr "프로그램 정보"
 
-#: kara/templates/includes/nav.html:17 kara/templates/includes/nav.html:68
+#: kara/templates/includes/nav.html:17 kara/templates/includes/nav.html:66
 msgid "Gift Tracker"
 msgstr "축의금 기록하기"
 
-#: kara/templates/includes/nav.html:22 kara/templates/includes/nav.html:73
+#: kara/templates/includes/nav.html:22 kara/templates/includes/nav.html:71
 msgid "My Wedding Expenses"
 msgstr "나의 결혼 비용"
 
@@ -38,6 +38,10 @@ msgstr "로그인"
 #: kara/templates/includes/nav.html:34
 msgid "Sign Up"
 msgstr "가입하기"
+
+#: kara/templates/includes/nav.html:77
+msgid "Get started!"
+msgstr "시작하기!"
 
 #: kara/templates/registration/email_confirmation.html:4
 #: kara/templates/registration/email_confirmation.html:6
