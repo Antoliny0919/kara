@@ -26,39 +26,17 @@
         </nav>
         {% if not user.is_authenticated %}
         <div class="flex items-center gap-4">
-            <div class="sm:flex sm:gap-4">
+            <div class="hidden md:flex sm:gap-4">
                 <a class="block rounded-md bg-kara-very-shallow px-4 py-2.5 text-sm font-medium duration-500 text-kara-deep transition hover:bg-kara-strong hover:text-white cursor-pointer" href="{% url 'login' %}">
                   {% trans "Login" %}
                 </a>
-                <a class="hidden rounded-md bg-kara-strong px-5 py-2.5 text-sm font-medium text-white duration-500 transition hover:bg-kara-deep sm:block cursor-pointer" href="{% url 'signup' %}">
+                <a class="block rounded-md bg-kara-strong px-5 py-2.5 text-sm font-medium text-white duration-500 transition hover:bg-kara-deep sm:block cursor-pointer" href="{% url 'signup' %}">
                   {% trans "Sign Up" %}
                 </a>
-          </div>
+            </div>
         {% else %}
            <div class="relative hidden md:block" x-data="{ showDropdown: false }">
-              <button type="button" class="block bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" @click="showDropdown = !showDropdown">
-                <span class="sr-only">Open user menu</span>
-                <img class="w-8 h-8 rounded-full" src={%  if user.profile.bio_image %}"{{ user.profile.bio_image }}"{% else %}"{% static 'img/favicon.png' %}"{% endif %} alt="Profile photo">
-              </button>
-              <div x-cloak x-show="showDropdown">
-                <ul class="py-2 absolute right-0 py-2 mt-2 bg-gray-100 rounded-md shadow-xl w-44" aria-labelledby="user-menu-button">
-                  <li class="p-2">
-                    <a href="" class="block outline-link text-gray-500 transition hover:text-ds-purple">
-                        {% trans "Profile" %}
-                    </a>
-                  </li>
-                  <li class="p-2">
-                    <a href="" class="block outline-link text-gray-500 transition hover:text-ds-purple">
-                        {% trans "Update password" %}
-                    </a>
-                  </li>
-                  <li class="p-2">
-                    <a href="" class="block outline-link text-gray-500 transition hover:text-ds-purple">
-                        {% trans "Logout" %}
-                    </a>
-                  </li>
-                </ul>
-              </div>
+                {% comment %} User Profile {% endcomment %}
            </div>
         {% endif %}
             <div class="relative block md:hidden" x-data="{ showSidePanel: false }">
@@ -83,7 +61,7 @@
                 >
                     <ul class="py-2">
                         <li class="hover:bg-gray-100">
-                            <a class="block p-4 outline-link text-gray-500 transition hover:text-ds-purple" target="_blank" href="https://github.com/djangonaut-space/program/blob/main/README.md">
+                            <a class="block p-4 outline-link text-gray-500 transition hover:text-ds-purple" target="_blank" href="">
                             {% trans "Program Information" %}
                             </a>
                         </li>
@@ -97,23 +75,6 @@
                             {% trans "Expense Log" %}
                             </a>
                         </li>
-                        {% if user.is_authenticated %}
-                        <li class="hover:bg-gray-100">
-                            <a class="block p-4 outline-link text-gray-500 transition hover:text-ds-purple" href="">
-                            {% trans "Profile" %}
-                            </a>
-                        </li>
-                        <li class="hover:bg-gray-100">
-                            <a class="block p-4 outline-link text-gray-500 transition hover:text-ds-purple" href="">
-                            {% trans "Update password" %}
-                            </a>
-                        </li>
-                        <li class="hover:bg-gray-100">
-                            <a class="block p-4 outline-link text-gray-500 transition hover:text-ds-purple" href="">
-                            {% trans "Logout" %}
-                            </a>
-                        </li>
-                    {% endif %}
                     </ul>
                 </div>
             </div>
