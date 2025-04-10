@@ -26,11 +26,11 @@
         </nav>
         {% if not user.is_authenticated %}
         <div class="flex items-center gap-4">
-            <div class="sm:flex sm:gap-4">
+            <div class="hidden flex-row sm:flex gap-4">
                 <a class="block rounded-md bg-kara-very-shallow px-4 py-2.5 text-sm font-medium duration-500 text-kara-deep transition hover:bg-kara-strong hover:text-white cursor-pointer" href="{% url 'login' %}">
                   {% trans 'Login' %}
                 </a>
-                <a class="hidden rounded-md bg-kara-strong px-5 py-2.5 text-sm font-medium text-white duration-500 transition hover:bg-kara-deep sm:block cursor-pointer" href="{% url 'signup' %}">
+                <a class="block rounded-md bg-kara-strong px-5 py-2.5 text-sm font-medium text-white duration-500 transition hover:bg-kara-deep cursor-pointer" href="{% url 'signup' %}">
                   {% trans 'Sign Up' %}
                 </a>
             </div>
