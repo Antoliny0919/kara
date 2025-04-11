@@ -39,12 +39,11 @@
                 class="block rounded bg-kara-very-shallow p-2.5 text-kara-deep transition md:hidden"
                 @click="showSidePanel = !showSidePanel"
                 >
-                <span class="sr-only">Toggle menu</span>
-                <div class="burger-menu" :class="{ 'active': showSidePanel }">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+                    <div class="burger-menu" :class="{ 'active': showSidePanel }">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
                 </button>
                 <div 
                 x-cloak 
@@ -71,23 +70,69 @@
                                 {% trans 'My Wedding Expenses' %}
                                 </a>
                             </li>
-                            <li>
-                            </li>
                         </ul>
                         <a class="block w-full py-3 mt-10 bg-kara-strong text-white text-center transition-color duration-500 border rounded-lg border-kara-strong hover:bg-white hover:text-kara-strong" role="button" href="{% url 'login' %}">{% trans 'Get started!' %}</a>
                     </div>
                 </div>
-                {% else %}
+            </div>
+            {% else %}
+            <div class="relative block" x-data="{ showSidePanel: false }">
                 <button
                 class="
                 w-[50px] h-[50px] rounded-full p-1 bg-transparent cursor-pointer 
                 overflow-hidden transition-all duration-500 ease-in-out
                 hover:ring-2 hover:ring-kara-deep
                 "
+                @click="showSidePanel = !showSidePanel"
                 >
                     <img alt="profile" src="{{ user.profile.bio_image.url }}"/>
                 </button>
-                {% endif %}
+                <div
+                x-cloak
+                x-show="showSidePanel"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform translate-x-full"
+                x-transition:enter-end="opacity-100 transform translate-x-0"
+                class="fixed w-full inset-y-0 right-0 z-50 md:w-[420px] bg-white shadow-xl"
+                >
+                    <button
+                    id="closeSidePanel"
+                    type="button"
+                    class="absolute top-4 left-4 p-2 rounded-full hover:bg-kara-shallow transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-gray-300 flex items-center"
+                    @click="showSidePanel = false"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-kara-deep" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                        <span class="ml-1 text-kara-deep">{% trans 'Back' %}</span>
+                    </button>
+                    <div class="px-8 py-6">
+                        <div class="flex flex-col items-center justify-center">
+                            <div class="w-3/5 h-3/5 rounded-full bg-transparent">
+                                <img alt="profile" src="{{ user.profile.bio_image.url }}"/>
+                            </div>
+                            <h2 class="text-lg mt-6 text-center">
+                                {% blocktranslate with username=user.username %}Welcome, {{ username }}! How's your day going today 🙌{% endblocktranslate %}
+                            </h2>
+                        </div>
+                        <ul class="mt-6 text-lg">
+                            <li class="md:hidden py-4 px-2 border-t-2 border-t-kara-shallow/60 hover:bg-kara-shallow hover:text-white transition-colors duration-300">
+                                <span class="mr-1">&gt;</span><a href="">{% trans 'Gift Tracker' %}</a>
+                            </li>
+                            <li class="md:hidden py-4 px-2 border-t-2 border-t-kara-shallow/60 hover:bg-kara-shallow hover:text-white transition-colors duration-300">
+                                <span class="mr-1">&gt;</span><a href="">{% trans 'My Wedding Expenses' %}</a>
+                            </li>
+                            <li class="py-4 px-2 border-t-2 border-t-kara-shallow/60 hover:bg-kara-shallow hover:text-white transition-colors duration-300">
+                                <span class="mr-1">&gt;</span><a href="">{% trans 'Profile' %}</a>
+                            </li>
+                            <li class="py-4 px-2 border-t-2 border-t-kara-shallow/60 hover:bg-kara-shallow hover:text-white transition-colors duration-300">
+                                <span class="mr-1">&gt;</span><a href="">{% trans 'Logout' %}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
             </div>
         </div>
     </div>

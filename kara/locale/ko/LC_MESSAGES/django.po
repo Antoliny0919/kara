@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-10 17:48+0900\n"
+"POT-Creation-Date: 2025-04-11 16:38+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: kara/templates/includes/nav.html:12 kara/templates/includes/nav.html:61
+#: kara/templates/includes/nav.html:12 kara/templates/includes/nav.html:60
 msgid "Program Information"
 msgstr "프로그램 정보"
 
-#: kara/templates/includes/nav.html:17 kara/templates/includes/nav.html:66
+#: kara/templates/includes/nav.html:17 kara/templates/includes/nav.html:65
+#: kara/templates/includes/nav.html:120
 msgid "Gift Tracker"
 msgstr "축의금 기록하기"
 
-#: kara/templates/includes/nav.html:22 kara/templates/includes/nav.html:71
+#: kara/templates/includes/nav.html:22 kara/templates/includes/nav.html:70
+#: kara/templates/includes/nav.html:123
 msgid "My Wedding Expenses"
 msgstr "나의 결혼 비용"
 
@@ -39,9 +41,26 @@ msgstr "로그인"
 msgid "Sign Up"
 msgstr "가입하기"
 
-#: kara/templates/includes/nav.html:77
+#: kara/templates/includes/nav.html:74
 msgid "Get started!"
 msgstr "시작하기!"
+
+#: kara/templates/includes/nav.html:107
+msgid "Back"
+msgstr "닫기"
+
+#: kara/templates/includes/nav.html:115
+#, python-format
+msgid "Welcome, %(username)s! How's your day going today 🙌"
+msgstr "환영합니다, %(username)s!님 오늘 하루는 어떤가요 🙌"
+
+#: kara/templates/includes/nav.html:126
+msgid "Profile"
+msgstr "프로필"
+
+#: kara/templates/includes/nav.html:129
+msgid "Logout"
+msgstr "로그아웃"
 
 #: kara/templates/registration/email_confirmation.html:4
 #: kara/templates/registration/email_confirmation.html:6
