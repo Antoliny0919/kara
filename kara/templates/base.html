@@ -12,7 +12,7 @@
         {% tailwind_css %}
 	</head>
     <body class="flex flex-col h-screen font-common {% block body_class %}{% endblock %}">
-        {% include 'includes/nav.html' %}
+        {% block navbar %}{% include 'includes/nav.html' %}{% endblock %}
         {% include 'includes/messages.html' %}
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <div class="container flex justify-center mb-auto mx-auto max-w-screen-xl">
