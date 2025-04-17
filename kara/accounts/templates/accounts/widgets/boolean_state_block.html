@@ -1,0 +1,23 @@
+{% load i18n %}
+<div class="
+    flex flex-start items-center p-4 border-2 rounded-lg
+    {% if widget.attrs.state == True %}border-green-700 bg-green-700/50{% else %}border-red-700 bg-red-700/50{% endif %}
+    "
+    >
+    <label
+    class="text-white mr-2"
+    >
+    {{ widget.attrs.label }}
+    </label>
+    {% if widget.attrs.state == True %}
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 13L9 17L19 7" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+    {% else %}
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 6L6 18" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M6 6L18 18" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+    {% endif %}
+</div>
+

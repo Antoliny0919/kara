@@ -1,0 +1,31 @@
+{% load i18n %}
+
+<label class="my-4 text-kara-deep">{% trans 'Profile Image' %}</label>
+<div class="relative w-64 h-64 rounded-full overflow-hidden ring-2 ring-kara-shallow hover:ring-4 duration-500 transition-all">
+    <input
+    type={{ widget.type }}
+    name="{{ widget.name }}"
+    id="image-input"
+    class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
+    {% include "django/forms/widgets/attrs.html" %}
+    >
+    <div class="w-full h-full p-10">
+      <img id="profile-bio-image" alt="profile-bio-image" src="{{ widget.value.url }}"/>
+    </div>
+</div>
+<div class="text-sm mt-2">{% blocktranslate with value=widget.value %}Selected image: {{ value }}{% endblocktranslate %}</div>
+<script>
+document.getElementById('image-input').addEventListener('change', function (event) {
+  const input = event.target;
+  const preview = document.getElementById('profile-bio-image');
+
+  if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      console.log(input.files[0].name)
+      reader.onload = function (e) {
+          preview.src = e.target.result;
+      }
+      reader.readAsDataURL(input.files[0]);
+  }
+});
+</script>

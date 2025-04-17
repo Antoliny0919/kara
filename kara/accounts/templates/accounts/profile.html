@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load i18n widget_tweaks %}
+
+{% block title %}{% trans 'Kara | Profile' %}{% endblock %}
+
+{% block meta_title %}{% trans 'Kara | Profile' %}{% endblock %}
+
+{% block content %}
+<main class="my-12">
+    <h1 class="my-10 text-4xl text-center">{% blocktranslate with username=user.username %}Welcome, {{ username }}{% endblocktranslate %}</h1>
+    <div class="border-2 border-kara-strong rounded-lg" x-data="{ activeTab: 'profile' }">
+        <div class="flex flex-row">
+            <div class="w-[30%] border-r-2 border-kara-strong">
+                <ul class="text-base text-center">
+                    <li
+                    class="border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300"
+                    :class="activeTab === 'profile' ? 'bg-kara-shallow text-white' : ''"
+                    >
+                        <button class="py-6 w-full" @click="activeTab = 'profile'">
+                            {% trans 'Profile' %}
+                        </button>
+                    </li>
+                    <li
+                    class="border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300"
+                    :class="activeTab === 'cashGiftRecords' ? 'bg-kara-shallow text-white' : ''"
+                    >
+                        <button class="py-6 w-full" @click="activeTab = 'cashGiftRecords'">
+                            {% trans 'Cash Gift Records' %}
+                        </button>
+                    </li>
+                    <li
+                    class="border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300"
+                    :class="activeTab === 'weddingExpenseRecords' ? 'bg-kara-shallow text-white' : ''"
+                    >
+                        <button class="py-6 w-full" @click="activeTab = 'weddingExpenseRecords'">
+                            {% trans 'Wedding Expense Records' %}
+                        </button>
+                    </li>
+                    <li
+                    class="border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300"
+                    >
+                        <button class="py-6 w-full">
+                            {% trans 'Logout' %}
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <div class="w-[70%] flex flex-col items-center justify-center">
+                <div class="w-full px-8" x-show="activeTab === 'profile'">
+                    <form method="post">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            {% if field|field_type == 'imagefield' %}
+                                <div class="flex flex-col items-center justify-center my-4">
+                                    {{ field.as_field_group }}
+                                </div>
+                            {% else %}
+                                <div class="field-container py-6">
+                                    {{ field.as_field_group }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                            <button class="
+                            block py-4 my-6 bg-red-200 w-1/3 bg-kara-strong rounded-lg text-white transition-color duration-500 mx-auto
+                            hover:bg-kara-deep
+                            "
+                            type="submit"
+                            >{% trans 'Save' %}</button>
+                    </form>
+                </div>
+                <div x-show="activeTab === 'cashGiftRecords'">
+                    <h1>Comming Soon! - Cash Gift Records</h1>
+                </div>
+                <div x-show="activeTab === 'weddingExpenseRecords'">
+                    <h1>Comming Soon! - Wedding Expense Records </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

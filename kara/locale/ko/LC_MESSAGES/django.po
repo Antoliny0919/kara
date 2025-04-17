@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-11 16:38+0900\n"
+"POT-Creation-Date: 2025-04-17 16:13+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgid "My Wedding Expenses"
 msgstr "나의 결혼 비용"
 
 #: kara/templates/includes/nav.html:31
-#: kara/templates/registration/login.html:32
+#: kara/templates/registration/login.html:34
 msgid "Login"
 msgstr "로그인"
 
@@ -67,11 +67,11 @@ msgstr "로그아웃"
 msgid "Email Confirmation | Kara "
 msgstr "이메일 확인 | Kara"
 
-#: kara/templates/registration/email_confirmation.html:11
+#: kara/templates/registration/email_confirmation.html:13
 msgid "Please check your inbox!"
 msgstr "이메일을 확인해 주세요!"
 
-#: kara/templates/registration/email_confirmation.html:12
+#: kara/templates/registration/email_confirmation.html:14
 #, python-format
 msgid ""
 "To complete your registration, please enter the 6-digit code sent to <span "
@@ -80,15 +80,15 @@ msgstr ""
 "회원가입을 완료하려면 <span class=\"text-kara-deep\">%(email)s</span>로 전송"
 "된 6자리 인증 코드를 입력해 주세요."
 
-#: kara/templates/registration/email_confirmation.html:31
+#: kara/templates/registration/email_confirmation.html:33
 msgid "Resend Code"
 msgstr "인증 코드 재전송"
 
-#: kara/templates/registration/email_confirmation.html:43
+#: kara/templates/registration/email_confirmation.html:45
 msgid "Verify Code"
 msgstr "코드 확인"
 
-#: kara/templates/registration/email_confirmation.html:47
+#: kara/templates/registration/email_confirmation.html:49
 msgid "I'll confirm later!"
 msgstr "나중에 인증할게요!"
 
@@ -97,7 +97,7 @@ msgstr "나중에 인증할게요!"
 msgid "Login | kara"
 msgstr "로그인 | Kara"
 
-#: kara/templates/registration/login.html:20
+#: kara/templates/registration/login.html:22
 #, python-format
 msgid "Don't have an account you? %(link)ssignup%(end_link)s"
 msgstr "아직 계정이 없나요? %(link)s회원가입%(end_link)s"
@@ -107,15 +107,15 @@ msgstr "아직 계정이 없나요? %(link)s회원가입%(end_link)s"
 msgid "Registration | Kara"
 msgstr "회원가입 | Kara"
 
-#: kara/templates/registration/signup.html:11
+#: kara/templates/registration/signup.html:13
 msgid "Registration"
 msgstr "회원가입"
 
-#: kara/templates/registration/signup.html:19
+#: kara/templates/registration/signup.html:21
 #, python-format
 msgid "Already have an account? Then please %(link)ssign in%(end_link)s."
 msgstr "이미 계정이 있으신가요? 그렇다면 %(link)s로그인%(end_link)s 해주세요."
 
-#: kara/templates/registration/signup.html:32
+#: kara/templates/registration/signup.html:34
 msgid "Signup"
 msgstr "가입하기"

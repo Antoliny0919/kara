@@ -18,6 +18,7 @@ from .forms import (
     CustomAuthenticationForm,
     CustomUserCreationForm,
     EmailVerificationCodeForm,
+    UserProfileForm,
 )
 from .models import User
 
@@ -148,3 +149,21 @@ class SignupView(FormView):
         login(self.request, user)
         send_user_confirmation_email(self.request, user)
         return super().form_valid(form)
+
+
+@method_decorator(login_required, name="dispatch")
+class ProfileView(FormView):
+    template_name = "accounts/profile.html"
+    form_class = UserProfileForm
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        user = self.request.user
+        kwargs["initial"] = {
+            "username": user.username,
+            "email": user.email,
+            "bio": user.profile.bio,
+            "bio_image": user.profile.bio_image,
+            "email_confirmed": user.profile.email_confirmed,
+        }
+        return kwargs

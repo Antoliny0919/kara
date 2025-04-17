@@ -1,17 +1,15 @@
 <div class="relative">
-    <input
+    <textarea
         id="{{ widget.name }}"
-        type="{{ widget.type }}"
-        name="{{ widget.name }}"
-        {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}
-        {% include "django/forms/widgets/attrs.html" %}
+        name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}
         class="
-        block w-full px-2.5 pb-2.5 pt-4 text-lg text-gray-900 bg-transparent rounded-lg border-2 border-kara-shallow appearance-none
+        block w-full h-40 px-2.5 pb-2.5 pt-4 text-lg text-gray-900 bg-transparent rounded-lg border-2 border-kara-shallow appearance-none resize-none
         dark:text-white dark:border-gray-600 dark:focus:border-blue-500
         focus:outline-none focus:ring-0 focus:border-kara-strong peer
         "
         placeholder=" "
     >
+    {% if widget.value %}{{ widget.value }}{% endif %}</textarea>
     <label
         for="{{ widget.name }}"
         class="

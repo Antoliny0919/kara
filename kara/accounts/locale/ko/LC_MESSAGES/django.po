@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-07 16:35+0900\n"
+"POT-Creation-Date: 2025-04-17 16:13+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,23 +46,85 @@ msgstr "확인을 위해 앞에서 입력한 비밀번호와 동일한 값을 �
 msgid "Username or Email"
 msgstr "아이디 또는 이메일"
 
-#: kara/accounts/forms.py:94
+#: kara/accounts/forms.py:93
+msgid "If you want to change profile image, click on the image!"
+msgstr "프로필 이미지를 변경하고 싶다면, 이미지를 클릭하세요!"
+
+#: kara/accounts/forms.py:95
+#: kara/accounts/templates/accounts/widgets/profile_file_input.html:3
+msgid "Profile Image"
+msgstr "프로필 이미지"
+
+#: kara/accounts/forms.py:100 kara/accounts/forms.py:135
 msgid "Username"
 msgstr "사용자 이름"
 
-#: kara/accounts/forms.py:100
+#: kara/accounts/forms.py:105 kara/accounts/forms.py:141
 msgid "Email"
 msgstr "이메일"
 
-#: kara/accounts/views.py:89
+#: kara/accounts/forms.py:110
+msgid "Email Confirmed ?"
+msgstr "이메일 인증 ?"
+
+#: kara/accounts/forms.py:115
+msgid "About Me"
+msgstr "자기소개"
+
+#: kara/accounts/forms.py:123
+msgid "You have verified your email."
+msgstr "이메일을 인증하셨습니다."
+
+#: kara/accounts/forms.py:126
+msgid ""
+"You have not verified your email yet. Some features may be limited until you "
+"verify your email."
+msgstr "아직 이메일을 인증하지 않았습니다. 이메일을 인증하지 않으면 일부 기능이 제한될 수 있습니다."
+
+#: kara/accounts/templates/accounts/profile.html:4
+#: kara/accounts/templates/accounts/profile.html:6
+msgid "Kara | Profile"
+msgstr "Kara | 프로필"
+
+#: kara/accounts/templates/accounts/profile.html:10
+#, python-format
+msgid "Welcome, %(username)s"
+msgstr "환영합니다, %(username)s"
+
+#: kara/accounts/templates/accounts/profile.html:20
+msgid "Profile"
+msgstr "프로필"
+
+#: kara/accounts/templates/accounts/profile.html:28
+msgid "Cash Gift Records"
+msgstr "축의금 기록"
+
+#: kara/accounts/templates/accounts/profile.html:36
+msgid "Wedding Expense Records"
+msgstr "결혼 비용 기록"
+
+#: kara/accounts/templates/accounts/profile.html:43
+msgid "Logout"
+msgstr "로그아웃"
+
+#: kara/accounts/templates/accounts/profile.html:63
+msgid "Save"
+msgstr "저장"
+
+#: kara/accounts/templates/accounts/widgets/profile_file_input.html:16
+#, python-format
+msgid "Selected image: %(value)s"
+msgstr "선택된 이미지: %(value)s"
+
+#: kara/accounts/views.py:90
 msgid "Email verification is complete!"
 msgstr "이메일 인증이 완료되었습니다!"
 
-#: kara/accounts/views.py:121
+#: kara/accounts/views.py:122
 msgid "The email verification code has been resent."
 msgstr "이메일 인증 코드가 다시 전송되었습니다."
 
-#: kara/accounts/views.py:140
+#: kara/accounts/views.py:141
 msgid ""
 "Your registration was successful. Please check your email provided for a "
 "verification code."
