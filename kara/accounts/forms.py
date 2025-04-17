@@ -11,7 +11,12 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from .models import User
-from .widgets import FloatingLabelInput
+from .widgets import (
+    BooleanStateBlock,
+    FloatingLabelInput,
+    FloatingLabelTextarea,
+    ProfileFileInput,
+)
 
 
 class EmailVerificationCodeForm(forms.Form):
@@ -85,6 +90,40 @@ class CustomAuthenticationForm(AuthenticationForm):
             }
         ),
     )
+
+
+class UserProfileForm(forms.Form):
+
+    bio_image = forms.ImageField(
+        help_text=_("If you want to change profile image, click on the image!"),
+        widget=ProfileFileInput(attrs={"label": _("Profile Image")}),
+    )
+    username = forms.CharField(
+        widget=FloatingLabelInput(attrs={"label": _("Username"), "type": "text"})
+    )
+    email = forms.EmailField(
+        widget=FloatingLabelInput(attrs={"label": _("Email"), "type": "email"})
+    )
+    email_confirmed = forms.BooleanField(
+        required=False,
+        widget=BooleanStateBlock(
+            attrs={"label": _("Email Confirmed ?")},
+        ),
+    )
+    bio = forms.CharField(widget=FloatingLabelTextarea(attrs={"label": _("About Me")}))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        email_confirmed_state = kwargs["initial"]["email_confirmed"]
+        if email_confirmed_state:
+            self.fields["email_confirmed"].help_text = _(
+                "You have verified your email."
+            )
+        else:
+            self.fields["email_confirmed"].help_text = _(
+                "You have not verified your email yet. "
+                "Some features may be limited until you verify your email."
+            )
 
 
 class CustomUserCreationForm(UserCreationForm, forms.ModelForm):
