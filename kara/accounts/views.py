@@ -115,7 +115,7 @@ class EmailConfirmationView(FormView):
 
 
 class ResendEmailVerificationCodeView(LoginRequiredMixin, View):
-    def post(self, request):
+    def get(self, request):
         user = request.user
         send_user_confirmation_email(request, user)
         messages.add_message(
