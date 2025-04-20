@@ -73,16 +73,6 @@ class EmailConfirmationView(FormView):
         self.verification = request.session.get(PENDING_EMAIL_CONFIRMATION_SESSION_KEY)
         return super().dispatch(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        res = None
-        if request.method == "POST":
-            if "action_resend" in request.POST:
-                view = ResendEmailVerificationCodeView.as_view()
-                res = view(request)
-            elif "action_confirm" in request.POST:
-                res = super().post(request, *args, **kwargs)
-        return res
-
     def get_success_url(self):
         messages.add_message(
             self.request,

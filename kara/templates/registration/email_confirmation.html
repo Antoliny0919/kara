@@ -22,21 +22,19 @@
                         </div>
                     {% endfor %}
                     <div class="pl-1 flex mt-4 mb-2">
-                        <button 
-                        type="submit"
-                        name="action_resend"
+                        <a
+                        href="{% url 'email_confirmation_resend' %}"
                         class="
                         resend-code text-kara-strong hover:text-kara-deep transition-colors duration-500 mr-4
                         disabled:text-kara-shallow disabled:cursor-default disabled:opacity-80
                         "
                         >
                         {% translate "Resend Code" %}
-                        </button>
+                        </a>
                         <div class="timer"></div>
                     </div>
                     <button
                     type="submit"
-                    name="action_confirm"
                     class="
                     w-full text-lg bg-kara-shallow py-3 rounded-lg text-white transition-colors duration-500
                     hover:bg-kara-very-shallow hover:text-kara-strong
