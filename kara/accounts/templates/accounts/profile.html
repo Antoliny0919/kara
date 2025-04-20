@@ -37,11 +37,14 @@
                         </button>
                     </li>
                     <li
-                    class="border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300"
+                    class="block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300"
                     >
-                        <button class="py-6 w-full">
-                            {% trans 'Logout' %}
-                        </button>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="py-6 w-full">
+                                {% trans 'Logout' %}
+                            </button>
+                        </form>
                     </li>
                 </ul>
             </div>
