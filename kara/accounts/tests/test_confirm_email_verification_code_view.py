@@ -1,4 +1,3 @@
-from django.core import mail
 from django.test import Client, TestCase
 from django.urls import reverse
 
@@ -42,7 +41,7 @@ class ConfirmEmailVerificationCodeViewTests(TestCase):
     def test_email_verification_success(self):
         response = self.client.post(
             self.url,
-            data={"code": self.verification_code, "action_confirm": "1"},
+            data={"code": self.verification_code},
             follow=True,
         )
         self.assertEqual(response.status_code, 200)
@@ -53,25 +52,9 @@ class ConfirmEmailVerificationCodeViewTests(TestCase):
     def test_email_verification_fail(self):
         response = self.client.post(
             self.url,
-            data={"code": 123456, "action_confirm": "1"},
+            data={"code": 123456},
             follow=True,
         )
         self.assertContains(
             response, "<li>The verification code does not match.</li>", html=True
-        )
-
-    def test_resend_email_confirmation_code(self):
-        mail_cnt = len(mail.outbox)
-        response = self.client.post(
-            self.url,
-            data={"action_resend": "1"},
-            follow=True,
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(mail.outbox), mail_cnt + 1)
-        self.assertEqual(mail.outbox[-1].subject, "Kara Email Confirmation")
-        self.assertIn(
-            "Please enter the 6-digit email verification code on the "
-            "email verification page.",
-            mail.outbox[-1].body,
         )
