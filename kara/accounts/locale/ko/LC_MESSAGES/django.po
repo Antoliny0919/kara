@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-17 16:13+0900\n"
+"POT-Creation-Date: 2025-04-18 10:42+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,48 +18,48 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: kara/accounts/forms.py:19
+#: kara/accounts/forms.py:24
 msgid "Confirmation Code"
 msgstr "인증 코드"
 
-#: kara/accounts/forms.py:21
+#: kara/accounts/forms.py:26
 msgid "Enter the 6-digit verification code sent to your email."
 msgstr "이메일로 전송된 6자리 인증 코드를 입력하세요."
 
-#: kara/accounts/forms.py:37
+#: kara/accounts/forms.py:42
 msgid "The verification code does not match."
 msgstr "인증 코드가 일치하지 않습니다."
 
-#: kara/accounts/forms.py:43 kara/accounts/forms.py:82
+#: kara/accounts/forms.py:48 kara/accounts/forms.py:87
 msgid "Password"
 msgstr "비밀번호"
 
-#: kara/accounts/forms.py:43
+#: kara/accounts/forms.py:48
 msgid "Password confirmation"
 msgstr "비밀번호 확인"
 
-#: kara/accounts/forms.py:67
+#: kara/accounts/forms.py:72
 msgid "Enter the same password as before, for verification."
 msgstr "확인을 위해 앞에서 입력한 비밀번호와 동일한 값을 입력하세요."
 
-#: kara/accounts/forms.py:75
+#: kara/accounts/forms.py:80
 msgid "Username or Email"
 msgstr "아이디 또는 이메일"
 
-#: kara/accounts/forms.py:93
+#: kara/accounts/forms.py:98
 msgid "If you want to change profile image, click on the image!"
 msgstr "프로필 이미지를 변경하고 싶다면, 이미지를 클릭하세요!"
 
-#: kara/accounts/forms.py:95
+#: kara/accounts/forms.py:99
 #: kara/accounts/templates/accounts/widgets/profile_file_input.html:3
 msgid "Profile Image"
 msgstr "프로필 이미지"
 
-#: kara/accounts/forms.py:100 kara/accounts/forms.py:135
+#: kara/accounts/forms.py:102 kara/accounts/forms.py:133
 msgid "Username"
 msgstr "사용자 이름"
 
-#: kara/accounts/forms.py:105 kara/accounts/forms.py:141
+#: kara/accounts/forms.py:105 kara/accounts/forms.py:139
 msgid "Email"
 msgstr "이메일"
 
@@ -67,19 +67,21 @@ msgstr "이메일"
 msgid "Email Confirmed ?"
 msgstr "이메일 인증 ?"
 
-#: kara/accounts/forms.py:115
+#: kara/accounts/forms.py:113
 msgid "About Me"
 msgstr "자기소개"
 
-#: kara/accounts/forms.py:123
+#: kara/accounts/forms.py:120
 msgid "You have verified your email."
 msgstr "이메일을 인증하셨습니다."
 
-#: kara/accounts/forms.py:126
+#: kara/accounts/forms.py:124
 msgid ""
 "You have not verified your email yet. Some features may be limited until you "
 "verify your email."
-msgstr "아직 이메일을 인증하지 않았습니다. 이메일을 인증하지 않으면 일부 기능이 제한될 수 있습니다."
+msgstr ""
+"아직 이메일을 인증하지 않았습니다. 이메일을 인증하지 않으면 일부 기능이 제한"
+"될 수 있습니다."
 
 #: kara/accounts/templates/accounts/profile.html:4
 #: kara/accounts/templates/accounts/profile.html:6
@@ -107,7 +109,12 @@ msgstr "결혼 비용 기록"
 msgid "Logout"
 msgstr "로그아웃"
 
-#: kara/accounts/templates/accounts/profile.html:63
+#: kara/accounts/templates/accounts/profile.html:61
+#| msgid "Confirmation Code"
+msgid "Confirm Now!"
+msgstr "지금 인증할래요!"
+
+#: kara/accounts/templates/accounts/profile.html:75
 msgid "Save"
 msgstr "저장"
 
