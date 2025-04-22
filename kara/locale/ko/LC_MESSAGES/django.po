@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-17 16:13+0900\n"
+"POT-Creation-Date: 2025-04-22 18:18+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,13 +58,15 @@ msgstr "환영합니다, %(username)s!님 오늘 하루는 어떤가요 🙌"
 msgid "Profile"
 msgstr "프로필"
 
-#: kara/templates/includes/nav.html:129
+#: kara/templates/includes/nav.html:131
 msgid "Logout"
 msgstr "로그아웃"
 
 #: kara/templates/registration/email_confirmation.html:4
 #: kara/templates/registration/email_confirmation.html:6
-msgid "Email Confirmation | Kara "
+#, fuzzy
+#| msgid "Email Confirmation | Kara "
+msgid "Email Confirmation | Kara"
 msgstr "이메일 확인 | Kara"
 
 #: kara/templates/registration/email_confirmation.html:13
@@ -80,15 +82,15 @@ msgstr ""
 "회원가입을 완료하려면 <span class=\"text-kara-deep\">%(email)s</span>로 전송"
 "된 6자리 인증 코드를 입력해 주세요."
 
-#: kara/templates/registration/email_confirmation.html:33
+#: kara/templates/registration/email_confirmation.html:32
 msgid "Resend Code"
 msgstr "인증 코드 재전송"
 
-#: kara/templates/registration/email_confirmation.html:45
+#: kara/templates/registration/email_confirmation.html:43
 msgid "Verify Code"
 msgstr "코드 확인"
 
-#: kara/templates/registration/email_confirmation.html:49
+#: kara/templates/registration/email_confirmation.html:47
 msgid "I'll confirm later!"
 msgstr "나중에 인증할게요!"
 

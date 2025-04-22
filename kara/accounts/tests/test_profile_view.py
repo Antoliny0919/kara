@@ -14,6 +14,7 @@ class ProfileViewTests(TestCase):
         cls.user = UserFactory(
             username="cheeze123", email="cheeze123@cake.com", password="password"
         )
+        cls.profile = cls.user.profile
         cls.url = reverse("profile")
 
     def setUp(self):
@@ -26,10 +27,30 @@ class ProfileViewTests(TestCase):
             "You have not verified your email yet. "
             "Some features may be limited until you verify your email.",
         )
-        self.user.profile.email_confirmed = True
-        self.user.profile.save()
+        self.profile.email_confirmed = True
+        self.profile.save()
         response = self.client.get(self.url)
         self.assertContains(response, "You have verified your email.")
+
+    def test_update_profile_fields(self):
+        new_bio = "Hello my name is cheeze-cake!!"
+        response = self.client.post(
+            self.url, {"username": self.user.username, "bio": new_bio}, follow=True
+        )
+        self.assertContains(response, new_bio)
+        self.profile.refresh_from_db()
+        self.assertEqual(self.profile.bio, new_bio)
+
+    def test_update_email_field(self):
+        self.profile.email_confirmed = True
+        self.profile.save()
+        self.client.post(
+            self.url,
+            {"username": self.user.username, "email": "cheeze456@cake.com"},
+            follow=True,
+        )
+        self.profile.refresh_from_db()
+        self.assertFalse(self.profile.email_confirmed)
 
 
 @pytest.mark.playwright
