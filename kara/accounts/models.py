@@ -14,7 +14,7 @@ class UserProfile(models.Model):
     user = DefaultOneToOneField(
         User, create=True, on_delete=models.CASCADE, related_name="profile"
     )
-    bio = models.TextField(blank=True, null=True)
+    bio = models.TextField(default="")
     bio_image = models.ImageField(
         default=default_storage.url("profile/profile_default_image.png")
     )

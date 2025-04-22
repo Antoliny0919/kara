@@ -43,6 +43,23 @@ class EmailVerificationCodeForm(forms.Form):
         return code
 
 
+class BaseCustomUserForm(forms.ModelForm):
+    bio_image = forms.ImageField(
+        help_text=_("If you want to change profile image, click on the image!"),
+        widget=ProfileFileInput(attrs={"label": _("Profile Image")}),
+    )
+    bio = forms.CharField(
+        widget=FloatingLabelTextarea(attrs={"label": _("About Me")}),
+        required=False,
+    )
+    email_confirmed = forms.BooleanField(
+        widget=BooleanStateBlock(
+            attrs={"label": _("Email Confirmed ?")},
+        ),
+        required=False,
+    )
+
+
 class CustomSetPasswordMixin(SetPasswordMixin):
     @staticmethod
     def create_password_fields(label1=_("Password"), label2=_("Password confirmation")):
@@ -92,25 +109,23 @@ class CustomAuthenticationForm(AuthenticationForm):
     )
 
 
-class UserProfileForm(forms.Form):
+class UserProfileForm(BaseCustomUserForm):
 
-    bio_image = forms.ImageField(
-        help_text=_("If you want to change profile image, click on the image!"),
-        widget=ProfileFileInput(attrs={"label": _("Profile Image")}),
-    )
-    username = forms.CharField(
-        widget=FloatingLabelInput(attrs={"label": _("Username"), "type": "text"})
-    )
-    email = forms.EmailField(
-        widget=FloatingLabelInput(attrs={"label": _("Email"), "type": "email"})
-    )
-    email_confirmed = forms.BooleanField(
-        required=False,
-        widget=BooleanStateBlock(
-            attrs={"label": _("Email Confirmed ?")},
-        ),
-    )
-    bio = forms.CharField(widget=FloatingLabelTextarea(attrs={"label": _("About Me")}))
+    class Meta(BaseCustomUserForm):
+        model = User
+        fields = (
+            "bio_image",
+            "username",
+            "email",
+            "email_confirmed",
+            "bio",
+        )
+        widgets = {
+            "username": FloatingLabelInput(
+                attrs={"label": _("Username"), "type": "text"}
+            ),
+            "email": FloatingLabelInput(attrs={"label": _("Email"), "type": "email"}),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

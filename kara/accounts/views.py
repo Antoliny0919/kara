@@ -146,14 +146,40 @@ class ProfileView(FormView):
     template_name = "accounts/profile.html"
     form_class = UserProfileForm
 
+    def get_object(self):
+        user = self.request.user
+        return user, user.profile
+
+    def get_success_url(self):
+        messages.add_message(
+            self.request,
+            messages.INFO,
+            _("Your profile has been updated!"),
+        )
+        return reverse("profile")
+
+    def form_valid(self, form):
+        user = form.save()
+        profile = user.profile
+        profile.bio_image = form.cleaned_data["bio_image"]
+        profile.bio = form.cleaned_data["bio"]
+        update_fields = ["bio_image", "bio"]
+        # email is changed, the email verification status is also reset.
+        if "email" in form.changed_data:
+            profile.email_confirmed = False
+            update_fields.append("email_confirmed")
+        profile.save(update_fields=update_fields)
+        return super().form_valid(form)
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        user = self.request.user
+        user, profile = self.get_object()
+        kwargs["instance"] = user
         kwargs["initial"] = {
             "username": user.username,
             "email": user.email,
-            "bio": user.profile.bio,
-            "bio_image": user.profile.bio_image,
-            "email_confirmed": user.profile.email_confirmed,
+            "bio": profile.bio,
+            "bio_image": profile.bio_image,
+            "email_confirmed": profile.email_confirmed,
         }
         return kwargs
