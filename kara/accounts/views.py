@@ -5,14 +5,16 @@ from django.contrib import messages
 from django.contrib.auth import login, views as django_views
 from django.contrib.auth.decorators import login_not_required, login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
+from django.http import Http404
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.crypto import get_random_string
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import FormView, View
+from django.views.generic import FormView, UpdateView, View
 
 from .forms import (
     CustomAuthenticationForm,
@@ -20,7 +22,7 @@ from .forms import (
     EmailVerificationCodeForm,
     UserProfileForm,
 )
-from .models import User
+from .models import User, UserProfile
 
 PENDING_EMAIL_CONFIRMATION_SESSION_KEY = "pending_email_confirmation"
 
@@ -141,14 +143,35 @@ class SignupView(FormView):
         return super().form_valid(form)
 
 
-@method_decorator(login_required, name="dispatch")
-class ProfileView(FormView):
+class ProfileView(UpdateView):
     template_name = "accounts/profile.html"
     form_class = UserProfileForm
+    model = UserProfile
+    url_kwarg = "username"
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.user != request.user:
+            raise PermissionDenied(
+                "You do not have permission to edit %s's profile" % obj.user.username
+            )
+        return super().post(request, *args, **kwargs)
 
     def get_object(self):
-        user = self.request.user
-        return user, user.profile
+        queryset = self.get_queryset()
+        username = self.kwargs.get(self.url_kwarg)
+        if username is None:
+            raise AttributeError(
+                "%s must be called with a %s parameter in the URLconf."
+                % (self.__class__.__name__, self.url_kwarg)
+            )
+        queryset = queryset.filter(user__username=username)
+        try:
+            # Get the single item from the filtered queryset
+            obj = queryset.get()
+        except queryset.model.DoesNotExist:
+            raise Http404("%s user does not exist." % username)
+        return obj
 
     def get_success_url(self):
         messages.add_message(
@@ -156,7 +179,7 @@ class ProfileView(FormView):
             messages.INFO,
             _("Your profile has been updated!"),
         )
-        return reverse("profile")
+        return reverse("profile", args=(self.kwargs.get(self.url_kwarg),))
 
     def form_valid(self, form):
         user = form.save()
@@ -173,7 +196,8 @@ class ProfileView(FormView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        user, profile = self.get_object()
+        profile = self.get_object()
+        user = profile.user
         kwargs["instance"] = user
         kwargs["initial"] = {
             "username": user.username,
