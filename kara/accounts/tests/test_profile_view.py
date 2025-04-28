@@ -15,7 +15,7 @@ class ProfileViewTests(TestCase):
             username="cheeze123", email="cheeze123@cake.com", password="password"
         )
         cls.profile = cls.user.profile
-        cls.url = reverse("profile", args=(cls.user.username,))
+        cls.url = reverse("profile")
 
     def setUp(self):
         self.client.force_login(self.user)
@@ -51,20 +51,6 @@ class ProfileViewTests(TestCase):
         )
         self.profile.refresh_from_db()
         self.assertFalse(self.profile.email_confirmed)
-
-    def test_update_profile_another_user(self):
-        user = UserFactory(
-            username="choco123", email="choco123@cake.com", password="password"
-        )
-        self.client.force_login(user)
-        response = self.client.post(
-            self.url, {"bio": "Edit another user's profile!!"}, follow=True
-        )
-        self.assertEqual(response.status_code, 403)
-
-    def test_get_profile_from_not_exist_user(self):
-        response = self.client.get(reverse("profile", args=("unknown",)))
-        self.assertEqual(response.status_code, 404)
 
 
 @pytest.mark.playwright
