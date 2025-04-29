@@ -3,7 +3,7 @@ import string
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, views as django_views
-from django.contrib.auth.decorators import login_not_required, login_required
+from django.contrib.auth.decorators import login_not_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import redirect
@@ -12,7 +12,7 @@ from django.urls import reverse
 from django.utils.crypto import get_random_string
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import FormView, View
+from django.views.generic import FormView, UpdateView, View
 
 from .forms import (
     CustomAuthenticationForm,
@@ -20,7 +20,7 @@ from .forms import (
     EmailVerificationCodeForm,
     UserProfileForm,
 )
-from .models import User
+from .models import User, UserProfile
 
 PENDING_EMAIL_CONFIRMATION_SESSION_KEY = "pending_email_confirmation"
 
@@ -64,8 +64,7 @@ def clear_confirmation_state(request):
     request.session.pop(PENDING_EMAIL_CONFIRMATION_SESSION_KEY, None)
 
 
-@method_decorator(login_required, name="dispatch")
-class EmailConfirmationView(FormView):
+class EmailConfirmationView(LoginRequiredMixin, FormView):
     form_class = EmailVerificationCodeForm
     template_name = "registration/email_confirmation.html"
 
@@ -141,14 +140,25 @@ class SignupView(FormView):
         return super().form_valid(form)
 
 
-@method_decorator(login_required, name="dispatch")
-class ProfileView(FormView):
+class ProfileView(LoginRequiredMixin, UpdateView):
     template_name = "accounts/profile.html"
     form_class = UserProfileForm
 
-    def get_object(self):
-        user = self.request.user
-        return user, user.profile
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_initial(self):
+        """
+        Populate the initial values for the UserProfile model fields used in the form.
+        """
+        initial = super().get_initial()
+        profile = self.get_object().profile
+        fields = self.get_form_class()._meta.fields
+        user_profile_fields = {field.name for field in UserProfile._meta.fields}
+        for field in fields:
+            if field in user_profile_fields:
+                initial[field] = getattr(profile, field, "")
+        return initial
 
     def get_success_url(self):
         messages.add_message(
@@ -173,13 +183,6 @@ class ProfileView(FormView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        user, profile = self.get_object()
+        user = self.get_object()
         kwargs["instance"] = user
-        kwargs["initial"] = {
-            "username": user.username,
-            "email": user.email,
-            "bio": profile.bio,
-            "bio_image": profile.bio_image,
-            "email_confirmed": profile.email_confirmed,
-        }
         return kwargs

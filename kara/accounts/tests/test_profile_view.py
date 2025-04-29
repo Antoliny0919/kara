@@ -1,5 +1,6 @@
 import pytest
 from django.core import mail
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
 from playwright.sync_api import expect
@@ -15,10 +16,24 @@ class ProfileViewTests(TestCase):
             username="cheeze123", email="cheeze123@cake.com", password="password"
         )
         cls.profile = cls.user.profile
+        cls.image = SimpleUploadedFile(
+            name="cheeze_cake.jpg", content=b"cheeze cake", content_type="image/jpeg"
+        )
         cls.url = reverse("profile")
 
     def setUp(self):
         self.client.force_login(self.user)
+
+    def test_populate_initial_values(self):
+        self.profile.bio = "bio initial value"
+        self.profile.email_confirmed = True
+        self.profile.bio_image = self.image
+        self.profile.save()
+        response = self.client.get(self.url)
+        self.assertContains(response, 'src="/test_media/cheeze_cake.jpg"')
+        self.assertContains(response, 'value="cheeze123"')
+        self.assertContains(response, 'value="cheeze123@cake.com"')
+        self.assertContains(response, "bio initial value")
 
     def test_email_confirm_field_help_text_template_render(self):
         response = self.client.get(self.url)
