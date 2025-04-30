@@ -20,3 +20,7 @@ class BooleanStateBlock(CheckboxInput):
 
 class ProfileFileInput(ClearableFileInput):
     template_name = "accounts/widgets/profile_file_input.html"
+
+
+class KaraCheckbox(CheckboxInput):
+    template_name = "accounts/widgets/checkbox.html"

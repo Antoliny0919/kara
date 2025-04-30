@@ -15,6 +15,7 @@ from .widgets import (
     BooleanStateBlock,
     FloatingLabelInput,
     FloatingLabelTextarea,
+    KaraCheckbox,
     ProfileFileInput,
 )
 
@@ -182,3 +183,22 @@ class CustomUserCreationForm(UserCreationForm, forms.ModelForm):
                 password_validation.validate_password(password, self.instance)
             except ValidationError as error:
                 self.add_error("password1", error)
+
+
+class AccountDeleteForm(forms.Form):
+    confirm_irrecoverable = forms.BooleanField(
+        widget=KaraCheckbox(
+            attrs={
+                "label": _("Deleted accounts cannot be recovered."),
+            }
+        ),
+        required=True,
+    )
+    confirm_data_loss = forms.BooleanField(
+        widget=KaraCheckbox(
+            attrs={
+                "label": _("Deleting your account will permanently remove all data."),
+            }
+        ),
+        required=True,
+    )

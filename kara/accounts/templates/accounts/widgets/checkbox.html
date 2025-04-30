@@ -1,0 +1,18 @@
+<style>
+    input[type="checkbox"]:checked + label span:first-child {
+      background-color: #E38282;
+      border-color: #FFEEEE;
+    }
+</style>
+
+<div class="relative m-2 text-sm">
+    <input type="checkbox" id="{{ widget.name }}" name="{{ widget.name }}" class="peer absolute opacity-0 w-0 h-0 cursor-pointer" {% include "django/forms/widgets/attrs.html" %}>
+    <label for="{{ widget.name }}" class="flex items-center cursor-pointer select-none p-1.5 rounded transition-colors duration-200 hover:bg-kara-shallow hover:text-white focus:outline-none focus:ring-2 focus:ring-kara-deep peer-checked:bg-[#E38282] peer-checked:text-white">
+        <span class="relative w-5 h-5 border-2 border-kara-deep rounded bg-white mr-2 flex items-center justify-center peer-checked:bg-[#E38282] peer-checked:border-[#E38282]">
+        <svg class="absolute h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+        </svg>
+        </span>
+        <span class="text-base font-sans">{{ widget.attrs.label }}</span>
+    </label>
+</div>

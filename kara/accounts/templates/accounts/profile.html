@@ -46,6 +46,11 @@
                             </button>
                         </form>
                     </li>
+                    <li
+                    class="block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300"
+                    >
+                        {% include "accounts/modal/delete_account_modal.html" with form=account_delete_form modal_state=account_delete_modal_state %}
+                    </li>
                 </ul>
             </div>
             <div class="w-[70%] flex flex-col items-center justify-center">

@@ -12,9 +12,10 @@ from django.urls import reverse
 from django.utils.crypto import get_random_string
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import FormView, UpdateView, View
+from django.views.generic import DeleteView, FormView, UpdateView, View
 
 from .forms import (
+    AccountDeleteForm,
     CustomAuthenticationForm,
     CustomUserCreationForm,
     EmailVerificationCodeForm,
@@ -186,3 +187,41 @@ class ProfileView(LoginRequiredMixin, UpdateView):
         user = self.get_object()
         kwargs["instance"] = user
         return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        session = self.request.session
+        # Restores the remembered modal(account_delete) state.
+        account_delete_form_data = session.pop("account_delete_form_data", None)
+        account_delete_modal_state = session.pop("account_delete_modal_state", False)
+        context.update(
+            {
+                "account_delete_form": AccountDeleteForm(data=account_delete_form_data),
+                "account_delete_modal_state": account_delete_modal_state,
+            }
+        )
+        return context
+
+
+class AccountDeleteView(DeleteView):
+    form_class = AccountDeleteForm
+
+    def get_object(self):
+        return self.request.user
+
+    def form_invalid(self, form):
+        """
+        When the form inside the modal fails,
+        its current state is remembered so that it can be re-rendered.
+        """
+        self.request.session["account_delete_form_data"] = self.request.POST
+        self.request.session["account_delete_modal_state"] = True
+        return redirect("profile")
+
+    def get_success_url(self):
+        messages.add_message(
+            self.request,
+            messages.INFO,
+            _("Your account was successfully deleted."),
+        )
+        return reverse("home")
