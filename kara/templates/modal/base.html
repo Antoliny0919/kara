@@ -1,0 +1,101 @@
+<head>
+    <!-- AlpineJS CDN -->
+    <style>
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+        }
+
+        .modal-container {
+            position: relative;
+            background-color: white;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            padding: 20px 20px 0 20px;
+            color: black;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            z-index: 10;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+<div
+x-data="{
+    open: {% if modal_state %}true{% else %}false{% endif %},
+    bodyScrollLock() {
+        if (this.open) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    }
+}"
+x-effect="bodyScrollLock()"
+id="{% block modal_name %}{% endblock %}"
+>
+    {% block trigger %}{% endblock %}
+    <div x-show="open" x-cloak class="modal-overlay" @click.self="open = false">
+        <div class="modal-container">
+            <button @click="open = false" class="modal-close text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              </button>
+            <div class="modal-header">
+                {% block header %}{% endblock %}
+            </div>
+            <div class="modal-body">
+            {% block content %}{% endblock %}
+            </div>
+            <div class="modal-footer">
+            {% block footer %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
