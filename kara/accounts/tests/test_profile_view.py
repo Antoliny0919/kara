@@ -6,6 +6,7 @@ from django.urls import reverse
 from playwright.sync_api import expect
 
 from kara.accounts.factories import UserFactory
+from kara.accounts.views import AccountDeleteView
 
 
 class ProfileViewTests(TestCase):
@@ -79,3 +80,41 @@ class TestPlaywright:
         assert "Hello tester, Welcome to Kara!" in mail.outbox[0].body
         expect(auth_page).to_have_title("Email Confirmation | Kara")
         expect(auth_page).to_have_url(live_server.url + reverse("email_confirmation"))
+
+    def test_open_delete_account_modal(self, auth_page, live_server):
+        # Tests interaction with the account deletion modal on the profile page.
+        auth_page.goto(live_server.url + reverse("profile"))
+        auth_page.get_by_role("button", name="Delete Account").click()
+        modal_title = auth_page.locator("h3.modal-title")
+        modal_content = auth_page.locator("div.modal-body")
+        expect(modal_title).to_have_text("Do you really want to delete your account?")
+        form_help_text = modal_content.locator("p#delete-account-form-help-text")
+        expect(form_help_text).to_have_text(
+            "※ To delete your account, please agree to all of the above statements."
+        )
+        form = auth_page.locator(f'form[action="{reverse("delete_account")}"]')
+        assert form is not None
+
+    def test_delete_account_modal_state_remember(self, auth_page, live_server):
+        auth_page.goto(live_server.url + reverse("profile"))
+        # To test the invalid case in the `DeleteAccountForm`,
+        # remove the 'required' attribute from the `BooleanField`.
+        for field_name, _ in AccountDeleteView.form_class.base_fields.items():
+            auth_page.eval_on_selector(
+                f'input[name="{field_name}"]', 'el => el.removeAttribute("required")'
+            )
+        auth_page.get_by_role("button", name="Delete Account").click()
+        auth_page.locator("button#delete-account-button").click()
+        # Check if the state of the delete modal is open.
+        delete_modal_state = auth_page.get_attribute("div#delete_account", "x-data")
+        assert "open: true" in delete_modal_state
+        # Check whether the form contains error messages to verify
+        # that the form inside the modal is preserved.
+        confirm_irrecoverable_field = auth_page.locator(
+            (
+                "div#delete_account div.modal-body "
+                "div.confirm_irrecoverable-field-container"
+            )
+        )
+        error_cnt = confirm_irrecoverable_field.locator("ul li").count()
+        assert error_cnt > 0
