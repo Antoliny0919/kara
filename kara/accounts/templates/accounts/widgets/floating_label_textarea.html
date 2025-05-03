@@ -8,8 +8,7 @@
         focus:outline-none focus:ring-0 focus:border-kara-strong peer
         "
         placeholder=" "
-    >
-    {% if widget.value %}{{ widget.value }}{% endif %}</textarea>
+    >{% if widget.value %}{{ widget.value }}{% endif %}</textarea>
     <label
         for="{{ widget.name }}"
         class="
