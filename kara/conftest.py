@@ -1,3 +1,5 @@
+import os
+
 import pytest
 from playwright.sync_api import expect, sync_playwright
 
@@ -13,8 +15,10 @@ def playwright():
 
 
 @pytest.fixture(scope="session")
-def browser(playwright):
-    browser = playwright.chromium.launch(headless=True)
+def browser(request, playwright):
+    os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
+    is_headless = request.config.getoption("--headed")
+    browser = playwright.chromium.launch(headless=not is_headless)
     yield browser
     browser.close()
 
