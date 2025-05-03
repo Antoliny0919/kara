@@ -1,5 +1,4 @@
 from django.contrib.auth.models import AbstractUser
-from django.core.files.storage import default_storage
 from django.db import models
 
 from .fields import DefaultOneToOneField
@@ -15,9 +14,7 @@ class UserProfile(models.Model):
         User, create=True, on_delete=models.CASCADE, related_name="profile"
     )
     bio = models.TextField(default="")
-    bio_image = models.ImageField(
-        default=default_storage.url("profile/profile_default_image.png")
-    )
+    bio_image = models.ImageField(default="profile/profile_default_image.png")
     email_confirmed = models.BooleanField(default=False)
 
     def __str__(self):
