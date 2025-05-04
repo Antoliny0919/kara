@@ -8,12 +8,13 @@
 {% block content %}
 <main class="my-12">
     <h1 class="my-10 text-4xl text-center">{% blocktranslate with username=user.username %}Welcome, {{ username }}{% endblocktranslate %}</h1>
-    <div class="border-2 border-kara-strong rounded-lg" x-data="{ activeTab: 'profile' }">
-        <div class="flex flex-row">
-            <div class="w-[30%] border-r-2 border-kara-strong">
-                <ul class="text-base text-center">
+    <div class="border-4 border-kara-strong rounded-lg" x-data="{ activeTab: 'profile' }">
+        <div class="flex flex-col md:flex-row">
+            <h2 class="sr-only" id="section-side-bar">{% trans 'Section Sidebar' %}</h2>
+            <aside aria-labelledby="section-side-bar" class="w-full md:border-r-2 md:border-kara-strong md:w-[30%]">
+                <ul class="flex flex-row text-center overflow-auto md:flex-col">
                     <li
-                    class="border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300"
+                    class="min-w-[150px] border-r-2 px-4 block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300 md:w-full md:px-0 md:border-r-0"
                     :class="activeTab === 'profile' ? 'bg-kara-shallow text-white' : ''"
                     >
                         <button class="py-6 w-full" @click="activeTab = 'profile'">
@@ -21,7 +22,7 @@
                         </button>
                     </li>
                     <li
-                    class="border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300"
+                    class="min-w-[150px] border-r-2 px-4 block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300 md:w-full md:px-0 md:border-r-0"
                     :class="activeTab === 'cashGiftRecords' ? 'bg-kara-shallow text-white' : ''"
                     >
                         <button class="py-6 w-full" @click="activeTab = 'cashGiftRecords'">
@@ -29,7 +30,7 @@
                         </button>
                     </li>
                     <li
-                    class="border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300"
+                    class="min-w-[150px] border-r-2 px-4 block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300 md:w-full md:px-0 md:border-r-0"
                     :class="activeTab === 'weddingExpenseRecords' ? 'bg-kara-shallow text-white' : ''"
                     >
                         <button class="py-6 w-full" @click="activeTab = 'weddingExpenseRecords'">
@@ -37,7 +38,7 @@
                         </button>
                     </li>
                     <li
-                    class="block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300"
+                    class="min-w-[150px] border-r-2 px-4 block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300 md:w-full md:px-0 md:border-r-0"
                     >
                         <form method="post" action="{% url 'logout' %}">
                             {% csrf_token %}
@@ -47,12 +48,12 @@
                         </form>
                     </li>
                     <li
-                    class="block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300"
+                    class="min-w-[150px] px-4 block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300 md:w-full md:px-0"
                     >
                         {% include "accounts/modal/delete_account_modal.html" with form=account_delete_form modal_state=account_delete_modal_state %}
                     </li>
                 </ul>
-            </div>
+            </aside>
             <div class="w-[70%] flex flex-col items-center justify-center">
                 <div class="w-full px-8" x-show="activeTab === 'profile'">
                     <form method="post">
