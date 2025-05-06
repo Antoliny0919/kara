@@ -11,10 +11,11 @@ assignees: ''
 
 - [ ] BUG
 - [ ] NEW FEATURE
-- [ ] REFACTORING
+- [ ] CLEANUP / OPTIMIZATION
 - [ ] TEST
-- [ ] CICD
-- [ ] INFRA 
+- [ ] CI / CD
+- [ ] INFRA
+- [ ] REVERT
 
 ## 설명
 
