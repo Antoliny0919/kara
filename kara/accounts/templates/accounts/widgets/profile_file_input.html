@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n base_filters %}
 
 <label class="my-4 text-kara-deep">{% trans 'Profile Image' %}</label>
 <div class="relative w-64 h-64 rounded-full overflow-hidden ring-2 ring-kara-shallow hover:ring-4 duration-500 transition-all">
@@ -13,7 +13,7 @@
       <img id="profile-bio-image" alt="profile-bio-image" src="{{ widget.value.url }}"/>
     </div>
 </div>
-<div class="text-sm mt-2">{% blocktranslate with value=widget.value %}Selected image: {{ value }}{% endblocktranslate %}</div>
+<div class="text-sm mt-2">{% blocktranslate with name=widget.value|file_name %}Selected image: {{ name }}{% endblocktranslate %}</div>
 <script>
 document.getElementById('image-input').addEventListener('change', function (event) {
   const input = event.target;
