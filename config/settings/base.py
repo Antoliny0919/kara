@@ -92,6 +92,7 @@ LOCAL_APPS = [
     "kara.theme",
     "kara.accounts",
     "kara.home",
+    "kara.cash_gifts",
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
