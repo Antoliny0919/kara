@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-30 18:24+0900\n"
+"POT-Creation-Date: 2025-05-07 18:35+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -91,19 +91,19 @@ msgstr "삭제된 계정은 복구할 수 없습니다."
 msgid "Deleting your account will permanently remove all data."
 msgstr "계정을 삭제할 시 모든 데이터가 삭제됩니다."
 
-#: kara/accounts/templates/accounts/modal/delete_account_modal.html:14
+#: kara/accounts/templates/accounts/modal/delete_account_modal.html:15
 msgid "Delete Account"
 msgstr "계정 삭제"
 
-#: kara/accounts/templates/accounts/modal/delete_account_modal.html:16
+#: kara/accounts/templates/accounts/modal/delete_account_modal.html:17
 msgid "Do you really want to delete your account?"
 msgstr "정말로 계정을 삭제하시겠습니까?"
 
-#: kara/accounts/templates/accounts/modal/delete_account_modal.html:25
+#: kara/accounts/templates/accounts/modal/delete_account_modal.html:31
 msgid "※ To delete your account, please agree to all of the above statements."
 msgstr "※ 계정을 삭제하려면 위 사항에 모두 동의해주세요."
 
-#: kara/accounts/templates/accounts/modal/delete_account_modal.html:26
+#: kara/accounts/templates/accounts/modal/delete_account_modal.html:32
 msgid "Delete"
 msgstr "삭제"
 
@@ -117,33 +117,38 @@ msgstr "Kara | 프로필"
 msgid "Welcome, %(username)s"
 msgstr "환영합니다, %(username)s"
 
-#: kara/accounts/templates/accounts/profile.html:20
+#: kara/accounts/templates/accounts/profile.html:13
+msgid "Section Sidebar"
+msgstr ""
+
+#: kara/accounts/templates/accounts/profile.html:21
 msgid "Profile"
 msgstr "프로필"
 
-#: kara/accounts/templates/accounts/profile.html:28
+#: kara/accounts/templates/accounts/profile.html:29
 msgid "Cash Gift Records"
 msgstr "축의금 기록"
 
-#: kara/accounts/templates/accounts/profile.html:36
+#: kara/accounts/templates/accounts/profile.html:37
 msgid "Wedding Expense Records"
 msgstr "결혼 비용 기록"
 
-#: kara/accounts/templates/accounts/profile.html:45
+#: kara/accounts/templates/accounts/profile.html:46
 msgid "Logout"
 msgstr "로그아웃"
 
-#: kara/accounts/templates/accounts/profile.html:95
+#: kara/accounts/templates/accounts/profile.html:74
 msgid "Confirm Now!"
 msgstr "지금 인증할래요!"
 
-#: kara/accounts/templates/accounts/profile.html:109
+#: kara/accounts/templates/accounts/profile.html:88
 msgid "Save"
 msgstr "저장"
 
 #: kara/accounts/templates/accounts/widgets/profile_file_input.html:16
-#, python-format
-msgid "Selected image: %(value)s"
+#, fuzzy, python-format
+#| msgid "Selected image: %(value)s"
+msgid "Selected image: %(name)s"
 msgstr "선택된 이미지: %(value)s"
 
 #: kara/accounts/views.py:80
@@ -166,6 +171,6 @@ msgstr ""
 msgid "Your profile has been updated!"
 msgstr "프로필이 업데이트 되었습니다!"
 
-#: kara/accounts/views.py:206
+#: kara/accounts/views.py:225
 msgid "Your account was successfully deleted."
 msgstr "계정이 성공적으로 삭제되었습니다."
