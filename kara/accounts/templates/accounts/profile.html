@@ -54,7 +54,7 @@
                     </li>
                 </ul>
             </aside>
-            <div class="w-[70%] flex flex-col items-center justify-center">
+            <div class="w-full flex flex-col items-center justify-center md:w-[70%]">
                 <div class="w-full px-8" x-show="activeTab === 'profile'">
                     <form method="post">
                         {% csrf_token %}
@@ -68,7 +68,7 @@
                                     {{ field.as_field_group }}
                                     {% if field.value == False %}
                                     <a class="
-                                    block mt-4 py-4 w-2/6 text-center text-kara-deep border-2 border-kara-strong rounded-lg duration-500 transition-color ml-auto
+                                    block text-sm mt-4 py-4 w-2/6 text-center text-kara-deep border-2 border-kara-strong rounded-lg duration-500 transition-color ml-auto
                                     hover:text-white hover:bg-kara-deep
                                     "
                                     role="button" href="{% url 'email_confirmation_resend' %}">{% trans 'Confirm Now!' %}</a>
