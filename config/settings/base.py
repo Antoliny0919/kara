@@ -88,6 +88,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    "kara.base",
     "kara.theme",
     "kara.accounts",
     "kara.home",

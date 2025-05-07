@@ -25,6 +25,12 @@ class ProfileViewTests(TestCase):
     def setUp(self):
         self.client.force_login(self.user)
 
+    def test_profile_template_render(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Kara | Profile")
+        self.assertContains(response, "Selected image: profile_default_image.png")
+
     def test_populate_initial_values(self):
         self.profile.bio = "bio initial value"
         self.profile.email_confirmed = True
