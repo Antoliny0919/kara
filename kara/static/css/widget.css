@@ -1,0 +1,74 @@
+/* ----------------------- */
+        /* LABEL */
+/* ----------------------- */
+
+/* FLOATING LABEL */
+
+.floating-label {
+    position: absolute;
+    font-size: 1.125rem;
+    color: var(--kara-light);
+    transition-duration: 300ms;
+    top: 0.9rem;
+    z-index: 10;
+    transform-origin: 0;
+    background-color: white;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    left: 0.25rem;
+}
+
+input:focus ~ .floating-label {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    color: var(--kara-strong);
+    top: 0.65rem;
+    left: 1rem;
+    transform: translateY(-1.5rem) scale(0.75);
+}
+
+input:not(:placeholder-shown) ~ .floating-label {
+    color: var(--kara-base);
+    top: 0.65rem;
+    left: 1rem;
+    transform: translateY(-1.5rem) scale(0.75);
+}
+
+/* ----------------------- */
+        /* INPUT */
+/* ----------------------- */
+
+/* BASE */
+
+.kara-input {
+    display: block;
+    width: 100%;
+    
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
+    padding-bottom: 0.625rem;
+    padding-top: 1rem;
+    
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    
+    color: #111827;
+    
+    background-color: transparent;
+    
+    border-radius: 0.5rem;
+    
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--kara-base);
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+  
+.kara-input:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: var(--kara-strong);
+}

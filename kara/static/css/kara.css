@@ -1,3 +1,9 @@
+:root {
+    --kara-light: #F3AFC2;
+    --kara-base: #E46A88;
+    --kara-strong: #C44B6B;
+}
+
 .brand-icon {
     height: 4rem;
     width: 8rem;
