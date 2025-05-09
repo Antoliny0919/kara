@@ -7,6 +7,7 @@ from .widgets import (
     KaraEmailInput,
     KaraPasswordInput,
     KaraRadioSelect,
+    KaraSplitDateInput,
     KaraTextarea,
     KaraTextInput,
 )
@@ -18,7 +19,7 @@ class ConvertWidgetMixin:
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
+        for _, field in self.fields.items():
             self.convert_to_widget(field)
 
     def convert_to_widget(self, field):
@@ -57,6 +58,7 @@ class KaraWidgetMixin(ConvertWidgetMixin):
         "Textarea": KaraTextarea,
         "RadioSelect": KaraRadioSelect,
         "CheckboxInput": KaraCheckboxInput,
+        "DateInput": KaraSplitDateInput,
     }
 
     def __init__(self, *args, **kwargs):

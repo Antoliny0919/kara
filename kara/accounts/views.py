@@ -56,7 +56,7 @@ def send_user_confirmation_email(request, user):
         settings.DEFAULT_FROM_EMAIL,
         [email],
         html_message=render_to_string(
-            "acconts/email/email_confirmation.html", email_dict
+            "accounts/email/email_confirmation.html", email_dict
         ),
         fail_silently=False,
     )

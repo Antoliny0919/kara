@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-07 18:38+0900\n"
+"POT-Creation-Date: 2025-05-13 11:21+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,76 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-#: kara/cash_gifts/templates/cash_gifts/gift_record_action_select.html:5
-#: kara/cash_gifts/templates/cash_gifts/gift_record_action_select.html:7
-msgid "Gift Records Action Select | Kara"
-msgstr "축의금 기록 작업 선택 | 카라"
 
-#: kara/cash_gifts/templates/cash_gifts/gift_record_action_select.html:14
+#: kara/cash_gifts/forms.py:22
+msgid "Please enter the name of the person receiving the cash gifts."
+msgstr "축의금을 받는 사람의 이름을 입력해주세요."
+
+#: kara/cash_gifts/forms.py:25
+msgid ""
+"Please enter the name of the person who is recording the cash gifts details."
+msgstr "축의금 기록을 작성하는 분의 이름을 입력해주세요."
+
+#: kara/cash_gifts/forms.py:28
+msgid "Please check to include in kind gifts details."
+msgstr "현물 선물 기록을 포함하려면 체크해주세요."
+
+#: kara/cash_gifts/forms.py:34
+msgid "Select Groom's or Bride's Side"
+msgstr "신랑 / 신부 측 선택"
+
+#: kara/cash_gifts/models.py:11
+msgid "Groom's side"
+msgstr "신랑측"
+
+#: kara/cash_gifts/models.py:12
+msgid "Bride's side"
+msgstr "신부측"
+
+#: kara/cash_gifts/models.py:23
+msgid "Receiver"
+msgstr "수령인"
+
+#: kara/cash_gifts/models.py:28
+msgid "Receptionist"
+msgstr "기록인"
+
+#: kara/cash_gifts/models.py:30
+msgid "Wedding Date"
+msgstr "결혼식 날짜"
+
+#: kara/cash_gifts/models.py:35
+msgid "Include In-Kind Gifts"
+msgstr "현물 선물 포함 여부"
+
+#: kara/cash_gifts/templates/cash_gifts/gifts_record_action_select.html:5
+#: kara/cash_gifts/templates/cash_gifts/gifts_record_action_select.html:7
+msgid "Gift Records Action Select | Kara"
+msgstr "축의금 기록 작업 선택 | Kara"
+
+#: kara/cash_gifts/templates/cash_gifts/gifts_record_action_select.html:14
 msgid "Add Cash Gift Record"
 msgstr "축의금 기록 추가"
 
-#: kara/cash_gifts/templates/cash_gifts/gift_record_action_select.html:21
+#: kara/cash_gifts/templates/cash_gifts/gifts_record_action_select.html:21
 msgid "Update Cash Gift Record"
 msgstr "축의금 기록 수정"
+
+#: kara/cash_gifts/templates/cash_gifts/gifts_record_repository_add.html:5
+#: kara/cash_gifts/templates/cash_gifts/gifts_record_repository_add.html:7
+msgid "Add Cash Gifts Record Repository"
+msgstr "축의금 기록 저장소 추가"
+
+#: kara/cash_gifts/templates/cash_gifts/gifts_record_repository_add.html:14
+msgid "Adding a cash gifts record repository!"
+msgstr "축의금 기록 저장소를 추가해 보세요!"
+
+#: kara/cash_gifts/templates/cash_gifts/gifts_record_repository_add.html:18
+msgid "Add"
+msgstr "추가하기"
+
+#: kara/cash_gifts/views.py:30
+msgid ""
+"The cash gifts record repository has been added. Go ahead and record the "
+"gifts you've received!"
+msgstr "축의금 기록 저장소가 추가되었습니다. 이제 받은 축의금을 기록해보세요!"
