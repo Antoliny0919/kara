@@ -1,0 +1,17 @@
+<div class="relative">
+    <input
+        id="{{ widget.id }}"
+        type="{{ widget.type }}"
+        name="{{ widget.name }}"
+        class="kara-input"
+        {% if field.value != None %} value="{{ field.value|stringformat:'s' }}"{% endif %}
+        {% include "django/forms/widgets/attrs.html" %}
+        placeholder=" "
+    >
+    <label
+        for="{{ widget.name }}"
+        class="floating-label"
+    >
+    {{ widget.attrs.label }}
+    </label>
+</div>

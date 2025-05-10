@@ -1,7 +1,9 @@
+{% load widget_tweaks %}
+
 <div class="space-y-8">
     {% for field in form %}
         <div class="field-container">
-            {{ field.as_field_group }}
+          {{ field.as_field_group }}
         </div>
     {% endfor %}
 </div>
