@@ -1,4 +1,4 @@
-{% extends "modal/base.html" %}
+{% extends "base/modal/modal.html" %}
 {% load i18n %}
 <head>
     <style>
@@ -14,7 +14,7 @@
 {% block modal_name %}delete_account{% endblock %}
 {% block trigger %}<button class="py-6 w-full" @click="open = true">{% trans 'Delete Account' %}</button>{% endblock %}
 {% block header %}
-    <h3 class="modal-title text-lg text-red-600 font-bold flex flew-row">{% include "icons/danger.html" with extra_class="w-[20px] mr-2" %}{% translate 'Do you really want to delete your account?' %}</h3>
+    <h3 class="modal-title text-lg text-red-600 font-bold flex flew-row">{% include "base/icons/danger.html" with extra_class="w-[20px] mr-2" %}{% translate 'Do you really want to delete your account?' %}</h3>
 {% endblock %}
 {% block content %}
 <div class="px-4">
