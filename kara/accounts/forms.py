@@ -3,26 +3,22 @@ from django.contrib.auth import password_validation
 from django.contrib.auth.forms import (
     AuthenticationForm,
     BaseUserCreationForm,
-    SetPasswordMixin,
     UserCreationForm,
     UsernameField,
 )
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
+from kara.base.forms import KaraForm, KaraModelForm
+from kara.base.widgets import KaraTextInput
+
 from .models import User
-from .widgets import (
-    BooleanStateBlock,
-    FloatingLabelInput,
-    FloatingLabelTextarea,
-    KaraCheckbox,
-    ProfileFileInput,
-)
+from .widgets import ProfileFileInput, StateBlock
 
 
-class EmailVerificationCodeForm(forms.Form):
+class EmailVerificationCodeForm(KaraForm):
     code = forms.CharField(
-        widget=FloatingLabelInput(attrs={"label": _("Confirmation Code")}),
+        label=_("Confirmation Code"),
         max_length=6,
         help_text=_("Enter the 6-digit verification code sent to your email."),
         required=False,
@@ -44,63 +40,33 @@ class EmailVerificationCodeForm(forms.Form):
         return code
 
 
-class BaseCustomUserForm(forms.ModelForm):
+class BaseCustomUserForm(KaraModelForm):
     bio_image = forms.ImageField(
+        label=_("Profile Image"),
         help_text=_("If you want to change profile image, click on the image!"),
-        widget=ProfileFileInput(attrs={"label": _("Profile Image")}),
+        widget=ProfileFileInput,
     )
     bio = forms.CharField(
-        widget=FloatingLabelTextarea(attrs={"label": _("About Me")}),
+        label=_("About Me"),
+        widget=forms.Textarea,
         required=False,
     )
     email_confirmed = forms.BooleanField(
-        widget=BooleanStateBlock(
-            attrs={"label": _("Email Confirmed ?")},
-        ),
+        label=_("Email Confirmed ?"),
+        widget=StateBlock,
         required=False,
     )
-
-
-class CustomSetPasswordMixin(SetPasswordMixin):
-    @staticmethod
-    def create_password_fields(label1=_("Password"), label2=_("Password confirmation")):
-        password = forms.CharField(
-            required=True,
-            strip=False,
-            widget=FloatingLabelInput(
-                attrs={
-                    "label": label1,
-                    "type": "password",
-                    "autocomplete": "new-password",
-                }
-            ),
-            help_text=password_validation.password_validators_help_text_html(),
-        )
-        password_confirmation = forms.CharField(
-            label=label2,
-            required=True,
-            widget=FloatingLabelInput(
-                attrs={
-                    "label": label2,
-                    "type": "password",
-                    "autocomplete": "new-password",
-                }
-            ),
-            strip=False,
-            help_text=_("Enter the same password as before, for verification."),
-        )
-        return password, password_confirmation
 
 
 class CustomAuthenticationForm(AuthenticationForm):
     username = UsernameField(
-        widget=FloatingLabelInput(
+        widget=KaraTextInput(
             attrs={"label": _("Username or Email"), "type": "text", "autofocus": True}
         )
     )
     password = forms.CharField(
         strip=False,
-        widget=FloatingLabelInput(
+        widget=KaraTextInput(
             attrs={
                 "label": _("Password"),
                 "type": "password",
@@ -121,12 +87,6 @@ class UserProfileForm(BaseCustomUserForm):
             "email_confirmed",
             "bio",
         )
-        widgets = {
-            "username": FloatingLabelInput(
-                attrs={"label": _("Username"), "type": "text"}
-            ),
-            "email": FloatingLabelInput(attrs={"label": _("Email"), "type": "email"}),
-        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -142,23 +102,7 @@ class UserProfileForm(BaseCustomUserForm):
             )
 
 
-class CustomUserCreationForm(UserCreationForm, forms.ModelForm):
-    username = forms.CharField(
-        min_length=4,
-        widget=FloatingLabelInput(
-            attrs={"label": _("Username"), "type": "text", "autocomplete": "username"}
-        ),
-    )
-    email = forms.EmailField(
-        widget=FloatingLabelInput(
-            attrs={
-                "label": _("Email"),
-                "type": "email",
-                "autocomplete": "email",
-            }
-        )
-    )
-    password1, password2 = CustomSetPasswordMixin.create_password_fields()
+class CustomUserCreationForm(UserCreationForm, KaraModelForm):
 
     class Meta:
         model = User
@@ -168,6 +112,9 @@ class CustomUserCreationForm(UserCreationForm, forms.ModelForm):
             "password1",
             "password2",
         )
+        help_text = {
+            "password2": _("Enter the same password as before, for verification.")
+        }
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request", None)
@@ -185,20 +132,12 @@ class CustomUserCreationForm(UserCreationForm, forms.ModelForm):
                 self.add_error("password1", error)
 
 
-class AccountDeleteForm(forms.Form):
+class AccountDeleteForm(KaraForm):
     confirm_irrecoverable = forms.BooleanField(
-        widget=KaraCheckbox(
-            attrs={
-                "label": _("Deleted accounts cannot be recovered."),
-            }
-        ),
+        label=_("Deleted accounts cannot be recovered."),
         required=True,
     )
     confirm_data_loss = forms.BooleanField(
-        widget=KaraCheckbox(
-            attrs={
-                "label": _("Deleting your account will permanently remove all data."),
-            }
-        ),
+        label=_("Deleting your account will permanently remove all data."),
         required=True,
     )
