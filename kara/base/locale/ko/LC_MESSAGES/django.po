@@ -1,0 +1,64 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-13 11:11+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+#: kara/base/templates/base/includes/nav.html:12
+#: kara/base/templates/base/includes/nav.html:60
+msgid "Program Information"
+msgstr "프로그램 정보"
+
+#: kara/base/templates/base/includes/nav.html:17
+#: kara/base/templates/base/includes/nav.html:65
+#: kara/base/templates/base/includes/nav.html:120
+msgid "Gift Tracker"
+msgstr "축의금 기록하기"
+
+#: kara/base/templates/base/includes/nav.html:22
+#: kara/base/templates/base/includes/nav.html:70
+#: kara/base/templates/base/includes/nav.html:123
+msgid "My Wedding Expenses"
+msgstr "나의 결혼 비용"
+
+#: kara/base/templates/base/includes/nav.html:31
+msgid "Login"
+msgstr "로그인"
+
+#: kara/base/templates/base/includes/nav.html:34
+msgid "Sign Up"
+msgstr "회원가입"
+
+#: kara/base/templates/base/includes/nav.html:74
+msgid "Get started!"
+msgstr "시작하기!"
+
+#: kara/base/templates/base/includes/nav.html:107
+msgid "Back"
+msgstr "닫기"
+
+#: kara/base/templates/base/includes/nav.html:115
+#, python-format
+msgid "Welcome, %(username)s! How's your day going today 🙌"
+msgstr "반갑습니다, %(username)s님! 오늘 하루는 어떤가요 🙌"
+
+#: kara/base/templates/base/includes/nav.html:126
+msgid "Profile"
+msgstr "프로필"
+
+#: kara/base/templates/base/includes/nav.html:131
+msgid "Logout"
+msgstr "로그아웃"
