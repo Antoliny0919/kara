@@ -248,8 +248,8 @@ LOGGING = {
 # TEMPLATE RENDER
 # ------------------------------------------------------------------------------
 class FormRenderer(TemplatesSetting):
-    field_template_name = "forms/field.html"
-    form_template_name = "forms/form.html"
+    field_template_name = "base/forms/field.html"
+    form_template_name = "base/forms/form.html"
 
 
 FORM_RENDERER = "config.settings.base.FormRenderer"

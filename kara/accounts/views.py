@@ -52,10 +52,12 @@ def send_user_confirmation_email(request, user):
     }
     send_mail(
         "Kara Email Confirmation",
-        render_to_string("emails/email_confirmation.txt", email_dict),
+        render_to_string("accounts/email/email_confirmation.txt", email_dict),
         settings.DEFAULT_FROM_EMAIL,
         [email],
-        html_message=render_to_string("emails/email_confirmation.html", email_dict),
+        html_message=render_to_string(
+            "acconts/email/email_confirmation.html", email_dict
+        ),
         fail_silently=False,
     )
     register_pending_email_confirmation(request, email, username, verification_code)
@@ -67,7 +69,7 @@ def clear_confirmation_state(request):
 
 class EmailConfirmationView(LoginRequiredMixin, FormView):
     form_class = EmailVerificationCodeForm
-    template_name = "registration/email_confirmation.html"
+    template_name = "accounts/registration/email_confirmation.html"
 
     def dispatch(self, request, *args, **kwargs):
         self.verification = request.session.get(PENDING_EMAIL_CONFIRMATION_SESSION_KEY)
@@ -117,11 +119,12 @@ class ResendEmailVerificationCodeView(LoginRequiredMixin, View):
 @method_decorator(login_not_required, name="dispatch")
 class LoginView(django_views.LoginView):
     form_class = CustomAuthenticationForm
+    template_name = "accounts/registration/login.html"
 
 
 class SignupView(FormView):
     form_class = CustomUserCreationForm
-    template_name = "registration/signup.html"
+    template_name = "accounts/registration/signup.html"
 
     def get_success_url(self):
         messages.add_message(
