@@ -1,0 +1,11 @@
+<fieldset class="relative rounded-lg border-2 border-kara-strong px-4 pb-4">
+    <legend class="bg-white text-kara-strong p-2 text-sm">{{ widget.attrs.label }}</legend>
+    <div class="flex flex-row items-center justify-center">
+    {% for widget in widget.subwidgets %}
+        <div>
+            <input name={{ widget.name }} type="text" class="w-full p-0 outline-none border-none text-center focus:outline-none focus:ring-0 focus:border-none" {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}></input>
+        </div>
+        {% if not forloop.last %}<span class="text-lg text-gray-400">/</span>{% endif %}
+    {% endfor %}
+    </div>
+</fieldset>
