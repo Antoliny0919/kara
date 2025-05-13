@@ -9,7 +9,7 @@
             {% if "error" in message.tags %}bg-red-100 border-red-400 text-red-700
             {% elif "warning" in message.tags %}bg-orange-100 border-orange-400 text-orange-700
             {% elif "success" in message.tags %}bg-green-100 border-green-500 text-green-700
-            {% else %}bg-kara-very-shallow border-kara-strong text-kara-deep{% endif %}"
+            {% else %}bg-kara-base border-kara-base text-white{% endif %}"
             role="alert">
                 <div class="{{ message.tags }}">{{ message}}</div>
             </div>

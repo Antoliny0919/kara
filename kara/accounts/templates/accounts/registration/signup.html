@@ -10,9 +10,9 @@
 {% block content %}
 <main class="my-5 mx-8 flex">
     <div class="flex-1 px-20">
-        <h1 class="text-6xl font-title mb-4 tracking-[.2em] text-kara-light-deep">{% translate "Registration" %}</h1>
+        <h1 class="text-6xl font-title mb-4 tracking-[.2em] text-kara-strong">{% translate "Registration" %}</h1>
         {% setvar link %}
-            <a class="text-kara-strong hover:text-kara-deep transition-colors duration-300" href="{{ login_url }}">
+            <a class="text-kara-base hover:text-kara-strong transition-colors duration-300" href="{{ login_url }}">
             {% endsetvar %}
             {% setvar end_link %}
             </a>
@@ -27,8 +27,8 @@
                 <button
                 type="submit"
                 class="
-                text-lg w-[24rem] mt-10 bg-kara-shallow py-3 rounded-lg text-white transition-colors duration-500
-                hover:bg-kara-very-shallow hover:text-kara-deep
+                text-lg w-[24rem] mt-10 bg-kara-base border-2 border-kara-base py-3 rounded-lg text-white transition-colors duration-500
+                hover:bg-white hover:text-kara-strong
                 "
                 >
                 {% translate "Signup" %}

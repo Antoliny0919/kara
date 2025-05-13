@@ -14,31 +14,31 @@
             <aside aria-labelledby="section-side-bar" class="w-full md:border-r-2 md:border-kara-strong md:w-[30%]">
                 <ul class="flex flex-row text-center overflow-auto md:flex-col">
                     <li
-                    class="min-w-[150px] border-r-2 px-4 block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300 md:w-full md:px-0 md:border-r-0"
-                    :class="activeTab === 'profile' ? 'bg-kara-shallow text-white' : ''"
+                    class="min-w-[150px] border-r-2 px-4 block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-base transition-color duration-500 md:w-full md:px-0 md:border-r-0"
+                    :class="activeTab === 'profile' ? 'bg-kara-strong text-white' : ''"
                     >
                         <button class="py-6 w-full" @click="activeTab = 'profile'">
                             {% trans 'Profile' %}
                         </button>
                     </li>
                     <li
-                    class="min-w-[150px] border-r-2 px-4 block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300 md:w-full md:px-0 md:border-r-0"
-                    :class="activeTab === 'cashGiftRecords' ? 'bg-kara-shallow text-white' : ''"
+                    class="min-w-[150px] border-r-2 px-4 block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-base transition-color duration-500 md:w-full md:px-0 md:border-r-0"
+                    :class="activeTab === 'cashGiftRecords' ? 'bg-kara-strong text-white' : ''"
                     >
                         <button class="py-6 w-full" @click="activeTab = 'cashGiftRecords'">
                             {% trans 'Cash Gift Records' %}
                         </button>
                     </li>
                     <li
-                    class="min-w-[150px] border-r-2 px-4 block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300 md:w-full md:px-0 md:border-r-0"
-                    :class="activeTab === 'weddingExpenseRecords' ? 'bg-kara-shallow text-white' : ''"
+                    class="min-w-[150px] border-r-2 px-4 block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-base transition-color duration-500 md:w-full md:px-0 md:border-r-0"
+                    :class="activeTab === 'weddingExpenseRecords' ? 'bg-kara-strong text-white' : ''"
                     >
                         <button class="py-6 w-full" @click="activeTab = 'weddingExpenseRecords'">
                             {% trans 'Wedding Expense Records' %}
                         </button>
                     </li>
                     <li
-                    class="min-w-[150px] border-r-2 px-4 block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300 md:w-full md:px-0 md:border-r-0"
+                    class="min-w-[150px] border-r-2 px-4 block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-base transition-color duration-500 md:w-full md:px-0 md:border-r-0"
                     >
                         <form method="post" action="{% url 'logout' %}">
                             {% csrf_token %}
@@ -48,7 +48,7 @@
                         </form>
                     </li>
                     <li
-                    class="min-w-[150px] px-4 block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-shallow transition-color duration-300 md:w-full md:px-0"
+                    class="min-w-[150px] px-4 block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-base transition-color duration-500 md:w-full md:px-0"
                     >
                         {% include "accounts/modal/delete_account_modal.html" with form=account_delete_form modal_state=account_delete_modal_state %}
                     </li>
@@ -68,8 +68,8 @@
                                     {{ field.as_field_group }}
                                     {% if field.value == False %}
                                     <a class="
-                                    block text-sm mt-4 py-4 w-2/6 text-center text-kara-deep border-2 border-kara-strong rounded-lg duration-500 transition-color ml-auto
-                                    hover:text-white hover:bg-kara-deep
+                                    block text-sm mt-4 py-4 w-2/6 text-center text-white border-2 border-kara-base bg-kara-base rounded-lg duration-500 transition-color ml-auto
+                                    hover:text-kara-strong hover:bg-white
                                     "
                                     role="button" href="{% url 'email_confirmation_resend' %}">{% trans 'Confirm Now!' %}</a>
                                     {% endif %}
@@ -81,8 +81,8 @@
                             {% endif %}
                         {% endfor %}
                             <button class="
-                            block py-4 my-6 bg-red-200 w-1/3 bg-kara-strong rounded-lg text-white transition-color duration-500 mx-auto
-                            hover:bg-kara-deep
+                            block py-4 my-6 bg-kara-base w-1/3 border-2 border-kara-base rounded-lg text-white transition-color duration-500 mx-auto
+                            hover:bg-white hover:text-kara-strong
                             "
                             type="submit"
                             >{% trans 'Save' %}</button>
