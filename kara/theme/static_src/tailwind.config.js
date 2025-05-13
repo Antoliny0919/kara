@@ -45,12 +45,9 @@ module.exports = {
         extend: {
             colors: {
                 kara: {
-                    'very-shallow': '#FFEEEE',
-                    'shallow': '#F5C8C8',
-                    'strong': '#F3B0B0',
-                    'deep': '#E38282',
-                    'light-deep': '#f48484',
-                    'base': '#f3AEAE',
+                    'light': '#F3AFC2',
+                    'base': '#E46A88',
+                    'strong': '#C44B6B',
                 },
             },
             fontFamily: {

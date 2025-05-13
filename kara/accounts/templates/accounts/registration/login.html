@@ -13,7 +13,7 @@
             <div class="h-full flex flex-col items-center justify-center">
                 <img alt="KARA" class="w-[24rem]" src="{% static 'img/kara_logo.png' %}"/>
                 {% setvar link %}
-                    <a class="text-kara-strong hover:text-kara-deep transition-colors duration-500" href="{% url 'signup' %}">
+                    <a class="text-kara-base hover:text-kara-strong transition-colors duration-500" href="{% url 'signup' %}">
                     {% endsetvar %}
                     {% setvar end_link %}
                     </a>
@@ -27,8 +27,8 @@
                         {{ form }}
                         <button
                         class="
-                        text-lg w-[24rem] mt-10 bg-kara-shallow py-3 rounded-lg text-white transition-colors duration-500
-                        hover:bg-kara-very-shallow hover:text-kara-deep
+                        text-lg w-[24rem] mt-10 bg-kara-base py-3 border-2 border-kara-base rounded-lg text-white transition-colors duration-500
+                        hover:bg-white hover:text-kara-strong
                         "
                         type="submit"
                         >{% trans 'Login' %}</button>

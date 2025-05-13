@@ -1,24 +1,24 @@
 {% load i18n static %}
 <nav class="bg-white">
     <div class="mx-4 flex h-16 items-center gap-12 px-1 py-2 sm:px-4 lg:px-2">
-        <a class="block text-teal-600" href={% url 'home' %}>
+        <a class="block" href={% url 'home' %}>
             <img alt="KARA" class="brand-icon" src="{% static 'img/kara_logo.png' %}"/>
         </a>
     <div class="flex flex-1 items-center justify-end md:justify-between">
         <nav aria-label="Global" class="hidden md:block">
             <ul class="flex items-center gap-12">
-                <li class="border-b-4 border-transparent hover:border-kara-deep/20">
-                    <a class="outline-link py-1 text-kara-strong transition duration-500 hover:text-kara-deep cursor-pointer" target="_blank" href="https://github.com/Antoliny0919/kara">
+                <li class="border-b-4 border-transparent hover:border-kara-strong/20 transition-all duration-500">
+                    <a class="outline-link py-1 text-kara-base hover:text-kara-strong cursor-pointer" target="_blank" href="https://github.com/Antoliny0919/kara">
                         {% trans 'Program Information' %}
                     </a>
                 </li>
-                <li class="border-b-4 border-transparent hover:border-kara-deep/20">
-                    <a class="outline-link py-1 text-kara-strong transition duration-500 hover:text-kara-deep cursor-pointer"  href="">
+                <li class="border-b-4 border-transparent hover:border-kara-strong/20 transition-all duration-500">
+                    <a class="outline-link py-1 text-kara-base hover:text-kara-strong cursor-pointer"  href="{% url 'action_select' %}">
                         {% trans 'Gift Tracker' %}
                     </a>
                 </li>
-                <li class="border-b-4 border-transparent hover:border-kara-deep/20">
-                    <a class="outline-link py-2 text-kara-strong transition duration-500 hover:text-kara-deep cursor-pointer"  href="">
+                <li class="border-b-4 border-transparent hover:border-kara-strong/20 transition-all duration-500">
+                    <a class="outline-link py-2 text-kara-base hover:text-kara-strong cursor-pointer"  href="">
                         {% trans 'My Wedding Expenses' %}
                     </a>
                 </li>
@@ -27,16 +27,16 @@
         <div class="flex items-center gap-4">
             {% if not user.is_authenticated %}
             <div class="hidden flex-row sm:flex gap-4">
-                <a class="block rounded-md bg-kara-very-shallow px-4 py-2.5 text-sm font-medium duration-500 text-kara-deep transition hover:bg-kara-strong hover:text-white cursor-pointer" href="{% url 'login' %}">
+                <a class="block rounded-md px-4 py-2.5 text-sm font-medium duration-500 text-kara-strong transition-color hover:bg-kara-base hover:text-white cursor-pointer" href="{% url 'login' %}">
                   {% trans 'Login' %}
                 </a>
-                <a class="block rounded-md bg-kara-strong px-5 py-2.5 text-sm font-medium text-white duration-500 transition hover:bg-kara-deep cursor-pointer" href="{% url 'signup' %}">
+                <a class="block rounded-md bg-kara-strong border-2 border-kara-strong px-5 py-2.5 text-sm font-medium text-white duration-500 transition-color hover:bg-white hover:text-kara-strong cursor-pointer" href="{% url 'signup' %}">
                   {% trans 'Sign Up' %}
                 </a>
             </div>
             <div class="relative block md:hidden" x-data="{ showSidePanel: false }">
                 <button
-                class="block rounded bg-kara-very-shallow p-2.5 text-kara-deep transition md:hidden"
+                class="block rounded p-2.5 text-white bg-kara-strong transition md:hidden"
                 @click="showSidePanel = !showSidePanel"
                 >
                     <div class="burger-menu" :class="{ 'active': showSidePanel }">
@@ -55,23 +55,23 @@
                 >
                     <div class="py-10 px-10 font-bold">
                         <ul>
-                            <li class="hover:bg-kara-shallow/20 border-t-2 border-t-kara-shallow/60">
-                                <a class="block p-4 outline-link text-kara-strong transition hover:text-kara-deep" target="_blank" href="https://github.com/Antoliny0919/kara">
+                            <li class="border-t-2 border-t-kara-strong">
+                                <a class="block p-4 outline-link transition-color duration-500 text-kara-base hover:text-kara-strong hover:bg-kara-light" target="_blank" href="https://github.com/Antoliny0919/kara">
                                 {% trans 'Program Information' %}
                                 </a>
                             </li>
-                            <li class="hover:bg-kara-shallow/20 border-t-2 border-t-kara-shallow/60">
-                                <a class="block p-4 outline-link text-kara-strong transition hover:text-kara-deep" href="">
+                            <li class="border-t-2 border-t-kara-strong">
+                                <a class="block p-4 outline-link transition-color duration-500 text-kara-base hover:text-kara-strong hover:bg-kara-light" href="{% url action_select %}">
                                 {% trans 'Gift Tracker' %}
                                 </a>
                             </li>
-                            <li class="hover:bg-kara-shallow/20 border-t-2 border-t-kara-shallow/60">
-                                <a class="block p-4 outline-link text-kara-strong transition hover:text-kara-deep" href="">
+                            <li class="border-t-2 border-t-kara-strong">
+                                <a class="block p-4 outline-link transition-color duration-500 text-kara-base hover:text-kara-strong hover:bg-kara-light" href="">
                                 {% trans 'My Wedding Expenses' %}
                                 </a>
                             </li>
                         </ul>
-                        <a class="block w-full py-3 mt-10 bg-kara-strong text-white text-center transition-color duration-500 border rounded-lg border-kara-strong hover:bg-white hover:text-kara-strong" role="button" href="{% url 'login' %}">{% trans 'Get started!' %}</a>
+                        <a class="block w-full py-3 mt-10 bg-kara-strong text-white text-center transition-color duration-500 border-2 rounded-lg border-kara-strong hover:bg-white hover:text-kara-strong" role="button" href="{% url 'login' %}">{% trans 'Get started!' %}</a>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                 class="
                 w-[50px] h-[50px] rounded-full p-1 bg-transparent cursor-pointer 
                 overflow-hidden transition-all duration-500 ease-in-out
-                hover:ring-2 hover:ring-kara-deep
+                hover:ring-2 hover:ring-kara-strong
                 "
                 @click="showSidePanel = !showSidePanel"
                 >
@@ -98,13 +98,13 @@
                     <button
                     id="closeSidePanel"
                     type="button"
-                    class="absolute top-4 left-4 p-2 rounded-full hover:bg-kara-shallow transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-gray-300 flex items-center"
+                    class="absolute top-4 left-4 p-2 rounded-full transition-colors duration-300 flex items-center"
                     @click="showSidePanel = false"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-kara-deep" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
-                        <span class="ml-1 text-kara-deep">{% trans 'Back' %}</span>
+                        <span class="ml-1">{% trans 'Back' %}</span>
                     </button>
                     <div class="px-8 py-6">
                         <div class="flex flex-col items-center justify-center">
@@ -116,16 +116,16 @@
                             </h2>
                         </div>
                         <ul class="mt-6 text-lg">
-                            <li class="md:hidden py-4 px-2 border-t-2 border-t-kara-shallow/60 hover:bg-kara-shallow hover:text-white transition-colors duration-300">
+                            <li class="md:hidden py-4 px-2 border-t-2 border-t-kara-strong text-kara-base hover:bg-kara-light hover:text-white transition-colors duration-500">
                                 <span class="mr-1">&gt;</span><a href="">{% trans 'Gift Tracker' %}</a>
                             </li>
-                            <li class="md:hidden py-4 px-2 border-t-2 border-t-kara-shallow/60 hover:bg-kara-shallow hover:text-white transition-colors duration-300">
+                            <li class="md:hidden py-4 px-2 border-t-2 border-t-kara-strong text-kara-base hover:bg-kara-light hover:text-white transition-colors duration-500">
                                 <span class="mr-1">&gt;</span><a href="">{% trans 'My Wedding Expenses' %}</a>
                             </li>
-                            <li class="py-4 px-2 border-t-2 border-t-kara-shallow/60 hover:bg-kara-shallow hover:text-white transition-colors duration-300">
+                            <li class="py-4 px-2 border-t-2 border-t-kara-strong hover:bg-kara-light text-kara-base hover:text-white transition-colors duration-500">
                                 <span class="mr-1">&gt;</span><a href="{% url 'profile' %}">{% trans 'Profile' %}</a>
                             </li>
-                            <li class="py-4 px-2 border-t-2 border-t-kara-shallow/60 hover:bg-kara-shallow hover:text-white transition-colors duration-300">
+                            <li class="py-4 px-2 border-t-2 border-t-kara-strong hover:bg-kara-light text-kara-base hover:text-white transition-colors duration-500">
                                 <form method="post" action="{% url 'logout' %}">
                                     {% csrf_token %}
                                     <span class="mr-1">&gt;</span><button type="submit">{% trans 'Logout' %}</button>

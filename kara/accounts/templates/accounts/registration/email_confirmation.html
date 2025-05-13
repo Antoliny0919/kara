@@ -10,8 +10,8 @@
 {% block content %}
 <main class="h-screen my-5 mx-8 flex">
     <div class="h-full flex flex-1 flex-col items-center justify-center">
-        <h1 class="text-5xl font-title tracking-[.07em] text-kara-light-deep mb-2">{% translate "Please check your inbox!" %}</h1>
-        <p class="my-6 text-center">{% blocktranslate %}To complete your registration, please enter the 6-digit code sent to <span class="text-kara-deep">{{ email }}</span>{% endblocktranslate %}</p>
+        <h1 class="text-5xl font-title tracking-[.07em] text-kara-strong mb-2">{% translate "Please check your inbox!" %}</h1>
+        <p class="my-6 text-center">{% blocktranslate %}To complete your registration, please enter the 6-digit code sent to <span class="text-kara-strong">{{ email }}</span>{% endblocktranslate %}</p>
         <div class="row w-4/5">
             <div class="col">
                 <form method="post">
@@ -25,8 +25,8 @@
                         <a
                         href="{% url 'email_confirmation_resend' %}"
                         class="
-                        resend-code text-kara-strong hover:text-kara-deep transition-colors duration-500 mr-4
-                        disabled:text-kara-shallow disabled:cursor-default disabled:opacity-80
+                        resend-code text-kara-base hover:text-kara-strong transition-colors duration-500 mr-4
+                        disabled:text-kara-light disabled:cursor-default disabled:opacity-80
                         "
                         >
                         {% translate "Resend Code" %}
@@ -36,15 +36,15 @@
                     <button
                     type="submit"
                     class="
-                    w-full text-lg bg-kara-shallow py-3 rounded-lg text-white transition-colors duration-500
-                    hover:bg-kara-very-shallow hover:text-kara-strong
+                    w-full text-lg bg-kara-base border-2 border-kara-base py-3 rounded-lg text-white transition-colors duration-500
+                    hover:bg-white hover:text-kara-strong
                     "
                     >
                     {% translate "Verify Code" %}
                     </button>
                 </form>
                 <div class="flex items-center justify-center mt-4">
-                    <a href="{{ later_confirm_link }}" class="text-kara-strong hover:text-kara-deep transition-colors duration-500">{% translate "I'll confirm later!"%}</a>
+                    <a href="{{ later_confirm_link }}" class="text-kara-base hover:text-kara-strong transition-colors duration-500">{% translate "I'll confirm later!"%}</a>
                 </div>
             </div>
         </div>
