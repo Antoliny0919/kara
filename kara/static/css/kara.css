@@ -179,3 +179,26 @@ input[type="radio"]:hover {
 input[type="radio"]:focus {
     --tw-ring-shadow: 0 0 #000 !important;
 }
+
+/* TABLE */
+
+table thead tr {
+    border-bottom: 2px;
+    border-color: var(--kara-strong);
+}
+
+table thead tr th {
+    padding: 12px 8px;
+}
+
+table tbody tr td {
+    padding: 8px;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: var(--kara-strong-shallow);
+}
+
+tbody tr:nth-child(even) {
+    background-color: var(--kara-light-shallow);
+}

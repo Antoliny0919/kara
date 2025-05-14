@@ -1,10 +1,12 @@
 {% extends "base/base.html" %}
 
-{% load i18n %}
+{% load i18n partials humanize %}
 
 {% block title %}{% blocktranslate with receiver=object.receiver %}{{ receiver }}'s Cash Gifts Records | Kara{% endblocktranslate %}{% endblock %}
 
 {% block meta_title %}{% blocktranslate with receiver=object.receiver %}{{ receiver }}'s Cash Gifts Records | Kara{% endblocktranslate %}{% endblock %}
+
+{% block body_width %}w-full{% endblock %}
 
 {% block content %}
 <main>
@@ -24,6 +26,45 @@
                 </div>
             </div>
         </header>
+        {% partialdef cash-gifts-section inline %}
+        <div id="cash-gifts-section" class="flex justify-between">
+            <div class="flex-1 mx-8">
+                <h2 class="text-2xl text-center my-4">{% translate 'Add Cash Gifts Record' %}</h2>
+                <div class="px-12 pt-10 border-2 border-kara-strong rounded-xl">
+                    <form method="post" hx-post="{% url 'add_cash_gift' object.pk %}" hx-target="#cash-gifts-section" hx-swap="outerHTML">
+                        {% csrf_token %}
+                        {{ cash_gifts_form }}
+                        <button type="submit" class="block py-4 my-6 bg-kara-base w-1/3 border-2 border-kara-base rounded-lg text-white transition-color duration-500 mx-auto hover:bg-white hover:text-kara-strong">{% trans 'Add' %}</button>
+                    </form>
+                </div>
+            </div>
+            <div class="flex-1 mx-8">
+                <h2 class="text-2xl text-center my-4">{% blocktranslate with receiver=object.receiver %}{{ receiver }}'s Cash Gift Records{% endblocktranslate %}</h2>
+                <div class="table-area border-2 border-kara-strong rounded-xl">
+                    <table class="w-full text-left">
+                        <thead class="uppercase">
+                            <tr>
+                                <th>name</th>
+                                <th>price</th>
+                                <th>receipt_date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cash_gift in object.cash_gift_records.all %}
+                            <tr>
+                                <td>{{ cash_gift.name }}</td>
+                                <td>{{ cash_gift.price|intcomma }}</td>
+                                <td>{{ cash_gift.receipt_date }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>No cash gifts</tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endpartialdef %}
     </div>
 </main>
 {% endblock %}

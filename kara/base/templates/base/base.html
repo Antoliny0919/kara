@@ -1,4 +1,4 @@
-{% load i18n static tailwind_tags %}
+{% load i18n static tailwind_tags django_htmx %}
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -11,13 +11,15 @@
         <link rel="stylesheet" href="{% static 'css/dist/fonts.css' %}">
         <link rel="stylesheet" href="{% static 'css/kara.css' %}">
         <link rel="stylesheet" href="{% static 'css/widgets.css' %}">
+        {% htmx_script %}
 	</head>
-    <body class="flex flex-col h-screen font-common {% block body_class %}{% endblock %}">
+    <body class="flex flex-col h-screen font-common {% block body_class %}{% endblock %}" hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
         {% block navbar %}{% include 'base/includes/nav.html' %}{% endblock %}
         {% include 'base/includes/messages.html' %}
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <div class="container flex justify-center mb-auto mx-auto max-w-screen-xl">
-            <div class="w-4/5">
+            <div class="{% block body_width %}w-4/5{% endblock %}">
                 {% block content %}
                 {% endblock %}
             </div>

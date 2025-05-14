@@ -3,7 +3,8 @@ from django.utils.translation import gettext_lazy as _
 
 from kara.base.forms import KaraModelForm
 
-from .models import CashGiftsRecordRepository
+from .fields import UnitPriceField
+from .models import CashGifts, CashGiftsRecordRepository
 
 
 class CashGiftsRecordRepositoryForm(KaraModelForm):
@@ -31,3 +32,25 @@ class CashGiftsRecordRepositoryForm(KaraModelForm):
             "side": RadioSelect,
         }
         labels = {"side": _("Select Groom's or Bride's Side")}
+
+
+class CashGiftsForm(KaraModelForm):
+
+    price = UnitPriceField(
+        choices=[("1", 1), ("10000", 10000)],
+        label=CashGifts._meta.get_field("price").verbose_name,
+        initial={"select": "1"},
+        help_text=_("Enter the amount of the cash gift received."),
+    )
+
+    class Meta:
+        model = CashGifts
+        fields = [
+            "name",
+            "price",
+            "receipt_date",
+        ]
+        help_texts = {
+            "name": _("Enter the name of the person who gave the cash gift."),
+            "receipt_date": _("Enter the date the cash gift was received."),
+        }

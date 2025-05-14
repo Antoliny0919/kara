@@ -1,0 +1,47 @@
+{% load i18n %}
+
+<fieldset class="unit-number-input-container relative rounded-lg border-2 border-kara-strong px-4 pb-4">
+    <legend class="bg-white text-kara-strong px-2 text-sm">{{ widget.attrs.label }}</legend>
+    {% for widget in widget.subwidgets %}
+    {% if widget.type == "number" %}
+    <section id="input-area">
+        <input id="{{ widget.attrs.id }}" type="{{ widget.type }}" name="{{ widget.name }}" {% if widget.value != None %}value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %} placeholder=" ">
+    </section>
+    {% else %}
+    <section id="select-area" class="mt-4 text-right">
+        <fieldset class="inline-flex flex-col items-start px-4 pt-2 pb-4 border-2 border-kara-base rounded-md">
+            <legend class="bg-white text-kara-strong px-2 text-sm">{% trans 'Unit' %}</legend>
+            {% for group, options, index in widget.optgroups %}
+            {% for option in options %}
+            {% include 'base/widgets/radio.html' with widget=option %}
+            {% endfor %}{% endfor %}
+        </fieldset>
+    </section>
+    {% endif %}
+    {% endfor %}
+    <div class="mt-2 pl-2">
+        <span>{% block result %}{% trans 'Result' %}{% endblock %} : </span>
+        <span id="result-value"></span>
+        <span>{% block unit_symbol %}{% endblock %}</span>
+    </div>
+</fieldset>
+<script>
+    $(document).ready(function() {
+        const $input = $('#input-area input');
+        const $resultDisplayTag = $('#result-value');
+        $('#select-area input[type="radio"]').on('click', function() {
+            $input.val("");
+            calculateResultValue();
+        });
+        const addCommas = (x) => {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        const calculateResultValue = () => {
+            const $unit = $('#select-area input[type="radio"]:checked');
+            const result = (parseInt($input.val(), 10) || 0) * (parseInt($unit.val(), 10) || 0);
+            $resultDisplayTag.text(addCommas(result));
+        }
+        calculateResultValue()
+        $input.on('input', calculateResultValue);
+    });
+</script>

@@ -1,4 +1,7 @@
+import uuid
+
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from kara.accounts.models import User
@@ -11,6 +14,7 @@ class CashGiftsRecordRepository(models.Model):
         (GROOM, _("Groom's side")),
         (BRIDE, _("Bride's side")),
     )
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="cash_gifts_record_repository"
     )
@@ -33,4 +37,17 @@ class CashGiftsRecordRepository(models.Model):
         default=True,
         help_text="Specifies whether to include the details of in-kind gifts received.",
         verbose_name=_("Include In-Kind Gifts"),
+    )
+
+
+class CashGifts(models.Model):
+    repository = models.ForeignKey(
+        CashGiftsRecordRepository,
+        on_delete=models.CASCADE,
+        related_name="cash_gift_records",
+    )
+    name = models.CharField(max_length=128, verbose_name=_("Name"))
+    price = models.PositiveIntegerField(verbose_name=_("Price"))
+    receipt_date = models.DateField(
+        default=timezone.now, verbose_name=_("Date of Receipt")
     )
