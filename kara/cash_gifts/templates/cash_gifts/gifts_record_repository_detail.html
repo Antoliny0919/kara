@@ -1,2 +1,29 @@
-<h1>Gifts Record Repository Detail!!</h1>
-<h1>{{ object.honoree }}</h1>
+{% extends "base/base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% blocktranslate with receiver=object.receiver %}{{ receiver }}'s Cash Gifts Records | Kara{% endblocktranslate %}{% endblock %}
+
+{% block meta_title %}{% blocktranslate with receiver=object.receiver %}{{ receiver }}'s Cash Gifts Records | Kara{% endblocktranslate %}{% endblock %}
+
+{% block content %}
+<main>
+    <div class="my-16">
+        <header>
+            <h1 class="text-4xl text-center my-4">{% blocktranslate with receiver=object.receiver %}Congratulations on your wedding, {{ receiver}}!{% endblocktranslate %}</h1>
+            <div class="ml-auto w-fit my-4">
+                <div class="grid grid-cols-[80px_20px_1fr] gap-1">
+                    <div class="text-right text-kara-strong">{% trans 'Wedding Date' %}</div>
+                    <div class="text-center text-kara-base">:</div>
+                    <div class="">{{ object.wedding_date }}</div>
+                </div>
+                <div class="grid grid-cols-[80px_20px_1fr] gap-1">
+                    <div class="text-right text-kara-strong">{% trans 'Receptionist' %}</div>
+                    <div class="text-center text-kara-base">:</div>
+                    <div>{{ object.receptionist }}</div>
+                </div>
+            </div>
+        </header>
+    </div>
+</main>
+{% endblock %}
