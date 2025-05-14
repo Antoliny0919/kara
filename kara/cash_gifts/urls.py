@@ -18,4 +18,14 @@ urlpatterns = [
         views.CashGiftsRecordRepositoryView.as_view(),
         name="repository",
     ),
+    path(
+        "repository/<int:pk>/record/add/",
+        views.CashGiftAddView.as_view(),
+        name="add_cash_gift",
+    ),
+    path(
+        "repository/<int:pk>/record/refresh/",
+        views.RefreshCashGiftTableView.as_view(),
+        name="refresh_cash_gift_table",
+    ),
 ]

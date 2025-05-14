@@ -1,6 +1,6 @@
 from datetime import date
 
-from django.forms import TextInput
+from django.forms import NumberInput, TextInput
 from django.forms.widgets import (
     CheckboxInput,
     EmailInput,
@@ -13,7 +13,7 @@ from django.forms.widgets import (
 
 
 class KaraRadioSelect(RadioSelect):
-    template_name = "base/widgets/radio.html"
+    template_name = "base/widgets/radio_select.html"
 
 
 class KaraEmailInput(EmailInput):
@@ -30,6 +30,10 @@ class KaraTextarea(Textarea):
 
 class KaraTextInput(TextInput):
     template_name = "base/widgets/input.html"
+
+
+class KaraNumberInput(NumberInput):
+    template_name = "base/widgets/number.html"
 
 
 class KaraCheckboxInput(CheckboxInput):
@@ -49,7 +53,7 @@ class KaraSplitDateInput(MultiWidget):
 
     def decompress(self, value):
         if isinstance(value, date):
-            return [value.day, value.month, value.year]
+            return [value.year, value.month, value.day]
         elif isinstance(value, str):
             year, month, day = value.split("-")
             return [year, month, day]
@@ -59,3 +63,20 @@ class KaraSplitDateInput(MultiWidget):
         year, month, day = super().value_from_datadict(data, files, name)
         # DateField expects a single string that it can parse into a date.
         return "{}-{}-{}".format(year, month, day)
+
+
+class UnitNumberInput(MultiWidget):
+    template_name = "base/widgets/unit_number_input.html"
+
+    def __init__(self, attrs=None, choices=()):
+        widgets = [
+            RadioSelect(attrs=(attrs or {}), choices=choices),
+            NumberInput(attrs=(attrs or {})),
+        ]
+        super().__init__(widgets, attrs=None)
+        self.choices = choices
+
+    def decompress(self, value):
+        if value and isinstance(value, dict):
+            return [value.get("select"), value.get("number")]
+        return [None, None]
