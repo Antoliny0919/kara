@@ -4,6 +4,16 @@
     --kara-strong: #C44B6B;
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 .brand-icon {
     height: 4rem;
     width: 8rem;

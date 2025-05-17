@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-13 11:11+0900\n"
+"POT-Creation-Date: 2025-05-16 10:36+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
 #: kara/base/templates/base/includes/nav.html:12
 #: kara/base/templates/base/includes/nav.html:60
 msgid "Program Information"
@@ -62,3 +63,11 @@ msgstr "프로필"
 #: kara/base/templates/base/includes/nav.html:131
 msgid "Logout"
 msgstr "로그아웃"
+
+#: kara/base/templates/base/widgets/unit_number_input.html:24
+msgid "Unit"
+msgstr "단위"
+
+#: kara/base/templates/base/widgets/unit_number_input.html:34
+msgid "Result"
+msgstr "최종"
