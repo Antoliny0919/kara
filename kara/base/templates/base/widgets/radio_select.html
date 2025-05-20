@@ -1,0 +1,11 @@
+<fieldset class="relative rounded-lg border-2 border-kara-strong px-4 pb-4" {% if field.aria_describedby %} aria-describedby="{{ field.aria_describedby }}"{% endif %}>
+  <legend class="bg-white text-kara-strong p-2 text-sm">{{ widget.attrs.label }}</legend>
+  {% with id=widget.attrs.id %}
+  <div{% if id %} id="{{ id }}"{% endif %} class="flex justify-around">{% for group, options, index in widget.optgroups %}
+    {% for option in options %}
+    <div>
+    {% include 'base/widgets/radio.html' with widget=option %}
+    {% endfor %}
+    </div>{% endfor %}
+  </div>{% endwith %}
+</fieldset>

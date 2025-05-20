@@ -14,7 +14,7 @@ from django.forms.widgets import (
 
 
 class KaraRadioSelect(RadioSelect):
-    template_name = "base/widgets/radio.html"
+    template_name = "base/widgets/radio_select.html"
 
 
 class KaraEmailInput(EmailInput):
