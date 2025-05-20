@@ -81,6 +81,8 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    "django_htmx",
+    "template_partials",
     "tailwind",
     "widget_tweaks",
     "allauth",
@@ -148,6 +150,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_htmx.middleware.HtmxMiddleware",
     "allauth.account.middleware.AccountMiddleware",
 ]
 
