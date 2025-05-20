@@ -74,7 +74,7 @@ input:is(
 ) {
     display: block;
     width: 100%;
-    padding: 0.825rem;
+    padding: 1rem;
     font-size: 1.125rem;
     line-height: 1.75rem;
     color: #111827;
