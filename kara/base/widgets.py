@@ -5,6 +5,7 @@ from django.forms.widgets import (
     CheckboxInput,
     EmailInput,
     MultiWidget,
+    NumberInput,
     PasswordInput,
     RadioSelect,
     Textarea,
@@ -59,3 +60,22 @@ class KaraSplitDateInput(MultiWidget):
         year, month, day = super().value_from_datadict(data, files, name)
         # DateField expects a single string that it can parse into a date.
         return "{}-{}-{}".format(year, month, day)
+
+
+class UnitNumberInput(MultiWidget):
+    template_name = "base/widgets/unit_number_input.html"
+
+    def __init__(self, attrs=None, choices=()):
+        widgets = [
+            RadioSelect(attrs=(attrs or {}), choices=choices),
+            NumberInput(attrs=(attrs or {})),
+        ]
+        super().__init__(widgets, attrs=None)
+        self.choices = choices
+
+    def decompress(self, value):
+        if value and isinstance(value, dict):
+            # Initial data must be provided as a dictionary.
+            # e.g. {"select": "10", "number": 1000}
+            return [value.get("select"), value.get("number")]
+        return [None, None]
