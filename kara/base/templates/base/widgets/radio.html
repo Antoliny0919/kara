@@ -6,14 +6,8 @@
     <div>
     {% with widget=option %}
     <label{% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %}>
-    <input type="{{ widget.type }}"
-    class="
-    w-5 h-5 rounded-full appearance-none border-2 border-kara-light transition-color duration-500 mr-2 text-kara-strong
-    checked:border-[0.4em] checked:border-kara-strong hover:shadow-[0_0_0_0.2em_var(--kara-light)] cursor-pointer peer
-    focus:outline-none focus:ring-0 focus:border-0
-    "
-    name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
-    {{ widget.label }}
+      <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
+      {{ widget.label }}
     </label>
     {% endwith %}{% endfor %}
     </div>{% endfor %}
