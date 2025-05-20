@@ -21,9 +21,25 @@ class KaraSplitDateInputWidgetTests(SimpleTestCase):
         for value, year, month, day in case:
             with self.subTest(initial_value=value):
                 form = EventForm(initial={"event_date": value})
-                self.assertIn(f'value="{year}"', form.as_div())
-                self.assertIn(f'value="{month}"', form.as_div())
-                self.assertIn(f'value="{day}"', form.as_div())
+                render_form = form.as_div()
+                self.assertIn(
+                    f'<input name=event_date_0 type="text" value="{year}" '
+                    'placeholder="YYYY" maxlength="4" required id="id_event_date_0">'
+                    "</input>",
+                    render_form,
+                )
+                self.assertIn(
+                    f'<input name=event_date_1 type="text" value="{month}" '
+                    'placeholder="MM" maxlength="2" required id="id_event_date_1">'
+                    "</input>",
+                    render_form,
+                )
+                self.assertIn(
+                    f'<input name=event_date_2 type="text" value="{day}" '
+                    'placeholder="DD" maxlength="2" required id="id_event_date_2">'
+                    "</input>",
+                    render_form,
+                )
 
     def test_value_from_datadict(self):
         data = {
