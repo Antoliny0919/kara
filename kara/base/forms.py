@@ -5,6 +5,7 @@ from django.forms import Form, ModelForm
 from .widgets import (
     KaraCheckboxInput,
     KaraEmailInput,
+    KaraNumberInput,
     KaraPasswordInput,
     KaraRadioSelect,
     KaraSplitDateInput,
@@ -55,6 +56,7 @@ class KaraWidgetMixin(ConvertWidgetMixin):
         "TextInput": KaraTextInput,
         "EmailInput": KaraEmailInput,
         "PasswordInput": KaraPasswordInput,
+        "NumberInput": KaraNumberInput,
         "Textarea": KaraTextarea,
         "RadioSelect": KaraRadioSelect,
         "CheckboxInput": KaraCheckboxInput,

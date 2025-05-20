@@ -14,8 +14,13 @@ urlpatterns = [
         name="add_repository",
     ),
     path(
-        "repository/<int:pk>/",
+        "repository/<uuid:pk>/",
         views.CashGiftsRecordRepositoryView.as_view(),
         name="repository",
+    ),
+    path(
+        "repository/<uuid:pk>/record/add/",
+        views.CashGiftAddView.as_view(),
+        name="add_cash_gift",
     ),
 ]

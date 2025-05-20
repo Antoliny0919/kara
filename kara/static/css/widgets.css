@@ -1,5 +1,16 @@
+/* UNIT NUMBER INPUT */
+
+.unit-number-input-container #input-area input[type="number"] {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+}
+
 /* DATE INPUT */
 
 .date-input-container input {
     padding: 0;
+    border: none;
+    text-align: center;
 }

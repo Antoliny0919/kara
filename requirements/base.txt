@@ -6,6 +6,8 @@ argon2-cffi==23.1.0  # https://github.com/hynek/argon2_cffi
 # Django
 # ------------------------------------------------------------------------------
 Django==5.1.7  # https://github.com/django/django
+django-htmx==1.23.0  # https://github.com/adamchainz/django-htmx
+django-template-partials==24.4  # https://github.com/carltongibson/django-template-partials
 wagtail==v6.4  # https://github.com/wagtail/wagtail
 django-environ==0.11.2  # https://github.com/joke2k/django-environ
 django-extensions==3.2.3  # https://github.com/django-extensions/django-extensions

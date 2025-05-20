@@ -1,6 +1,6 @@
 from datetime import date
 
-from django.forms import TextInput
+from django.forms import NumberInput, TextInput
 from django.forms.widgets import (
     CheckboxInput,
     EmailInput,
@@ -30,6 +30,10 @@ class KaraTextarea(Textarea):
 
 
 class KaraTextInput(TextInput):
+    template_name = "base/widgets/input.html"
+
+
+class KaraNumberInput(NumberInput):
     template_name = "base/widgets/input.html"
 
 

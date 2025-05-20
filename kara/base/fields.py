@@ -8,7 +8,6 @@ class UnitNumberField(MultiValueField):
     Allows large numbers to be entered easily by selecting a unit.
     e.g. unit: 100, number: 100, result: 10000
     """
-
     widget_cls = UnitNumberInput
 
     def __init__(self, attrs=None, choices=(), *args, **kwargs):
