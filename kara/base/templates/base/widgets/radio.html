@@ -1,15 +1,4 @@
-<fieldset class="relative rounded-lg border-2 border-kara-strong px-4 pb-4" {% if field.aria_describedby %} aria-describedby="{{ field.aria_describedby }}"{% endif %}>
-  <legend class="bg-white text-kara-strong p-2 text-sm">{{ widget.attrs.label }}</legend>
-  {% with id=widget.attrs.id %}
-  <div{% if id %} id="{{ id }}"{% endif %} class="flex justify-around">{% for group, options, index in widget.optgroups %}
-    {% for option in options %}
-    <div>
-    {% with widget=option %}
-    <label{% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %}>
-      <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
-      {{ widget.label }}
-    </label>
-    {% endwith %}{% endfor %}
-    </div>{% endfor %}
-  </div>{% endwith %}
-</fieldset>
+<label{% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %}>
+  <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
+  {{ widget.label }}
+</label>
