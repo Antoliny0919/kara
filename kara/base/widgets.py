@@ -50,7 +50,7 @@ class KaraSplitDateInput(MultiWidget):
 
     def decompress(self, value):
         if isinstance(value, date):
-            return [value.day, value.month, value.year]
+            return [value.year, value.month, value.day]
         elif isinstance(value, str):
             year, month, day = value.split("-")
             return [year, month, day]

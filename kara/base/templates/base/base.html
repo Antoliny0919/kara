@@ -10,6 +10,7 @@
         {% tailwind_css %}
         <link rel="stylesheet" href="{% static 'css/dist/fonts.css' %}">
         <link rel="stylesheet" href="{% static 'css/kara.css' %}">
+        <link rel="stylesheet" href="{% static 'css/widgets.css' %}">
 	</head>
     <body class="flex flex-col h-screen font-common {% block body_class %}{% endblock %}">
         {% block navbar %}{% include 'base/includes/nav.html' %}{% endblock %}
