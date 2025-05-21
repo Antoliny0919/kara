@@ -141,7 +141,7 @@ msgstr "최종 금액"
 msgid "$"
 msgstr "원"
 
-#: kara/cash_gifts/views.py:32
+#: kara/cash_gifts/views.py:30
 msgid ""
 "The cash gifts record repository has been added. Go ahead and record the "
 "gifts you've received!"

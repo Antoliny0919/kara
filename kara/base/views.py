@@ -1,6 +1,7 @@
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.functional import cached_property
 from django.views.generic.base import ContextMixin, TemplateResponseMixin
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import BaseCreateView, FormMixin, ModelFormMixin
 
 
@@ -71,4 +72,8 @@ class PartialTemplateBaseCreateView(PartialTemplateModelFormMixin, BaseCreateVie
 class PartialTemplateCreateView(
     PartialTemplateResponseMixin, PartialTemplateBaseCreateView
 ):
+    pass
+
+
+class PartialTemplateDetailView(PartialTemplateResponseMixin, DetailView):
     pass

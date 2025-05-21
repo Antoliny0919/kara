@@ -22,7 +22,7 @@ class CashGiftAddViewTests(TestCase):
     def test_add_cash_gift_object(self):
         response = self.client.post(
             self.url,
-            {
+            data={
                 "name": "Tim Bread",
                 "price_0": "10000",
                 "price_1": 10,
@@ -30,11 +30,13 @@ class CashGiftAddViewTests(TestCase):
                 "receipt_date_1": "5",
                 "receipt_date_2": "19",
             },
+            HTTP_HX_REQUEST="true",
             follow=True,
         )
         self.assertContains(response, "<td>Tim Bread</td>")
         self.assertContains(response, "<td>100,000</td>")
         self.assertContains(response, "<td>May 19, 2020</td>")
+        self.assertIn("#cash-gifts-section", response.template_name[0])
 
     def test_reuse_before_selected_price_button(self):
         response = self.client.get(self.url)
