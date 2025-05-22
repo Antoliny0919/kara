@@ -267,3 +267,8 @@ DEFAULT_FROM_EMAIL = "antoliny@kara.com"
 # ------------------------------------------------------------------------------
 TAILWIND_APP_NAME = "kara.theme"
 NPM_BIN_PATH = "/usr/bin/npm"
+
+
+# QUERYSTRING
+# ------------------------------------------------------------------------------
+PAGE_VAR = "page"

@@ -1,0 +1,22 @@
+{% load i18n tables %}
+
+{% if pagination.multi_page %}
+<div class="paginate-container">
+    <nav class="pagination" aria-labelledby="pagination" hx-target="{{ htmx_target|default:"#table" }}" hx-swap=outerHTML hx-push-url=true>
+        <h2 id="pagination" class="sr-only">{% blocktranslate with name=pagination.opts.verbose_name_plural %}Pagination {{ name }}{% endblocktranslate %}</h2>
+        {% if pagination.page.has_previous %}
+            <a class="previous-page" href="{{ previous_page_link }}" hx-get="{{ previous_page_link }}" rel="prev" aria-label="Previous page">{% trans 'Previous '%}</a>
+        {% else %}
+            <span class="previous-page disabled" rel="prev" aria-label="Previous page">{% trans 'Previous '%}</span>
+        {% endif %}
+        {% for i in pagination.page_range %}
+            {% pagination_number pagination i %}
+        {% endfor %}
+        {% if pagination.page.has_next %}
+            <a class="next-page" href="{{ next_page_link }}" hx-get="{{ next_page_link }}" rel="next" aria-label="Next page">{% trans 'Next' %}</a>
+        {% else %}
+            <span class="next-page disabled" rel="next" aria-label="Next page">{% trans 'Next' %}</span>
+        {% endif %}
+    </nav>
+</div>
+{% endif %}
