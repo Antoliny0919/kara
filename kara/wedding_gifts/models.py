@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.db.models.functions import Lower
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -51,3 +52,28 @@ class CashGift(models.Model):
     receipt_date = models.DateField(
         default=timezone.now, verbose_name=_("date of receipt")
     )
+    tags = models.ManyToManyField(
+        "GiftTag",
+        blank=True,
+        related_name="cash_gifts",
+        verbose_name=_("tags"),
+    )
+
+
+class GiftTag(models.Model):
+    name = models.CharField(max_length=64, verbose_name=_("name"))
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="tags",
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                Lower("name"), "owner", name="unique_lower_name_owner"
+            )
+        ]
+
+    def __str__(self):
+        return self.name
