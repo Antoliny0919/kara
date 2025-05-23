@@ -23,10 +23,10 @@
                     </li>
                     <li
                     class="min-w-[150px] border-r-2 px-4 block border-b-2 border-kara-strong text-kara-strong hover:text-white hover:bg-kara-base transition-color duration-500 md:w-full md:px-0 md:border-r-0"
-                    :class="activeTab === 'cashGiftRecords' ? 'bg-kara-strong text-white' : ''"
+                    :class="activeTab === 'weddingGiftRecords' ? 'bg-kara-strong text-white' : ''"
                     >
-                        <button class="py-6 w-full" @click="activeTab = 'cashGiftRecords'">
-                            {% trans 'Cash Gift Records' %}
+                        <button class="py-6 w-full" @click="activeTab = 'weddingGiftRecords'">
+                            {% trans 'My Wedding Gift Records' %}
                         </button>
                     </li>
                     <li
@@ -88,8 +88,8 @@
                             >{% trans 'Save' %}</button>
                     </form>
                 </div>
-                <div x-show="activeTab === 'cashGiftRecords'">
-                    <h1>Comming Soon! - Cash Gift Records</h1>
+                <div x-show="activeTab === 'weddingGiftRecords'">
+                    <h1>Comming Soon! - Wedding Gift Records</h1>
                 </div>
                 <div x-show="activeTab === 'weddingExpenseRecords'">
                     <h1>Comming Soon! - Wedding Expense Records </h1>

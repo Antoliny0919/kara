@@ -4,13 +4,13 @@ from django.utils.translation import gettext_lazy as _
 from kara.base.forms import KaraModelForm
 
 from .fields import UnitPriceField
-from .models import CashGifts, CashGiftsRecordRepository
+from .models import CashGift, WeddingGiftRegistry
 
 
-class CashGiftsRecordRepositoryForm(KaraModelForm):
+class WeddingGiftRegistryForm(KaraModelForm):
 
     class Meta:
-        model = CashGiftsRecordRepository
+        model = WeddingGiftRegistry
         fields = [
             "side",
             "receiver",
@@ -20,13 +20,15 @@ class CashGiftsRecordRepositoryForm(KaraModelForm):
         ]
         help_texts = {
             "receiver": _(
-                "Please enter the name of the person receiving the cash gifts."
+                "Please enter the name of the person receiving the wedding gift."
             ),
             "receptionist": _(
                 "Please enter the name of the person who is recording "
-                "the cash gifts details."
+                "the wedding gift details."
             ),
-            "in_kind_gifts_allow": _("Please check to include in kind gifts details."),
+            "in_kind_gifts_allow": _(
+                "Please select this option to include records of in-kind gifts."
+            ),
         }
         widgets = {
             "side": RadioSelect,
@@ -34,17 +36,17 @@ class CashGiftsRecordRepositoryForm(KaraModelForm):
         labels = {"side": _("Select Groom's or Bride's Side")}
 
 
-class CashGiftsForm(KaraModelForm):
+class CashGiftForm(KaraModelForm):
 
     price = UnitPriceField(
         choices=[("1", 1), ("10000", 10000)],
-        label=CashGifts._meta.get_field("price").verbose_name,
+        label=CashGift._meta.get_field("price").verbose_name,
         initial={"select": "1"},
         help_text=_("Enter the amount of the cash gift received."),
     )
 
     class Meta:
-        model = CashGifts
+        model = CashGift
         fields = [
             "name",
             "price",

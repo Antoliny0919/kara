@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from kara.accounts.factories import UserFactory
-from kara.cash_gifts.factories import CashGiftFactory, CashGiftRecordRepositoryFactory
+from kara.wedding_gifts.factories import CashGiftFactory, WeddingGiftRegistryFactory
 
 
 class CashGiftAddViewTests(TestCase):
@@ -12,9 +12,9 @@ class CashGiftAddViewTests(TestCase):
         cls.user = UserFactory(
             username="black000", email="black000@color.com", password="password"
         )
-        repository = CashGiftRecordRepositoryFactory(owner=cls.user)
-        CashGiftFactory.create_batch(repository=repository, size=20)
-        cls.url = reverse("add_cash_gift", args=(repository.pk,))
+        registry = WeddingGiftRegistryFactory(owner=cls.user)
+        CashGiftFactory.create_batch(registry=registry, size=20)
+        cls.url = reverse("add_cash_gift", args=(registry.pk,))
 
     def setUp(self):
         self.client.force_login(self.user)
@@ -36,7 +36,7 @@ class CashGiftAddViewTests(TestCase):
         self.assertContains(response, "<td>Tim Bread</td>")
         self.assertContains(response, "<td>100,000</td>")
         self.assertContains(response, "<td>May 19, 2020</td>")
-        self.assertIn("#cash-gifts-section", response.template_name[0])
+        self.assertIn("#gift-records-section", response.template_name[0])
 
     def test_reuse_before_selected_price_button(self):
         response = self.client.get(self.url)
