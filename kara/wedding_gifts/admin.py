@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CashGift, WeddingGiftRegistry
+from .models import CashGift, GiftTag, WeddingGiftRegistry
 
 
 class WeddingGiftRegistryAdmin(admin.ModelAdmin):
@@ -8,4 +8,5 @@ class WeddingGiftRegistryAdmin(admin.ModelAdmin):
 
 
 admin.site.register(CashGift)
+admin.site.register(GiftTag)
 admin.site.register(WeddingGiftRegistry, WeddingGiftRegistryAdmin)
