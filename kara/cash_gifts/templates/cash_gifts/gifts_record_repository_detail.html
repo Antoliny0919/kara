@@ -1,6 +1,6 @@
 {% extends "base/base.html" %}
 
-{% load i18n partials humanize %}
+{% load i18n partials humanize tables %}
 
 {% block title %}{% blocktranslate with receiver=object.receiver %}{{ receiver }}'s Cash Gifts Records | Kara{% endblocktranslate %}{% endblock %}
 
@@ -40,28 +40,33 @@
             </div>
             <div class="flex-1 mx-8">
                 <h2 class="text-2xl text-center my-4">{% blocktranslate with receiver=object.receiver %}{{ receiver }}'s Cash Gift Records{% endblocktranslate %}</h2>
-                <div class="table-area border-2 border-kara-strong rounded-xl">
-                    <table class="w-full text-left">
-                        <thead class="uppercase">
-                            <tr>
-                                <th>name</th>
-                                <th>price</th>
-                                <th>receipt_date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for cash_gift in object.cash_gift_records.all %}
-                            <tr>
-                                <td>{{ cash_gift.name }}</td>
-                                <td>{{ cash_gift.price|intcomma }}</td>
-                                <td>{{ cash_gift.receipt_date }}</td>
-                            </tr>
-                            {% empty %}
-                            <tr>No cash gifts</tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                {% partialdef cash-gifts-table inline %}
+                <div id="cash-gifts-table">
+                    <div class="table-area border-2 border-kara-strong rounded-xl">
+                        <table class="w-full text-left">
+                            <thead class="uppercase">
+                                <tr>
+                                    <th>name</th>
+                                    <th>price</th>
+                                    <th>receipt_date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for cash_gift in table.result_objects %}
+                                <tr>
+                                    <td>{{ cash_gift.name }}</td>
+                                    <td>{{ cash_gift.price|intcomma }}</td>
+                                    <td>{{ cash_gift.receipt_date }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>No cash gifts</tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% pagination table.pagination htmx_target="#cash-gifts-table" %}
                 </div>
+                {% endpartialdef %}
             </div>
         </div>
         {% endpartialdef %}

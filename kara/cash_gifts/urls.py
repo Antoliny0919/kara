@@ -15,7 +15,7 @@ urlpatterns = [
     ),
     path(
         "repository/<uuid:pk>/",
-        views.CashGiftsRecordRepositoryView.as_view(),
+        views.CashGiftsRecordRepositoryDetailView.as_view(),
         name="repository",
     ),
     path(

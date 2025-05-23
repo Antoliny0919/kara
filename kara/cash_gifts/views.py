@@ -1,14 +1,15 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, TemplateView
-from django.views.generic.detail import DetailView
 
-from kara.base.views import PartialTemplateCreateView
+from kara.base.tables import Table
+from kara.base.views import PartialTemplateCreateView, PartialTemplateDetailView
 
 from .forms import CashGiftsForm, CashGiftsRecordRepositoryForm
-from .models import CashGiftsRecordRepository
+from .models import CashGifts, CashGiftsRecordRepository
 
 
 class CashGiftsRecordActionSelectView(TemplateView):
@@ -36,12 +37,34 @@ class AddCashGiftsRecordRepositoryView(LoginRequiredMixin, CreateView):
         return reverse("repository", args=(self.object.pk,))
 
 
-class CashGiftsRecordRepositoryView(LoginRequiredMixin, DetailView):
+class CashGiftsRecordRepositoryDetailView(
+    LoginRequiredMixin, PartialTemplateDetailView
+):
     template_name = "cash_gifts/gifts_record_repository_detail.html"
+    partial_template_identifier = "#cash-gifts-section"
+
+    def add_form_to_context(self, context):
+        if not (self.request.htmx and self.request.GET):
+            # Add `CashGiftsForm` to the context unless it's an HTMX GET request.
+            context["cash_gifts_form"] = CashGiftsForm()
+
+    def get_template_names(self):
+        if self.request.htmx and self.request.GET:
+            # Only render the table for HTMX GET requests
+            self.partial_template_identifier = "#cash-gifts-table"
+        return super().get_template_names()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["cash_gifts_form"] = CashGiftsForm()
+        self.add_form_to_context(context)
+        cash_gift_records = self.object.cash_gift_records.all().order_by("-id")
+        table = Table(
+            self.request,
+            model=CashGifts,
+            base_queryset=cash_gift_records,
+            list_per_page=settings.CASH_GIFT_TABLE_LIST_PER_PAGE,
+        )
+        context["table"] = table
         return context
 
     def get_object(self, queryset=None):
@@ -61,10 +84,19 @@ class CashGiftAddView(PartialTemplateCreateView):
         object = CashGiftsRecordRepository.objects.prefetch_related(
             "cash_gift_records"
         ).get(pk=self.kwargs.get("pk"))
+        cash_gift_records = object.cash_gift_records.all().order_by("-id")
+        table = Table(
+            self.request,
+            model=CashGifts,
+            base_queryset=cash_gift_records,
+            list_per_page=settings.CASH_GIFT_TABLE_LIST_PER_PAGE,
+        )
         context["object"] = object
+        context["table"] = table
         return context
 
     def reuse_form(self, form):
+        # In `UnitNumberField`(price), the selected unit is reused.
         selected = form["price"].value()[0]
         initial = {"price": {"select": selected}}
         new_form = self.form_class(initial=initial)
