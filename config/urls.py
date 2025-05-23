@@ -28,5 +28,5 @@ urlpatterns = [
 urlpatterns += [
     path("", include("kara.home.urls")),
     path("accounts/", include("kara.accounts.urls")),
-    path("cash_gifts/", include("kara.cash_gifts.urls")),
+    path("wedding_gifts/", include("kara.wedding_gifts.urls")),
 ]

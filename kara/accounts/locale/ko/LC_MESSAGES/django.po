@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-13 11:18+0900\n"
+"POT-Creation-Date: 2025-05-23 11:36+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -114,8 +114,8 @@ msgid "Profile"
 msgstr "프로필"
 
 #: kara/accounts/templates/accounts/profile.html:29
-msgid "Cash Gift Records"
-msgstr "축의금 기록"
+msgid "My Wedding Gift Records"
+msgstr "나의 결혼 선물 기록"
 
 #: kara/accounts/templates/accounts/profile.html:37
 msgid "Wedding Expense Records"
@@ -223,12 +223,3 @@ msgstr "프로필이 업데이트 되었습니다!"
 #: kara/accounts/views.py:228
 msgid "Your account was successfully deleted."
 msgstr "계정이 성공적으로 삭제되었습니다."
-
-#~ msgid "Password confirmation"
-#~ msgstr "비밀번호 확인"
-
-#~ msgid "Username"
-#~ msgstr "사용자 이름"
-
-#~ msgid "Email"
-#~ msgstr "이메일"

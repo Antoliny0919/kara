@@ -95,7 +95,7 @@ LOCAL_APPS = [
     "kara.theme",
     "kara.accounts",
     "kara.home",
-    "kara.cash_gifts",
+    "kara.wedding_gifts",
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -273,6 +273,6 @@ NPM_BIN_PATH = "/usr/bin/npm"
 # ------------------------------------------------------------------------------
 PAGE_VAR = "page"
 
-# CASH GIFT
+# WEDDING GIFT
 # ------------------------------------------------------------------------------
-CASH_GIFT_TABLE_LIST_PER_PAGE = 15
+WEDDING_GIFT_REGISTRY_TABLE_LIST_PER_PAGE = 15
