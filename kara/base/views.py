@@ -8,17 +8,20 @@ class PartialTemplateResponseMixin(TemplateResponseMixin):
     partial_template_identifier = None
 
     def get_template_names(self):
-        if self.template_name is None or self.partial_template_identifier is None:
-            raise ImproperlyConfigured(
-                "PartialTemplateResponseMixin requires either a definition of "
-                "'template_name' and 'partial_template_id' or "
-                "an implementation of 'get_template_names()'"
-            )
+        if self.request.htmx:
+            if self.template_name is None or self.partial_template_identifier is None:
+                raise ImproperlyConfigured(
+                    "PartialTemplateResponseMixin requires either a definition of "
+                    "'template_name' and 'partial_template_identifier' or "
+                    "an implementation of 'get_template_names()'"
+                )
+            else:
+                partial_template_name = (
+                    self.template_name + self.partial_template_identifier
+                )
+                return [partial_template_name]
         else:
-            partial_template_name = (
-                self.template_name + self.partial_template_identifier
-            )
-            return [partial_template_name]
+            return super().get_template_names()
 
 
 class PartialTemplateFormMixin(FormMixin):
