@@ -1,5 +1,5 @@
 <fieldset class="date-input-container relative rounded-lg border-2 border-kara-strong px-4 pb-4">
-    <legend class="bg-white text-kara-strong p-2 text-sm">{{ widget.attrs.label }}</legend>
+    <legend class="bg-white text-kara-strong p-2 text-sm">{{ widget.attrs.label|capfirst }}</legend>
     <div class="flex flex-row items-center justify-center">
     {% for widget in widget.subwidgets %}
         <div>

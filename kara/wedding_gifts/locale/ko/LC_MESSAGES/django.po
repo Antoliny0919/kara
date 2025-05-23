@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-23 11:42+0900\n"
+"POT-Creation-Date: 2025-05-23 16:04+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,23 +28,23 @@ msgid ""
 "details."
 msgstr "결혼 선물 기록을 작성하는 분의 이름을 입력해주세요."
 
-#: kara/wedding_gifts/forms.py:29
+#: kara/wedding_gifts/forms.py:30
 msgid "Please select this option to include records of in-kind gifts."
 msgstr "현물 선물 기록을 포함하려면 체크해주세요."
 
-#: kara/wedding_gifts/forms.py:34
+#: kara/wedding_gifts/forms.py:36
 msgid "Select Groom's or Bride's Side"
 msgstr "신랑 / 신부 측 선택"
 
-#: kara/wedding_gifts/forms.py:43
+#: kara/wedding_gifts/forms.py:45
 msgid "Enter the amount of the cash gift received."
 msgstr "축의금 금액을 입력해주세요."
 
-#: kara/wedding_gifts/forms.py:54
+#: kara/wedding_gifts/forms.py:56
 msgid "Enter the name of the person who gave the cash gift."
 msgstr "축의금을 지급한 사람의 이름을 입력해주세요."
 
-#: kara/wedding_gifts/forms.py:55
+#: kara/wedding_gifts/forms.py:57
 msgid "Enter the date the cash gift was received."
 msgstr "축의금을 수령한 날짜를 입력해주세요."
 
@@ -57,33 +57,31 @@ msgid "Bride's side"
 msgstr "신부측"
 
 #: kara/wedding_gifts/models.py:27
-msgid "Receiver"
+msgid "receiver"
 msgstr "수령인"
 
 #: kara/wedding_gifts/models.py:32
-#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:23
-msgid "Receptionist"
+msgid "receptionist"
 msgstr "기록인"
 
 #: kara/wedding_gifts/models.py:34
-#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:18
-msgid "Wedding Date"
+msgid "wedding date"
 msgstr "결혼식 날짜"
 
 #: kara/wedding_gifts/models.py:39
-msgid "Include In-Kind Gifts"
+msgid "include in-kind gifts"
 msgstr "현물 선물 포함 여부"
 
 #: kara/wedding_gifts/models.py:49
-msgid "Name"
+msgid "name"
 msgstr "이름"
 
 #: kara/wedding_gifts/models.py:50
-msgid "Price"
+msgid "price"
 msgstr "금액"
 
 #: kara/wedding_gifts/models.py:52
-msgid "Date of Receipt"
+msgid "date of receipt"
 msgstr "수령일"
 
 #: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_action_select.html:5
@@ -112,6 +110,7 @@ msgstr "추가하기"
 
 #: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:5
 #: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:7
+#, python-format
 msgid "%(receiver)s's Wedding Gift Registry | Kara"
 msgstr "%(receiver)s님의 결혼 선물 저장소 | Kara"
 
@@ -120,11 +119,20 @@ msgstr "%(receiver)s님의 결혼 선물 저장소 | Kara"
 msgid "Congratulations on your wedding, %(receiver)s!"
 msgstr "결혼을 축하드립니다, %(receiver)s님!"
 
+#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:18
+msgid "Wedding Date"
+msgstr "결혼식 날짜"
+
+#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:23
+msgid "Receptionist"
+msgstr "기록인"
+
 #: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:32
 msgid "Add Cash Gift Record"
 msgstr "축의금 기록 추가"
 
 #: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:42
+#, python-format
 msgid "%(receiver)s's Gift Records"
 msgstr "%(receiver)s님의 선물 기록 | Kara"
 

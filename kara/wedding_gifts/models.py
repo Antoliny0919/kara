@@ -24,19 +24,19 @@ class WeddingGiftRegistry(models.Model):
         help_text=(
             "This is the person who is getting married and receiving the wedding gift."
         ),
-        verbose_name=_("Receiver"),
+        verbose_name=_("receiver"),
     )
     receptionist = models.CharField(
         max_length=64,
         help_text="This is the person who recorded the wedding gift receipt details.",
-        verbose_name=_("Receptionist"),
+        verbose_name=_("receptionist"),
     )
-    wedding_date = models.DateField(verbose_name=_("Wedding Date"))
+    wedding_date = models.DateField(verbose_name=_("wedding date"))
     updated_at = models.DateField(auto_now=True)
     in_kind_gifts_allow = models.BooleanField(
         default=True,
         help_text="Specifies whether to include the details of in-kind gift received.",
-        verbose_name=_("Include In-Kind Gifts"),
+        verbose_name=_("include in-kind gifts"),
     )
 
 
@@ -46,8 +46,8 @@ class CashGift(models.Model):
         on_delete=models.CASCADE,
         related_name="cash_gifts",
     )
-    name = models.CharField(max_length=128, verbose_name=_("Name"))
-    price = models.PositiveIntegerField(verbose_name=_("Price"))
+    name = models.CharField(max_length=128, verbose_name=_("name"))
+    price = models.PositiveIntegerField(verbose_name=_("price"))
     receipt_date = models.DateField(
-        default=timezone.now, verbose_name=_("Date of Receipt")
+        default=timezone.now, verbose_name=_("date of receipt")
     )
