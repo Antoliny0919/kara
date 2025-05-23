@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-16 10:36+0900\n"
+"POT-Creation-Date: 2025-05-23 08:44+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,10 +64,25 @@ msgstr "프로필"
 msgid "Logout"
 msgstr "로그아웃"
 
-#: kara/base/templates/base/widgets/unit_number_input.html:24
+#: kara/base/templates/base/tables/pagination.html:6
+#, python-format
+msgid "Pagination %(name)s"
+msgstr "페이지네이션 %(name)s"
+
+#: kara/base/templates/base/tables/pagination.html:8
+#: kara/base/templates/base/tables/pagination.html:10
+msgid "Previous "
+msgstr "이전"
+
+#: kara/base/templates/base/tables/pagination.html:16
+#: kara/base/templates/base/tables/pagination.html:18
+msgid "Next"
+msgstr "다음"
+
+#: kara/base/templates/base/widgets/unit_number_input.html:13
 msgid "Unit"
 msgstr "단위"
 
-#: kara/base/templates/base/widgets/unit_number_input.html:34
+#: kara/base/templates/base/widgets/unit_number_input.html:23
 msgid "Result"
 msgstr "최종"

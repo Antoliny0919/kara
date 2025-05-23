@@ -202,3 +202,72 @@ tbody tr:nth-child(odd) {
 tbody tr:nth-child(even) {
     background-color: var(--kara-light-shallow);
 }
+
+/* PAGINATION */
+
+.paginate-container {
+    display: flex;
+    justify-content: center;
+    font-size: 1rem;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.pagination a, .pagination em, .pagination span{
+    padding: 5px 10px;
+    min-width: 32px;
+    line-height: 20px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    transition: border-color .2s cubic-bezier(0.3, 0, 0.5, 1);
+}
+
+@supports (clip-path: polygon(50% 0, 100% 50%, 50% 100%)) {
+    .pagination .previous-page::before, .pagination .next-page::after {
+        display: inline-block;
+        width: 17px;
+        height: 17px;
+        vertical-align: text-bottom;
+        content: "";
+        background-color: currentColor;
+    }
+
+    .pagination .previous-page::before {
+        clip-path: polygon(9.8px 12.8px, 8.7px 12.8px, 4.5px 8.5px, 4.5px 7.5px, 8.7px 3.2px, 9.8px 4.3px, 6.1px 8px, 9.8px 11.7px, 9.8px 12.8px);
+        margin-right: 4px;
+    }
+
+    .pagination .next-page::after {
+        clip-path: polygon(6.2px 3.2px, 7.3px 3.2px, 11.5px 7.5px, 11.5px 8.5px, 7.3px 12.8px, 6.2px 11.7px, 9.9px 8px, 6.2px 4.3px, 6.2px 3.2px);
+        margin-left: 4px;
+    }
+}
+
+.next-page, .previous-page{
+    color: var(--kara-base);
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.pagination a:hover {
+    border-color: var(--kara-light);
+}
+
+.pagination em {
+    font-style: normal;
+    cursor: default;
+}
+
+.pagination .current-page {
+    font-weight: bold;
+    color: white;
+    background-color: var(--kara-strong);
+}
+
+.pagination .disabled {
+    color: gray;
+    cursor: default;
+    border-color: transparent;
+}
