@@ -8,8 +8,8 @@ from django.views.generic import CreateView, TemplateView
 from kara.base.tables import Table
 from kara.base.views import PartialTemplateCreateView, PartialTemplateDetailView
 
-from .forms import CashGiftForm, WeddingGiftRegistryForm
-from .models import CashGift, WeddingGiftRegistry
+from .forms import WeddingGiftForm, WeddingGiftRegistryForm
+from .models import WeddingGift, WeddingGiftRegistry
 
 
 class WeddingGiftRegistryActionSelectView(TemplateView):
@@ -44,7 +44,7 @@ class WeddingGiftRegistryDetailView(LoginRequiredMixin, PartialTemplateDetailVie
     def add_form_to_context(self, context):
         if not (self.request.htmx and self.request.GET):
             # Add `CashGiftForm` to the context unless it's an HTMX GET request.
-            context["cash_gift_form"] = CashGiftForm()
+            context["wedding_gift_form"] = WeddingGiftForm()
 
     def get_template_names(self):
         if self.request.htmx and self.request.GET:
@@ -55,38 +55,38 @@ class WeddingGiftRegistryDetailView(LoginRequiredMixin, PartialTemplateDetailVie
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         self.add_form_to_context(context)
-        cash_gifts = self.object.cash_gifts.all().order_by("-id")
+        wedding_gifts = self.object.wedding_gifts.all().order_by("-id")
         table = Table(
             self.request,
-            model=CashGift,
-            base_queryset=cash_gifts,
+            model=WeddingGift,
+            base_queryset=wedding_gifts,
             list_per_page=settings.WEDDING_GIFT_REGISTRY_TABLE_LIST_PER_PAGE,
         )
         context["table"] = table
         return context
 
     def get_object(self, queryset=None):
-        self.object = WeddingGiftRegistry.objects.prefetch_related("cash_gifts").get(
+        self.object = WeddingGiftRegistry.objects.prefetch_related("wedding_gifts").get(
             pk=self.kwargs.get(self.pk_url_kwarg)
         )
         return self.object
 
 
-class CashGiftAddView(PartialTemplateCreateView):
-    form_class = CashGiftForm
+class WeddingGiftAddView(PartialTemplateCreateView):
+    form_class = WeddingGiftForm
     template_name = "wedding_gifts/wedding_gift_registry_detail.html"
     partial_template_identifier = "#gift-records-section"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        object = WeddingGiftRegistry.objects.prefetch_related("cash_gifts").get(
+        object = WeddingGiftRegistry.objects.prefetch_related("wedding_gifts").get(
             pk=self.kwargs.get("pk")
         )
-        cash_gifts = object.cash_gifts.all().order_by("-id")
+        wedding_gifts = object.wedding_gifts.all().order_by("-id")
         table = Table(
             self.request,
-            model=CashGift,
-            base_queryset=cash_gifts,
+            model=WeddingGift,
+            base_queryset=wedding_gifts,
             list_per_page=settings.WEDDING_GIFT_REGISTRY_TABLE_LIST_PER_PAGE,
         )
         context["object"] = object

@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.db.models import CheckConstraint, Q
 from django.db.models.functions import Lower
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -34,20 +35,24 @@ class WeddingGiftRegistry(models.Model):
     )
     wedding_date = models.DateField(verbose_name=_("wedding date"))
     updated_at = models.DateField(auto_now=True)
-    in_kind_gifts_allow = models.BooleanField(
-        default=True,
-        help_text="Specifies whether to include the details of in-kind gift received.",
-        verbose_name=_("include in-kind gifts"),
-    )
 
 
-class CashGift(models.Model):
+class WeddingGift(models.Model):
+    CASH = "cash"
+    NON_CASH = "non_cash"
+    KIND_CHOICES = [
+        (CASH, _("Cash")),
+        (NON_CASH, _("Non-cash")),
+    ]
+
     registry = models.ForeignKey(
         WeddingGiftRegistry,
         on_delete=models.CASCADE,
-        related_name="cash_gifts",
+        related_name="wedding_gifts",
     )
     name = models.CharField(max_length=128, verbose_name=_("name"))
+    kind = models.CharField(choices=KIND_CHOICES)
+    non_cash_detail = models.CharField(max_length=128, blank=True, null=True)
     price = models.PositiveIntegerField(verbose_name=_("price"))
     receipt_date = models.DateField(
         default=timezone.now, verbose_name=_("date of receipt")
@@ -55,9 +60,18 @@ class CashGift(models.Model):
     tags = models.ManyToManyField(
         "GiftTag",
         blank=True,
-        related_name="cash_gifts",
+        related_name="wedding_gifts",
         verbose_name=_("tags"),
     )
+
+    class Meta:
+        constraints = [
+            CheckConstraint(
+                condition=Q(kind="cash"),
+                check=Q(non_cash_detail__isnull=True),
+                name="cash_no_detail",
+            ),
+        ]
 
 
 class GiftTag(models.Model):

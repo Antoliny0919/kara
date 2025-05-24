@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from kara.base.forms import KaraModelForm
 
 from .fields import UnitPriceField
-from .models import CashGift, WeddingGiftRegistry
+from .models import WeddingGift, WeddingGiftRegistry
 
 
 class WeddingGiftRegistryForm(KaraModelForm):
@@ -16,7 +16,6 @@ class WeddingGiftRegistryForm(KaraModelForm):
             "receiver",
             "receptionist",
             "wedding_date",
-            "in_kind_gifts_allow",
         ]
         help_texts = {
             "receiver": _(
@@ -26,9 +25,6 @@ class WeddingGiftRegistryForm(KaraModelForm):
                 "Please enter the name of the person who is recording "
                 "the wedding gift details."
             ),
-            "in_kind_gifts_allow": _(
-                "Please select this option to include records of in-kind gifts."
-            ),
         }
         widgets = {
             "side": RadioSelect,
@@ -36,24 +32,23 @@ class WeddingGiftRegistryForm(KaraModelForm):
         labels = {"side": _("Select Groom's or Bride's Side")}
 
 
-class CashGiftForm(KaraModelForm):
+class WeddingGiftForm(KaraModelForm):
 
     price = UnitPriceField(
         choices=[("1", 1), ("10000", 10000)],
-        label=CashGift._meta.get_field("price").verbose_name,
+        label=WeddingGift._meta.get_field("price").verbose_name,
         initial={"select": "1"},
-        help_text=_("Enter the amount of the cash gift received."),
+        help_text=_("Enter the amount of the wedding gift received."),
     )
 
     class Meta:
-        model = CashGift
+        model = WeddingGift
         fields = [
             "name",
             "price",
             "receipt_date",
-            "tags",
         ]
         help_texts = {
-            "name": _("Enter the name of the person who gave the cash gift."),
-            "receipt_date": _("Enter the date the cash gift was received."),
+            "name": _("Enter the name of the person who gave the wedding gift."),
+            "receipt_date": _("Enter the date the wedding gift was received."),
         }

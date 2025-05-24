@@ -20,7 +20,7 @@ urlpatterns = [
     ),
     path(
         "registry/<uuid:pk>/cash_gift/add/",
-        views.CashGiftAddView.as_view(),
-        name="add_cash_gift",
+        views.WeddingGiftAddView.as_view(),
+        name="add_wedding_gift",
     ),
 ]
