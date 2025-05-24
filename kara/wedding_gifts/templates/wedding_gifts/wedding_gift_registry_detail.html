@@ -45,6 +45,9 @@
                 <h2 class="text-2xl text-center my-4">{% blocktranslate with receiver=object.receiver %}{{ receiver }}'s Cash Gift Records{% endblocktranslate %}</h2>
                 {% partialdef gift-records-table-section inline %}
                 <section id="gift-records-table-section">
+                    {% if table.search_fields %}
+                    {% search_form table htmx_target="#gift-records-table-section" %}
+                    {% endif %}
                     <div class="table-area border-2 border-kara-strong rounded-xl">
                         <table class="w-full text-left">
                             <thead class="uppercase">

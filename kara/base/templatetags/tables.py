@@ -33,10 +33,20 @@ def pagination_number(pagination, i):
 def pagination_tag(pagination, **kwargs):
     previous_page_num = pagination.page_num - 1
     next_page_num = pagination.page_num + 1
-
     return {
         "pagination": pagination,
         "previous_page": {settings.PAGE_VAR: previous_page_num},
         "next_page": {settings.PAGE_VAR: next_page_num},
+        **kwargs,
+    }
+
+
+@register.inclusion_tag("base/tables/search_form.html", name="search_form")
+def search_form_tag(table, **kwargs):
+    return {
+        "table": table,
+        "field": table.search_form[settings.SEARCH_VAR],
+        "model_name": table.opts.verbose_name,
+        "clear_param": {settings.SEARCH_VAR: None},
         **kwargs,
     }
