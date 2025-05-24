@@ -83,6 +83,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     "django_htmx",
+    "django_filters",
     "template_partials",
     "tailwind",
     "widget_tweaks",

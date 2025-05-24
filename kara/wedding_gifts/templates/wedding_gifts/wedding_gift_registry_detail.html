@@ -41,6 +41,20 @@
             <div class="flex-1 mx-8">
                 <h2 class="text-2xl text-center my-4">{% blocktranslate with receiver=object.receiver %}{{ receiver }}'s Gift Records{% endblocktranslate %}</h2>
                 {% partialdef gifts-table inline %}
+                {% block search %}
+                {% if table.search_form %}
+                <div>
+                    <h2 id="table-search-form" class="sr-only">Search Gifts</h2>
+                    <form method="get" role="search" aria-labelledby="table-search-form">
+                        <label>검색하기</label>
+                        <div>
+                            {{ table.search_form }}
+                            <button type="submit">검색</button>
+                        </div>
+                    </form>
+                </div>
+                {% endif %}
+                {% endblock %}
                 <div id="gifts-table">
                     <div class="table-area border-2 border-kara-strong rounded-xl">
                         <table class="w-full text-left">
