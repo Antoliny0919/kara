@@ -51,7 +51,6 @@ class CashGiftForm(KaraModelForm):
             "name",
             "price",
             "receipt_date",
-            "tags",
         ]
         help_texts = {
             "name": _("Enter the name of the person who gave the cash gift."),
