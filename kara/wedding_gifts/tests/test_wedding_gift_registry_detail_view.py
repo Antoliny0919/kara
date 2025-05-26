@@ -56,17 +56,17 @@ class TestPlaywright:
         self.registry_pk = registry.pk
 
     def test_pagination(self, auth_page, live_server, setup_data):
-        url = reverse("registry", args=(self.registry_pk,))
+        url = reverse("detail_registry", args=(self.registry_pk,))
         auth_page.goto(live_server.url + f"{url}?page=5")
         current_page_button = auth_page.locator("nav.pagination em.current-page")
         expect(current_page_button).to_have_text("5")
-        rows = auth_page.locator("div#gifts-table table tbody tr")
+        rows = auth_page.locator("section#gift-records-table-section table tbody tr")
         # Verify the table contents displayed on page 5
         expect(rows.first.locator("td").first).to_have_text("cash-gift-160")
         expect(rows.last.locator("td").first).to_have_text("cash-gift-151")
         auth_page.locator('nav.pagination a[href*="?page=8"]').click()
         expect(auth_page).to_have_url(re.compile(r"page=8"))
-        rows = auth_page.locator("div#gifts-table table tbody tr")
+        rows = auth_page.locator("section#gift-records-table-section table tbody tr")
         # Verify the table contents displayed on page 8
         expect(rows.first.locator("td").first).to_have_text("cash-gift-130")
         expect(rows.last.locator("td").first).to_have_text("cash-gift-121")

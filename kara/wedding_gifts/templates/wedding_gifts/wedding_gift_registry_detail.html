@@ -43,8 +43,8 @@
             </div>
             <div class="mx-8 my-20">
                 <h2 class="text-2xl text-center my-4">{% blocktranslate with receiver=object.receiver %}{{ receiver }}'s Cash Gift Records{% endblocktranslate %}</h2>
-                {% partialdef gifts-table inline %}
-                <div id="gifts-table">
+                {% partialdef gift-records-table-section inline %}
+                <section id="gift-records-table-section">
                     <div class="table-area border-2 border-kara-strong rounded-xl">
                         <table class="w-full text-left">
                             <thead class="uppercase">
@@ -67,8 +67,8 @@
                             </tbody>
                         </table>
                     </div>
-                    {% pagination table.pagination htmx_target="#gifts-table" %}
-                </div>
+                    {% pagination table.pagination htmx_target="#gift-records-table-section" %}
+                </section>
                 {% endpartialdef %}
             </div>
         </div>
