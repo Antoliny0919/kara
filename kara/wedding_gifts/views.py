@@ -49,7 +49,7 @@ class WeddingGiftRegistryDetailView(LoginRequiredMixin, PartialTemplateDetailVie
     def get_template_names(self):
         if self.request.htmx and self.request.GET:
             # Only render the table for HTMX GET requests
-            self.partial_template_identifier = "#gifts-table"
+            self.partial_template_identifier = "#gift-records-table-section"
         return super().get_template_names()
 
     def get_context_data(self, **kwargs):
