@@ -21,6 +21,7 @@ class Pagination:
             self.page_num = int(request.GET.get(settings.PAGE_VAR, 1))
         except ValueError:
             self.page_num = 1
+        self.params = request.GET.copy()
         self.setup()
 
     @property
