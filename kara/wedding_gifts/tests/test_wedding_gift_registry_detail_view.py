@@ -1,6 +1,7 @@
 import re
 
 import pytest
+from django.template.defaultfilters import urlencode
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from playwright.sync_api import expect
@@ -84,3 +85,28 @@ class TestPlaywright:
         # Disable the "Next" button when on the last page.
         next_button = auth_page.locator("nav.pagination span", has_text="Next")
         expect(next_button).to_contain_class("disabled")
+
+    def test_search(self, auth_page, live_server, user):
+        usernames = ["Mookie Betts", "Ohtani Shohei", "Frederick Charles Freeman"]
+        registry = WeddingGiftRegistryFactory(owner=user)
+        for username in usernames:
+            CashGiftFactory.create(registry_id=registry.id, name=username)
+
+        url = reverse("detail_registry", args=(registry.pk,))
+        auth_page.goto(live_server.url + url)
+        search_input = auth_page.get_by_role("search").locator("input")
+        search_input.fill("mookie betts")
+        submit_button = auth_page.get_by_role("search").locator("button")
+        submit_button.click()
+        expect_url = f"search={urlencode("mookie betts")}"
+        expect(auth_page).to_have_url(re.compile(rf"{expect_url}"))
+        rows = auth_page.locator("section#gift-records-table-section table tbody tr")
+        assert rows.count() == 1
+        expect(rows.first.locator("td").first).to_have_text("Mookie Betts")
+        search_input.fill("Ohtani Shohei")
+        submit_button.click()
+        expect_url = f"search={urlencode("Ohtani Shohei")}"
+        expect(auth_page).to_have_url(re.compile(rf"{expect_url}"))
+        rows = auth_page.locator("section#gift-records-table-section table tbody tr")
+        assert rows.count() == 1
+        expect(rows.first.locator("td").first).to_have_text("Ohtani Shohei")

@@ -5,11 +5,11 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, TemplateView
 
-from kara.base.tables import Table
 from kara.base.views import PartialTemplateCreateView, PartialTemplateDetailView
 
 from .forms import CashGiftForm, WeddingGiftRegistryForm
 from .models import CashGift, WeddingGiftRegistry
+from .tables import CashGiftTable
 
 
 class WeddingGiftRegistryActionSelectView(TemplateView):
@@ -56,7 +56,7 @@ class WeddingGiftRegistryDetailView(LoginRequiredMixin, PartialTemplateDetailVie
         context = super().get_context_data(**kwargs)
         self.add_form_to_context(context)
         cash_gifts = self.object.cash_gifts.all().order_by("-id")
-        table = Table(
+        table = CashGiftTable(
             self.request,
             model=CashGift,
             base_queryset=cash_gifts,
@@ -83,7 +83,7 @@ class CashGiftAddView(PartialTemplateCreateView):
             pk=self.kwargs.get("pk")
         )
         cash_gifts = object.cash_gifts.all().order_by("-id")
-        table = Table(
+        table = CashGiftTable(
             self.request,
             model=CashGift,
             base_queryset=cash_gifts,

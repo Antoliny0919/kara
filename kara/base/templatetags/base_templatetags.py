@@ -16,24 +16,34 @@ register = template.Library()
 def querystring(context, *args, **kwargs):
     """
     Build a query string using `args` and `kwargs` arguments.
+
     This tag constructs a new query string by adding, removing, or modifying
     parameters from the given positional and keyword arguments. Positional
     arguments must be mappings (such as `QueryDict` or `dict`), and
     `request.GET` is used as the starting point if `args` is empty.
+
     Keyword arguments are treated as an extra, final mapping. These mappings
     are processed sequentially, with later arguments taking precedence.
+
     A query string prefixed with `?` is returned.
+
     Raise TemplateSyntaxError if a positional argument is not a mapping or if
     keys are not strings.
+
     For example::
+
         {# Set a parameter on top of `request.GET` #}
         {% querystring foo=3 %}
+
         {# Remove a key from `request.GET` #}
         {% querystring foo=None %}
+
         {# Use with pagination #}
         {% querystring page=page_obj.next_page_number %}
+
         {# Use a custom ``QueryDict`` #}
         {% querystring my_query_dict foo=3 %}
+
         {# Use multiple positional and keyword arguments #}
         {% querystring my_query_dict my_dict foo=3 bar=None %}
     """

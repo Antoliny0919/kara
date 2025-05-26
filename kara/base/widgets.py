@@ -41,6 +41,11 @@ class KaraCheckboxInput(CheckboxInput):
     template_name = "base/widgets/checkbox.html"
 
 
+class KaraSearchInput(TextInput):
+    input_type = "search"
+    template_name = "base/widgets/search.html"
+
+
 class KaraSplitDateInput(MultiWidget):
     template_name = "base/widgets/date.html"
 
