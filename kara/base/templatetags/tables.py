@@ -1,9 +1,9 @@
 from django import template
 from django.conf import settings
-from django.http import QueryDict
-from django.template.defaulttags import querystring
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
+
+from .base_templatetags import querystring
 
 register = template.Library()
 
@@ -18,9 +18,7 @@ def pagination_number(pagination, i):
     elif i == pagination.page_num:
         return format_html('<em class="current-page" aria-current="page">{}</em> ', i)
     else:
-        link = querystring(
-            context=None, query_dict=QueryDict(f"{settings.PAGE_VAR}={i}")
-        )
+        link = querystring(None, pagination.params, {settings.PAGE_VAR: i})
         return format_html(
             '<a href="{}" hx-get="{}" aria-label="page {}" {}>{}</a> ',
             link,
@@ -35,15 +33,10 @@ def pagination_number(pagination, i):
 def pagination_tag(pagination, **kwargs):
     previous_page_num = pagination.page_num - 1
     next_page_num = pagination.page_num + 1
-    previous_page_link = querystring(
-        context=None, query_dict=QueryDict(f"{settings.PAGE_VAR}={previous_page_num}")
-    )
-    next_page_link = querystring(
-        context=None, query_dict=QueryDict(f"{settings.PAGE_VAR}={next_page_num}")
-    )
+
     return {
         "pagination": pagination,
-        "previous_page_link": previous_page_link,
-        "next_page_link": next_page_link,
+        "previous_page": {settings.PAGE_VAR: previous_page_num},
+        "next_page": {settings.PAGE_VAR: next_page_num},
         **kwargs,
     }

@@ -6,6 +6,7 @@ class Table:
         self.model = model
         self.queryset = base_queryset
         self.list_per_page = list_per_page
+        self.params = dict(request.GET.lists())
         self.result_objects = self.apply_pagination(request)
 
     def get_pagination_class(self, **kwargs):
