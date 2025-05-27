@@ -45,7 +45,6 @@ class CashGift(models.Model):
     registry = models.ForeignKey(
         WeddingGiftRegistry,
         on_delete=models.CASCADE,
-        related_name="cash_gifts",
     )
     name = models.CharField(max_length=128, verbose_name=_("name"))
     price = models.PositiveIntegerField(verbose_name=_("price"))
@@ -55,9 +54,11 @@ class CashGift(models.Model):
     tags = models.ManyToManyField(
         "GiftTag",
         blank=True,
-        related_name="cash_gifts",
         verbose_name=_("tags"),
     )
+
+    class Meta:
+        default_related_name = "cash_gifts"
 
 
 class GiftTag(models.Model):
