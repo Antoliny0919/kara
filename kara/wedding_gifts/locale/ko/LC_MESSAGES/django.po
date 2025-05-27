@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-25 16:35+0900\n"
+"POT-Creation-Date: 2025-05-27 19:19+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,21 +72,61 @@ msgstr "결혼식 날짜"
 msgid "include in-kind gifts"
 msgstr "현물 선물 포함 여부"
 
-#: kara/wedding_gifts/models.py:50 kara/wedding_gifts/models.py:64
+#: kara/wedding_gifts/models.py:49 kara/wedding_gifts/models.py:99
 msgid "name"
 msgstr "이름"
 
-#: kara/wedding_gifts/models.py:51
+#: kara/wedding_gifts/models.py:50
 msgid "price"
 msgstr "금액"
 
-#: kara/wedding_gifts/models.py:53
+#: kara/wedding_gifts/models.py:52
 msgid "date of receipt"
 msgstr "수령일"
 
-#: kara/wedding_gifts/models.py:59
+#: kara/wedding_gifts/models.py:57
 msgid "tags"
 msgstr "태그"
+
+#: kara/wedding_gifts/models.py:72
+msgid "Appliance"
+msgstr "가전제품"
+
+#: kara/wedding_gifts/models.py:73
+msgid "Kitchenware"
+msgstr "주방용품"
+
+#: kara/wedding_gifts/models.py:74
+msgid "Furniture"
+msgstr "가구"
+
+#: kara/wedding_gifts/models.py:75
+msgid "Decor"
+msgstr "인테리어 소품"
+
+#: kara/wedding_gifts/models.py:76
+msgid "Bedding"
+msgstr "침구류"
+
+#: kara/wedding_gifts/models.py:77
+msgid "Food or Drink"
+msgstr "와인 및 식료품"
+
+#: kara/wedding_gifts/models.py:78
+msgid "Daily Goods"
+msgstr "생활용품"
+
+#: kara/wedding_gifts/models.py:79
+msgid "Other"
+msgstr "기타"
+
+#: kara/wedding_gifts/models.py:94
+msgid "In-kind gift"
+msgstr "현물 선물"
+
+#: kara/wedding_gifts/models.py:95
+msgid "In-kind gifts"
+msgstr "현물 선물"
 
 #: kara/wedding_gifts/tables.py:11
 msgid ""
@@ -141,6 +181,7 @@ msgid "Add Cash Gift Record"
 msgstr "축의금 기록 추가"
 
 #: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:45
+#, python-format
 msgid "%(receiver)s's Cash Gift Records"
 msgstr "%(receiver)s님의 축의금 기록"
 

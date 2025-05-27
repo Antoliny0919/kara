@@ -41,7 +41,7 @@ class WeddingGiftRegistry(models.Model):
     )
 
 
-class CashGift(models.Model):
+class Gift(models.Model):
     registry = models.ForeignKey(
         WeddingGiftRegistry,
         on_delete=models.CASCADE,
@@ -58,7 +58,41 @@ class CashGift(models.Model):
     )
 
     class Meta:
+        abstract = True
+
+
+class CashGift(Gift):
+
+    class Meta:
         default_related_name = "cash_gifts"
+
+
+class InKindGift(Gift):
+    KIND_CHOICES = [
+        ("appliance", _("Appliance")),
+        ("kitchenware", _("Kitchenware")),
+        ("furniture", _("Furniture")),
+        ("decor", _("Decor")),
+        ("bedding", _("Bedding")),
+        ("food_or_drink", _("Food or Drink")),
+        ("daily_goods", _("Daily Goods")),
+        ("other", _("Other")),
+    ]
+    kind = models.CharField(choices=KIND_CHOICES)
+    kind_detail = models.CharField(max_length=128, null=True)
+
+    class Meta:
+        default_related_name = "in_kind_gifts"
+        # kind must have a detail when it is set to "other"
+        constraints = [
+            models.CheckConstraint(
+                condition=~models.Q(kind__exact="other")
+                | models.Q(kind_detail__isnull=False),
+                name="kind_other_require_detail",
+            )
+        ]
+        verbose_name = _("In-kind gift")
+        verbose_name_plural = _("In-kind gifts")
 
 
 class GiftTag(models.Model):
