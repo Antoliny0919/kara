@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-29 16:49+0900\n"
+"POT-Creation-Date: 2025-05-29 17:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -177,7 +177,7 @@ msgid "Adding a wedding gift registry!"
 msgstr "결혼 선물 저장소를 추가합니다!"
 
 #: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_add.html:18
-#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:38
+#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:44
 msgid "Add"
 msgstr "추가하기"
 
@@ -204,10 +204,15 @@ msgstr "기록인"
 msgid "Add Cash Gift Record"
 msgstr "축의금 기록 추가"
 
-#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:45
-#, python-format
-msgid "%(receiver)s's Cash Gift Records"
-msgstr "%(receiver)s님의 축의금 기록"
+#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:36
+#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:53
+msgid "Cash Gift"
+msgstr "축의금"
+
+#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:37
+#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:54
+msgid "In Kind Gift"
+msgstr "현물 선물"
 
 #: kara/wedding_gifts/templates/wedding_gifts/widgets/unit_price_input.html:5
 msgid "Result Price"
@@ -217,7 +222,7 @@ msgstr "최종 금액"
 msgid "$"
 msgstr "원"
 
-#: kara/wedding_gifts/views.py:33
+#: kara/wedding_gifts/views.py:38
 msgid ""
 "The wedding gift registry has been added. Go ahead and record the gifts "
 "you've received!"

@@ -7,7 +7,11 @@ from django.urls import reverse
 from playwright.sync_api import expect
 
 from kara.accounts.factories import UserFactory
-from kara.wedding_gifts.factories import CashGiftFactory, WeddingGiftRegistryFactory
+from kara.wedding_gifts.factories import (
+    CashGiftFactory,
+    InKindGiftFactory,
+    WeddingGiftRegistryFactory,
+)
 
 
 class WeddingGiftRegistryDetailViewTests(TestCase):
@@ -18,7 +22,8 @@ class WeddingGiftRegistryDetailViewTests(TestCase):
             username="mango777", email="mango777@fruit.com", password="password"
         )
         registry = WeddingGiftRegistryFactory(owner=cls.user)
-        cls.url = reverse("detail_registry", args=(registry.pk,))
+        cls.registry_pk = registry.pk
+        cls.url = reverse("detail_registry", args=(cls.registry_pk,))
         cls.query_url = f"{cls.url}?page=1"
 
     def setUp(self):
@@ -36,9 +41,24 @@ class WeddingGiftRegistryDetailViewTests(TestCase):
 
     def test_form_context(self):
         response = self.client.get(self.url)
-        self.assertIn("cash_gift_form", response.context)
+        self.assertIn("gift_form", response.context)
         response = self.client.get(self.query_url, HTTP_HX_REQUEST="true")
-        self.assertNotIn("cash_gift_form", response.context)
+        self.assertNotIn("gift_form", response.context)
+
+    def test_context_from_mixin(self):
+        response = self.client.get(self.url)
+        self.assertIn("gift_type", response.context)
+        self.assertEqual(response.context["gift_type"], "cash")
+        self.assertEqual(
+            response.context["gift_url"], reverse("cash_gift", args=(self.registry_pk,))
+        )
+        response = self.client.get(f"{self.url}?gift_type=in_kind")
+        self.assertIn("gift_type", response.context)
+        self.assertEqual(response.context["gift_type"], "in_kind")
+        self.assertEqual(
+            response.context["gift_url"],
+            reverse("in_kind_gift", args=(self.registry_pk,)),
+        )
 
 
 @pytest.mark.playwright
@@ -110,3 +130,40 @@ class TestPlaywright:
         rows = auth_page.locator("section#gift-records-table-section table tbody tr")
         assert rows.count() == 1
         expect(rows.first.locator("td").first).to_have_text("Ohtani Shohei")
+
+    def test_change_gift_tab(self, auth_page, live_server, user):
+        registry = WeddingGiftRegistryFactory(owner=user)
+        CashGiftFactory.create(registry_id=registry.id, name="Kim Rich")
+        InKindGiftFactory.create(registry_id=registry.id, name="Jang Poor")
+        url = reverse("detail_registry", args=(registry.pk,))
+        auth_page.goto(live_server.url + url)
+        # Click 'In Kind Gift' tab
+        # Verify that the InKindGift form and table are rendered correctly
+        form_in_kind_select = auth_page.locator(
+            "nav.tab-selector.gift-form ul li a:has-text('In Kind Gift')"
+        )
+        form_in_kind_select.click()
+        expect(form_in_kind_select).to_contain_class("active")
+        table_in_kind_select = auth_page.locator(
+            "nav.tab-selector.gift-table ul li a:has-text('In Kind Gift')"
+        )
+        expect(table_in_kind_select).to_contain_class("active")
+        form = auth_page.locator("form#gift-form")
+        form_hx_post = form.get_attribute("hx-post")
+        assert "in_kind_gift" in form_hx_post
+        rows = auth_page.locator("section#gift-records-table-section table tbody tr")
+        expect(rows.first.locator("td").first).to_have_text("Jang Poor")
+        # Click 'Cash Gift' tab
+        # Verify that the CashGift form and table are rendered correctly
+        table_cash_select = auth_page.locator(
+            "nav.tab-selector.gift-table ul li a:has-text('Cash Gift')"
+        )
+        table_cash_select.click()
+        expect(table_cash_select).to_contain_class("active")
+        form_cash_select = auth_page.locator(
+            "nav.tab-selector.gift-form ul li a:has-text('Cash Gift')"
+        )
+        expect(form_cash_select).to_contain_class("active")
+        form_hx_post = form.get_attribute("hx-post")
+        assert "cash_gift" in form_hx_post
+        expect(rows.first.locator("td").first).to_have_text("Kim Rich")

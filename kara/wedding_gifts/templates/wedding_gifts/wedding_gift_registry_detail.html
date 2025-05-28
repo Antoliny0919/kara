@@ -29,50 +29,63 @@
         {% partialdef gift-records-section inline %}
         <div id="gift-records-section">
             <div class="flex">
-                <div class="flex-1 mx-8">
+                <div class="flex-1">
                     <h2 class="text-2xl text-center my-4">{% translate 'Add Cash Gift Record' %}</h2>
-                    <div class="px-12 pt-10 border-2 border-kara-strong rounded-xl">
-                        <form method="post" hx-post="{% url 'add_cash_gift' object.pk %}" hx-target="#gift-records-section" hx-swap="outerHTML">
+                    <nav class="tab-selector gift-form">
+                        <ul hx-target="#gift-records-section" hx-swap="outerHTML">
+                            <li><a class="{% if gift_type == 'cash' %}active{% endif %}" href="{{ detail_registry_url }}" hx-get="{{ detail_registry_url }}" hx-push-url="true" hx-vals='{"gift_type": "cash"}'>{% trans 'Cash Gift' %}</a></li>
+                            <li><a class="{% if gift_type == 'in_kind' %}active{% endif %}" href="{{ detail_registry_url }}" hx-get="{{ detail_registry_url }}" hx-push-url="true" hx-vals='{"gift_type": "in_kind"}'>{% trans 'In Kind Gift' %}</a></li>
+                        </ul>
+                    </nav>
+                    <div class="px-12 pt-10 border-2 border-kara-strong rounded-b-xl">
+                        <form id="gift-form" method="post" hx-post="{{ gift_url }}" hx-target="#gift-records-section" hx-vals='{"gift_type": "{{ gift_type }}"}' hx-swap="outerHTML">
                             {% csrf_token %}
-                            {{ cash_gift_form }}
+                            {{ gift_form }}
                             <button type="submit" class="block py-4 my-6 bg-kara-base w-1/3 border-2 border-kara-base rounded-lg text-white transition-color duration-500 mx-auto hover:bg-white hover:text-kara-strong">{% trans 'Add' %}</button>
                         </form>
                     </div>
                 </div>
                 <div class="flex-1"></div>
             </div>
-            <div class="mx-8 my-20">
-                <h2 class="text-2xl text-center my-4">{% blocktranslate with receiver=object.receiver %}{{ receiver }}'s Cash Gift Records{% endblocktranslate %}</h2>
-                {% partialdef gift-records-table-section inline %}
-                <section id="gift-records-table-section">
-                    {% if table.search_fields %}
-                    {% search_form table htmx_target="#gift-records-table-section" %}
-                    {% endif %}
-                    <div class="table-area border-2 border-kara-strong rounded-xl">
-                        <table class="w-full text-left">
-                            <thead class="uppercase">
-                                <tr>
-                                    <th>name</th>
-                                    <th>price</th>
-                                    <th>receipt_date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for gift in table.result_objects %}
-                                <tr>
-                                    <td>{{ gift.name }}</td>
-                                    <td>{{ gift.price|intcomma }}</td>
-                                    <td>{{ gift.receipt_date }}</td>
-                                </tr>
-                                {% empty %}
-                                <tr>No gifts</tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    {% pagination table.pagination htmx_target="#gift-records-table-section" %}
-                </section>
-                {% endpartialdef %}
+            <div class="my-20">
+                <nav class="tab-selector gift-table">
+                    <ul hx-target="#gift-records-section" hx-swap="outerHTML">
+                        <li><a class="{% if gift_type == 'cash' %}active{% endif %}" href="{{ detail_registry_url }}" hx-get="{{ detail_registry_url }}" hx-push-url="true" hx-vals='{"gift_type": "cash"}'>{% trans 'Cash Gift' %}</a></li>
+                        <li><a class="{% if gift_type == 'in_kind' %}active{% endif %}" href="{{ detail_registry_url }}" hx-get="{{ detail_registry_url }}" hx-push-url="true" hx-vals='{"gift_type": "in_kind"}'>{% trans 'In Kind Gift' %}</a></li>
+                    </ul>
+                </nav>
+                <div class="py-8 px-12 border-2 border-kara-strong">
+                    {% partialdef gift-records-table-section inline %}
+                    <section id="gift-records-table-section">
+                        {% if table.search_fields %}
+                        {% search_form table htmx_target="#gift-records-table-section" %}
+                        {% endif %}
+                        <div class="table-area border-2 border-kara-strong rounded-xl">
+                            <table class="w-full text-left">
+                                <thead class="uppercase">
+                                    <tr>
+                                        <th>name</th>
+                                        <th>price</th>
+                                        <th>receipt_date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for gift in table.result_objects %}
+                                    <tr>
+                                        <td>{{ gift.name }}</td>
+                                        <td>{{ gift.price|intcomma }}</td>
+                                        <td>{{ gift.receipt_date }}</td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>No gifts</tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% pagination table.pagination htmx_target="#gift-records-table-section" %}
+                    </section>
+                    {% endpartialdef %}
+                </div>
             </div>
         </div>
         {% endpartialdef %}

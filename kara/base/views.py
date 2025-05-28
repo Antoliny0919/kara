@@ -4,6 +4,8 @@ from django.views.generic.base import ContextMixin, TemplateResponseMixin
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import BaseCreateView, FormMixin, ModelFormMixin
 
+from .utils import pascal_to_snake
+
 
 class PartialTemplateResponseMixin(TemplateResponseMixin):
     partial_template_identifier = None
@@ -30,10 +32,10 @@ class PartialTemplateFormMixin(FormMixin):
     @cached_property
     def form_name(self):
         # Convert PascalCase form name to snake_case.
+        # To use a unified form_name across multiple forms,
+        # define it in the parent class(overwrite).
         name = self.form_class.__name__
-        form_name = "".join(
-            ["_" + c.lower() if c.isupper() else c for c in name]
-        ).lstrip("_")
+        form_name = pascal_to_snake(name)
         return form_name
 
     def get_context_data(self, **kwargs):

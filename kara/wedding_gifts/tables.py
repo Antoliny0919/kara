@@ -15,3 +15,8 @@ class CashGiftSearchForm(TableSearchForm):
 class CashGiftTable(Table):
     search_fields = ["name__iexact"]
     search_form_class = CashGiftSearchForm
+
+
+class InKindGiftTable(Table):
+    search_fields = ["name__iexact"]
+    search_form_class = CashGiftSearchForm
