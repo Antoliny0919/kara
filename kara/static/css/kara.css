@@ -234,6 +234,42 @@ tbody tr:nth-child(even) {
     transition: border-color .2s cubic-bezier(0.3, 0, 0.5, 1);
 }
 
+/* SELECT */
+
+.select-container {
+    position: relative;
+    color: var(--kara-strong);
+    padding: 16px;
+    border: 2px solid var(--kara-strong);
+    background-color: var(--kara-base-shallow);
+    border-radius: 0.5rem;
+}
+
+.select-container label {
+    position: absolute;
+    background-color: white;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    transform: translateY(-2rem) scale(0.75);
+    left: 0.5rem;
+}
+
+.select-container select {
+    border: 2px solid var(--kara-base);
+    border-radius: 0.5rem;
+    padding: 10px 24px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.select-container select:focus {
+    outline: none;
+    box-shadow: none;
+}
+
 /* SEARCH */
 
 .search-container {

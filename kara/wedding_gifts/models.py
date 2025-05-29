@@ -78,8 +78,12 @@ class InKindGift(Gift):
         ("daily_goods", _("Daily Goods")),
         ("other", _("Other")),
     ]
-    kind = models.CharField(choices=KIND_CHOICES)
-    kind_detail = models.CharField(max_length=128, null=True)
+    kind = models.CharField(
+        choices=KIND_CHOICES, default="appliance", verbose_name=_("Gift Kind")
+    )
+    kind_detail = models.CharField(
+        max_length=128, null=True, verbose_name=_("Gift Detail")
+    )
 
     class Meta:
         default_related_name = "in_kind_gifts"

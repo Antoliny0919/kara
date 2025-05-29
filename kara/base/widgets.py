@@ -8,6 +8,7 @@ from django.forms.widgets import (
     NumberInput,
     PasswordInput,
     RadioSelect,
+    Select,
     Textarea,
     TextInput,
 )
@@ -31,6 +32,10 @@ class KaraTextarea(Textarea):
 
 class KaraTextInput(TextInput):
     template_name = "base/widgets/input.html"
+
+
+class KaraSelect(Select):
+    template_name = "base/widgets/select.html"
 
 
 class KaraNumberInput(NumberInput):
