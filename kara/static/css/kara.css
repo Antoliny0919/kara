@@ -234,6 +234,50 @@ tbody tr:nth-child(even) {
     transition: border-color .2s cubic-bezier(0.3, 0, 0.5, 1);
 }
 
+/* TAB SELECTOR */
+
+.tab-selector ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.tab-selector ul li {
+    width: 100%;
+    text-align: center;
+}
+
+.tab-selector ul li a {
+    display: block;
+    border: 2px solid var(--kara-strong);
+    border-bottom: 0;
+    padding: 16px 0;
+}
+
+.tab-selector ul li:last-child a {
+    border-left: 0;
+    border-top-right-radius: 10px;
+}
+
+.tab-selector ul li:first-child a {
+    border-top-left-radius: 10px;
+}
+
+.tab-selector ul li a:hover {
+    background: var(--kara-base);
+    width: 100%;
+    color: white;
+    transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
+}
+
+.tab-selector ul li a.active {
+    background: var(--kara-strong);
+    color: white;
+    font-weight: bold;
+    cursor: default;
+}
+
 /* SELECT */
 
 .select-container {

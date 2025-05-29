@@ -19,8 +19,24 @@ urlpatterns = [
         name="detail_registry",
     ),
     path(
-        "registry/<uuid:pk>/cash_gift/add/",
-        views.CashGiftAddView.as_view(),
-        name="add_cash_gift",
+        "registry/<uuid:pk>/cash_gift/",
+        views.CashGiftView.as_view(),
+        name="cash_gift",
     ),
+    path(
+        "registry/<uuid:pk>/in_kind_gift/",
+        views.InKindGiftView.as_view(),
+        name="in_kind_gift",
+    ),
+    # The detail logic(PUT, PATCH, DELETE) will be provided at a later time.
+    # path(
+    #     "registry/<uuid:pk>/cash_gift/<int:pk>/",
+    #     views.CashGiftView.as_view(),
+    #     name="cash_gift_detail",
+    # ),
+    # path(
+    #     "registry/uuid:pk/in_kind_gift/<int:pk>/",
+    #     views.InKindGiftView.as_view(),
+    #     name="in_kind_gift_detail",
+    # ),
 ]
