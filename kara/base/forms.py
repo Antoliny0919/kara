@@ -8,6 +8,7 @@ from .widgets import (
     KaraNumberInput,
     KaraPasswordInput,
     KaraRadioSelect,
+    KaraSelect,
     KaraSplitDateInput,
     KaraTextarea,
     KaraTextInput,
@@ -61,6 +62,7 @@ class KaraWidgetMixin(ConvertWidgetMixin):
         "RadioSelect": KaraRadioSelect,
         "CheckboxInput": KaraCheckboxInput,
         "DateInput": KaraSplitDateInput,
+        "Select": KaraSelect,
     }
 
     def __init__(self, *args, **kwargs):
