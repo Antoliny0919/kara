@@ -18,7 +18,7 @@ class WeddingGiftRegistryDetailViewTests(TestCase):
             username="mango777", email="mango777@fruit.com", password="password"
         )
         registry = WeddingGiftRegistryFactory(owner=cls.user)
-        cls.url = reverse("registry", args=(registry.pk,))
+        cls.url = reverse("detail_registry", args=(registry.pk,))
         cls.query_url = f"{cls.url}?page=1"
 
     def setUp(self):
@@ -26,13 +26,13 @@ class WeddingGiftRegistryDetailViewTests(TestCase):
 
     def test_template_response(self):
         response = self.client.get(self.url)
-        self.assertNotIn("#gifts-table", response.template_name[0])
+        self.assertNotIn("#gift-records-table-section", response.template_name[0])
         # Use partial template when it's an HTMX request with query string
         response = self.client.get(
             self.query_url,
             HTTP_HX_REQUEST="true",
         )
-        self.assertIn("#gifts-table", response.template_name[0])
+        self.assertIn("#gift-records-table-section", response.template_name[0])
 
     def test_form_context(self):
         response = self.client.get(self.url)
