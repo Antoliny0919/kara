@@ -50,3 +50,14 @@ def search_form_tag(table, **kwargs):
         "clear_param": {settings.SEARCH_VAR: None},
         **kwargs,
     }
+
+
+@register.simple_tag
+def display_table_value(table, obj, column):
+    """
+    Returns the display value of a table row.
+    This tag allows applying various formatting based on the field type.
+    You can implement the detailed formatting logic in the
+    `table.display_for_value` method.
+    """
+    return table.display_for_value(obj, column)

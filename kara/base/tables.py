@@ -25,11 +25,22 @@ class Table:
     pagination_class = Pagination
     search_form_class = TableSearchForm
     search_fields = []
+    columns = "__all__"
 
     def __init__(self, request, model, base_queryset, list_per_page=100):
         self.model = model
         self.opts = model._meta
         self.list_per_page = list_per_page
+        if self.columns == "__all__":
+            # Displays all model fields if columns are not specified
+            self.columns = [field.name for field in self.opts.get_fields()]
+        # verbose_column contains the verbose_name of each column field
+        # to be rendered as the actual table column header
+        self.verbose_columns = [
+            self.opts.get_field(column).verbose_name
+            for column in self.columns
+            if self.opts.get_field(column).primary_key is not True
+        ]
         search_form = self.search_form_class(request.GET)
         search_form.is_valid()
         self.search_form = search_form
@@ -38,6 +49,14 @@ class Table:
         if settings.PAGE_VAR in self.params:
             del self.params[settings.PAGE_VAR]
         self.result_objects = self.get_queryset(request, base_queryset)
+
+    def display_for_value(self, obj, column):
+        """
+        Determines the row value to be displayed in the table.
+        You can apply various formatting to the row value based
+        on the column type in this method.
+        """
+        return getattr(obj, column, "")
 
     def get_search_result(self, queryset, search_value):
 
