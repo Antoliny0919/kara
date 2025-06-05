@@ -17,3 +17,14 @@ class Cake(models.Model):
     kind = models.CharField(choices=KIND_CHOICES)
     kind_detail = models.TextField()
     price = models.IntegerField()
+
+
+class Character(models.Model):
+    nickname = models.CharField(max_length=100)
+    level = models.IntegerField(default=0)
+    skill = models.ForeignKey("Skill", on_delete=models.SET_NULL, null=True)
+
+
+class Skill(models.Model):
+    name = models.CharField(max_length=100)
+    damage = models.IntegerField()
