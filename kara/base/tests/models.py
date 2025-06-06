@@ -2,8 +2,8 @@ from django.db import models
 
 
 class Fruit(models.Model):
-    name = models.CharField(max_length=255, verbose_name="Who are you!!")
-    price = models.IntegerField(verbose_name="Price expensive!!")
+    name = models.CharField(max_length=255, verbose_name="name label")
+    price = models.IntegerField(verbose_name="price label")
     expiration_date = models.DateField()
 
 

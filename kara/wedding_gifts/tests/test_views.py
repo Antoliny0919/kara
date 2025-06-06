@@ -136,6 +136,9 @@ class TestPlaywright:
             CashGiftFactory.create(registry_id=registry.id, name=f"cash-gift-{i}")
         self.registry_pk = registry.pk
 
+    def get_table_rows(self, auth_page):
+        return auth_page.locator("section#gift-records-table-section table tbody tr")
+
     def test_pagination(self, auth_page, live_server, setup_data):
         url = reverse("detail_registry", args=(self.registry_pk,))
         auth_page.goto(live_server.url + f"{url}?page=5")
@@ -227,3 +230,59 @@ class TestPlaywright:
         form_hx_post = form.get_attribute("hx-post")
         assert "cash_gift" in form_hx_post
         expect(rows.first.locator("td").first).to_have_text("Kim Rich")
+
+    def test_table_columns_ordering(self, auth_page, live_server, user):
+        registry = WeddingGiftRegistryFactory(owner=user)
+        cases = [
+            {"name": "Alex", "price": 10000, "receipt_date": "2010-10-14"},
+            {"name": "Sam", "price": 10000, "receipt_date": "2010-10-15"},
+            {"name": "Jordan", "price": 10001, "receipt_date": "2010-10-13"},
+            {"name": "Casey", "price": 9999, "receipt_date": "2010-10-14"},
+            {"name": "Taylor", "price": 10002, "receipt_date": "2010-10-13"},
+            {"name": "Morgan", "price": 10000, "receipt_date": "2010-10-16"},
+            {"name": "Burdy", "price": 10001, "receipt_date": "2010-10-14"},
+            {"name": "Loopy", "price": 9998, "receipt_date": "2010-10-17"},
+        ]
+        for case in cases:
+            CashGiftFactory(registry_id=registry.id, **case)
+        url = reverse("detail_registry", args=(registry.pk,))
+        auth_page.goto(live_server.url + url)
+        # order price ascending
+        price_sort_button = auth_page.locator(
+            "table thead tr th.sortable.column-price div a"
+        )
+        price_sort_button.click()
+        expect(auth_page).to_have_url(re.compile(r"order=price"))
+        rows = self.get_table_rows(auth_page)
+        for i, text in enumerate(["Loopy", "Casey"]):
+            expect(rows.nth(i).locator("td").first).to_have_text(text)
+        # order price ascending & receipt_date(priority) ascending
+        receipt_date_sort_button = auth_page.locator(
+            "table thead tr th.sortable.column-receipt_date div a"
+        )
+        receipt_date_sort_button.click()
+        expect(auth_page).to_have_url(re.compile(r"order=price&order=receipt_date"))
+        rows = self.get_table_rows(auth_page)
+        for i, text in enumerate(["Jordan", "Taylor", "Casey", "Alex", "Burdy"]):
+            expect(rows.nth(i).locator("td").first).to_have_text(text)
+        # order price descending & receipt_date(priority) ascending
+        price_desc_button = auth_page.locator(
+            "table thead tr th.sorted.column-price div.sortoptions a.toggle.descending"
+        )
+        price_desc_button.click()
+        expect(auth_page).to_have_url(re.compile(r"order=-price&order=receipt_date"))
+        for i, text in enumerate(["Taylor", "Jordan", "Burdy", "Alex", "Casey"]):
+            expect(rows.nth(i).locator("td").first).to_have_text(text)
+        # order receipt_date descending
+        receipt_date_desc_button = auth_page.locator(
+            "table thead tr th.sorted.column-receipt_date div.sortoptions "
+            "a.toggle.descending"
+        )
+        receipt_date_desc_button.click()
+        price_remove_sort_button = auth_page.locator(
+            "table thead tr th.sorted.column-price div.sortoptions a.sortremove"
+        )
+        price_remove_sort_button.click()
+        expect(auth_page).to_have_url(re.compile(r"order=-receipt_date"))
+        for i, text in enumerate(["Loopy", "Morgan", "Sam"]):
+            expect(rows.nth(i).locator("td").first).to_have_text(text)

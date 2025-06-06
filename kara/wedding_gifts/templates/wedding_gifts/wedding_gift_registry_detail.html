@@ -60,28 +60,7 @@
                         {% if table.search_fields %}
                         {% search_form table htmx_target="#gift-records-table-section" %}
                         {% endif %}
-                        <div class="table-area border-2 border-kara-strong rounded-xl">
-                            <table class="w-full text-left">
-                                <thead class="uppercase">
-                                    <tr>
-                                        {% for column in table.verbose_columns %}
-                                        <th>{{ column }}</th>
-                                        {% endfor %}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for gift in table.result_objects %}
-                                        <tr>
-                                            {% for column in table.columns %}
-                                            <td>{% display_table_value table gift column %}</td>
-                                            {% endfor %}
-                                        </tr>
-                                    {% empty %}
-                                    <tr>No gifts</tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                        {% table table %}
                         {% pagination table.pagination htmx_target="#gift-records-table-section" %}
                     </section>
                     {% endpartialdef %}

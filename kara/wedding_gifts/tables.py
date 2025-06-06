@@ -19,6 +19,7 @@ class GiftTable(Table):
     search_fields = ["name__iexact"]
     search_form_class = CashGiftSearchForm
     int_commas = ["price"]
+    ordering = ["price", "receipt_date"]
 
     def display_for_value(self, obj, column):
         field = obj.__class__._meta.get_field(column)
