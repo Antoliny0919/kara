@@ -1,0 +1,32 @@
+{% load tables base_templatetags %}
+
+<div class="table-container">
+    <table id="table" class="w-full text-left">
+        <thead class="uppercase">
+            <tr>
+                {% for header in table_headers %}
+                <th scope="col" class="{% if header.sorted %}sorted{% elif header.sortable %}sortable{% endif %}">
+                    <div class="text">{% if header.sort %}<a href="{% querystring table.params header.sort %}">{{ header.text }}</a>{% else %}{{ header.text }}{% endif %}</div>
+                    {% if header.sortable and header.sorted %}
+                    <div class="sortoptions">
+                        <a href="{% querystring table.params header.remove_sort %}" class="sortremove"></a>
+                        <a href="{% querystring table.params header.reverse_sort %}" class="toggle {{ header.order_type }}"></a>
+                    </div>
+                    {% endif %}
+                </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for gift in table.result_objects %}
+                <tr>
+                    {% for column in table.columns %}
+                    <td>{% display_table_value table gift column %}</td>
+                    {% endfor %}
+                </tr>
+            {% empty %}
+            <tr>No gifts</tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

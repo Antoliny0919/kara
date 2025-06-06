@@ -61,3 +61,71 @@ def display_table_value(table, obj, column):
     `table.display_for_value` method.
     """
     return table.display_for_value(obj, column)
+
+
+def table_headers(table):
+    sorted_fields = {
+        param.removeprefix("-"): param
+        for param in table.params.get(settings.ORDER_VAR, [])
+    }
+    for field_name in table.columns:
+        is_sortable = field_name in table.ordering
+        verbose_name = table.opts.get_field(field_name).verbose_name
+        if not is_sortable:
+            yield {
+                "text": verbose_name,
+                # "class_attr": format_html(' class="column-{}"', field_name),
+                "sortable": is_sortable,
+            }
+            continue
+        # th_classes = ["sortable", "column-{}".format(field_name)]
+        is_sorted = field_name in sorted_fields
+        if is_sorted:
+            value = sorted_fields[field_name]
+            order_type = "descending" if value.startswith("-") else "ascending"
+            new_order_type = {"ascending": "descending", "descending": "ascending"}[
+                order_type
+            ]
+            remove_sort_params = {
+                key: value for key, value in sorted_fields.items() if key != field_name
+            }
+            reverse_direction = (
+                f"-{field_name}" if new_order_type == "descending" else field_name
+            )
+            reverse_sort_params = sorted_fields.copy()
+            reverse_sort_params[field_name] = reverse_direction
+            yield {
+                "text": verbose_name,
+                "sortable": is_sortable,
+                "sorted": True,
+                "order_type": new_order_type,
+                "remove_sort": {
+                    settings.ORDER_VAR: [
+                        value for _, value in remove_sort_params.items()
+                    ]
+                },
+                "reverse_sort": {
+                    settings.ORDER_VAR: [
+                        value for _, value in reverse_sort_params.items()
+                    ]
+                },
+            }
+            continue
+        # First sorting is applied in ascending order.
+        sort_params = sorted_fields.copy()
+        sort_params[field_name] = field_name
+        yield {
+            "text": verbose_name,
+            "sortable": is_sortable,
+            "sorted": False,
+            "order_type": "ascending",
+            "sort": {settings.ORDER_VAR: [value for _, value in sort_params.items()]},
+        }
+
+
+@register.inclusion_tag("base/tables/table.html", name="table")
+def render_table(table):
+    return {
+        "table_headers": table_headers(table),
+        "table": table,
+    }

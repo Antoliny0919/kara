@@ -1,18 +1,21 @@
-from django.test import RequestFactory, TestCase
+from django.test import RequestFactory, TestCase, override_settings
 
 from kara.base.tables import Table
+from kara.base.templatetags.tables import table_headers
 
 from .models import Character, Fruit, Skill
 
 
 class FruitTable(Table):
-    pass
+    columns = ["name", "price", "expiration_date"]
+    ordering = []
 
 
 class CharacterTable(Table):
     pass
 
 
+@override_settings(ORDER_VAR="o")
 class TableTest(TestCase):
 
     @classmethod
@@ -29,7 +32,74 @@ class TableTest(TestCase):
         self.assertEqual(table.columns, ["id", "name", "price", "expiration_date"])
         self.assertEqual(
             table.verbose_columns,
-            ["Who are you!!", "Price expensive!!", "expiration date"],
+            ["name label", "price label", "expiration date"],
+        )
+
+    def test_table_headers(self):
+        request = self.factory.get("/fake-url/")
+        table = FruitTable(request, self.model, self.queryset)
+        table.ordering = ["price"]
+        headers = table_headers(table)
+        self.assertEqual(
+            list(headers),
+            [
+                {"text": "name label", "sortable": False},
+                {
+                    "text": "price label",
+                    "sortable": True,
+                    "order_type": "asc",
+                    "sort": {"o": ["price"]},
+                },
+                {"text": "expiration date", "sortable": False},
+            ],
+        )
+        request = self.factory.get("/fake-url?o=price")
+        table = FruitTable(request, self.model, self.queryset)
+        table.columns = ["price"]
+        table.ordering = ["price"]
+        headers = table_headers(table)
+        self.assertEqual(
+            list(headers),
+            [
+                {
+                    "text": "price label",
+                    "sortable": True,
+                    "order_type": "desc",
+                    "remove_sort": {"o": []},
+                    "reverse_sort": {"o": ["-price"]},
+                }
+            ],
+        )
+        request = self.factory.get("/fake-url?o=-price&o=name&o=-expiration_date")
+        table = FruitTable(request, self.model, self.queryset)
+        table.columns = ["name", "price", "expiration_date"]
+        table.ordering = ["name", "price", "expiration_date"]
+        headers = table_headers(table)
+        self.assertEqual(
+            list(headers),
+            [
+                {
+                    "text": "name label",
+                    "sortable": True,
+                    "order_type": "desc",
+                    "remove_sort": {"o": ["-price", "-expiration_date"]},
+                    "reverse_sort": {"o": ["-price", "-name", "-expiration_date"]},
+                },
+                {
+                    "text": "price label",
+                    "sortable": True,
+                    "order_type": "asc",
+                    "remove_sort": {"o": ["name", "-expiration_date"]},
+                    "reverse_sort": {"o": ["price", "name", "-expiration_date"]},
+                },
+                {
+                    "text": "expiration date",
+                    "sortable": True,
+                    "order_type": "asc",
+                    "remove_sort": {"o": ["-price", "name"]},
+                    "reverse_sort": {"o": ["-price", "name", "expiration_date"]},
+                },
+            ],
         )
 
 
