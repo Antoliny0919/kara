@@ -44,7 +44,6 @@ class AddWeddingGiftRegistryView(LoginRequiredMixin, CreateView):
 
 class GiftViewMixin(PartialTemplateResponseMixin):
     template_name = "wedding_gifts/wedding_gift_registry_detail.html"
-    partial_template_identifier = "#gift-records-section"
     gift_map = {
         "cash": {
             "model": CashGift,
@@ -83,12 +82,6 @@ class GiftViewMixin(PartialTemplateResponseMixin):
         gift_type = self.request.GET.get("gift_type", None) or self.request.POST.get(
             "gift_type", None
         )
-        if request.method == "GET":
-            if gift_type is None or (gift_type and len(dict(self.request.GET)) > 1):
-                # If gift_type is missing from the query or
-                # if multiple query parameters including gift_type are present,
-                # only the table is partially updated.
-                self.partial_template_identifier = "#gift-records-table-section"
         self.gift_type = gift_type or "cash"
         self.gift_data = self.gift_map[self.gift_type]
         self.registry_pk = self.kwargs.get(self.pk_url_kwarg)
@@ -98,12 +91,20 @@ class GiftViewMixin(PartialTemplateResponseMixin):
         self.gift_related_name = related_field.remote_field.related_name
         return super().dispatch(request, *args, **kwargs)
 
+    def get_gifts_data(self):
+        """
+        Returns the gifts to be passed to the table
+        """
+        gifts = self.queryset
+        if isinstance(self.object, WeddingGiftRegistry):
+            # Retrieves the related gift objects from the given registry
+            # using the gift_related_name
+            gifts = getattr(self.object, self.gift_related_name).all().order_by("-id")
+        return gifts
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if isinstance(self.object, WeddingGiftRegistry):
-            gifts = getattr(self.object, self.gift_related_name).all().order_by("-id")
-        else:
-            gifts = self.queryset
+        gifts = self.get_gifts_data()
         table = self.gift_data["table"](
             self.request,
             model=self.gift_data["model"],
@@ -117,7 +118,7 @@ class GiftViewMixin(PartialTemplateResponseMixin):
                 "detail_registry_url": reverse(
                     "detail_registry", args=(self.registry_pk,)
                 ),
-                "table": table,
+                "gift_table": table,
                 "gift_url": gift_url,
             }
         )
@@ -135,13 +136,7 @@ class WeddingGiftRegistryDetailView(
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if not self.request.htmx or (
-            self.partial_template_identifier != "#gift-records-table-section"
-        ):
-            # Passes the form unless it's an HTML request or
-            # a request that only returns the table template.
-            form = self.gift_data["form"]()
-            context.update({"gift_form": form})
+        context["gift_form"] = self.gift_data["form"]()
         return context
 
 

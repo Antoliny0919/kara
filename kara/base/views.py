@@ -8,20 +8,17 @@ from .utils import pascal_to_snake
 
 
 class PartialTemplateResponseMixin(TemplateResponseMixin):
-    partial_template_identifier = None
 
     def get_template_names(self):
         if self.request.htmx:
-            if self.template_name is None or self.partial_template_identifier is None:
+            htmx_target = self.request.headers.get("Hx-Target", None)
+            if self.template_name is None or htmx_target is None:
                 raise ImproperlyConfigured(
-                    "PartialTemplateResponseMixin requires either a definition of "
-                    "'template_name' and 'partial_template_identifier' or "
-                    "an implementation of 'get_template_names()'"
+                    "PartialTemplateResponseMixin requires 'template_name' to be "
+                    "defined and the request must include an 'Hx-Target' header."
                 )
             else:
-                partial_template_name = (
-                    self.template_name + self.partial_template_identifier
-                )
+                partial_template_name = self.template_name + f"#{htmx_target}"
                 return [partial_template_name]
         else:
             return super().get_template_names()
