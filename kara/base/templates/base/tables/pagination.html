@@ -2,18 +2,18 @@
 
 {% if pagination.multi_page %}
 <div class="paginate-container">
-    <nav class="pagination" aria-labelledby="pagination" hx-target="{{ htmx_target|default:"#table" }}" hx-swap=outerHTML hx-push-url=true>
+    <nav class="pagination" aria-labelledby="pagination" {% if htmx_target %}hx-target="{{ htmx_target }}" hx-swap="outerHTML" hx-push-url="true"{% endif %}>
         <h2 id="pagination" class="sr-only">{% blocktranslate with name=pagination.opts.verbose_name_plural %}Pagination {{ name }}{% endblocktranslate %}</h2>
         {% if pagination.page.has_previous %}
-            <a class="previous-page" href="{% querystring pagination.params previous_page %}" hx-get="{% querystring pagination.params previous_page %}" rel="prev" aria-label="Previous page">{% trans 'Previous '%}</a>
+            <a class="previous-page" {% if htmx_target %}hx-get{% else %}href{% endif %}="{% querystring pagination.params previous_page %}" rel="prev" aria-label="Previous page">{% trans 'Previous '%}</a>
         {% else %}
             <span class="previous-page disabled" rel="prev" aria-label="Previous page">{% trans 'Previous '%}</span>
         {% endif %}
         {% for i in pagination.page_range %}
-            {% pagination_number pagination i %}
+            {% pagination_number pagination i htmx_target %}
         {% endfor %}
         {% if pagination.page.has_next %}
-            <a class="next-page" href="{% querystring pagination.params next_page %}" hx-get="{% querystring pagination.params next_page %}" rel="next" aria-label="Next page">{% trans 'Next' %}</a>
+            <a class="next-page" {% if htmx_target %}hx-get{% else %}href{% endif %}="{% querystring pagination.params next_page %}" rel="next" aria-label="Next page">{% trans 'Next' %}</a>
         {% else %}
             <span class="next-page disabled" rel="next" aria-label="Next page">{% trans 'Next' %}</span>
         {% endif %}

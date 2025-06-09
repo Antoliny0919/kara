@@ -2,7 +2,7 @@
 
 <div class="my-6 w-1/2 min-w-[480px]">
     <h2 id="table-search-form" class="sr-only">{% blocktranslate %}Search {{ model_name }}{% endblocktranslate %}</h2>
-    <form method="get" role="search" hx-target="{{ htmx_target|default:"#table" }}" hx-get="{% querystring table.params clear_param %}" hx-push-url="true" aria-labelledby="table-search-form">
+    <form method="get" role="search" {% if htmx_target %}hx-get="{% querystring table.params clear_param %}" hx-target="{{ htmx_target }}" hx-push-url="true"{% else %}href="{% querystring table.params clear_param %}"{% endif %} aria-labelledby="table-search-form">
         <div class="flex flex-col">
             <div class="w-[32rem] flex flex-row space-x-4">
                 {{ field }}
