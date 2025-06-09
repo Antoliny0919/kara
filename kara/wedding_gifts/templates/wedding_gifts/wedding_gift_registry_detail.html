@@ -57,11 +57,11 @@
                 <div class="py-8 px-12 border-2 border-kara-strong">
                     {% partialdef gift-records-table-section inline %}
                     <section id="gift-records-table-section">
-                        {% if table.search_fields %}
-                        {% search_form table htmx_target="#gift-records-table-section" %}
+                        {% if gift_table.search_fields %}
+                        {% search_form gift_table htmx_target="#gift-records-table-section" %}
                         {% endif %}
-                        {% table table htmx_target="#gift-records-table-section" %}
-                        {% pagination table.pagination htmx_target="#gift-records-table-section" %}
+                        {% table gift_table htmx_target="#gift-records-table-section" %}
+                        {% pagination gift_table.pagination htmx_target="#gift-records-table-section" %}
                     </section>
                     {% endpartialdef %}
                 </div>

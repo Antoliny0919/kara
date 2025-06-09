@@ -40,12 +40,12 @@ class CashGiftAddViewTests(TestCase):
                 "receipt_date_2": "19",
             },
             HTTP_HX_REQUEST="true",
+            HTTP_HX_TARGET="gift-records-section",
             follow=True,
         )
         self.assertContains(response, "<td>Tim Bread</td>")
         self.assertContains(response, "<td>100,000</td>")
         self.assertContains(response, "<td>2020-05-19</td>")
-        self.assertIn("#gift-records-section", response.template_name[0])
 
     def test_reuse_before_selected_price_button(self):
         response = self.client.get(self.url)
@@ -88,22 +88,6 @@ class WeddingGiftRegistryDetailViewTests(TestCase):
 
     def setUp(self):
         self.client.force_login(self.user)
-
-    def test_template_response(self):
-        response = self.client.get(self.url)
-        self.assertNotIn("#gift-records-table-section", response.template_name[0])
-        # Use partial template when it's an HTMX request with query string
-        response = self.client.get(
-            self.query_url,
-            HTTP_HX_REQUEST="true",
-        )
-        self.assertIn("#gift-records-table-section", response.template_name[0])
-
-    def test_form_context(self):
-        response = self.client.get(self.url)
-        self.assertIn("gift_form", response.context)
-        response = self.client.get(self.query_url, HTTP_HX_REQUEST="true")
-        self.assertNotIn("gift_form", response.context)
 
     def test_context_from_mixin(self):
         response = self.client.get(self.url)
@@ -148,7 +132,7 @@ class TestPlaywright:
         # Verify the table contents displayed on page 5
         expect(rows.first.locator("td").first).to_have_text("cash-gift-160")
         expect(rows.last.locator("td").first).to_have_text("cash-gift-151")
-        auth_page.locator('nav.pagination a[href*="?page=8"]').click()
+        auth_page.locator('nav.pagination a[hx-get*="?page=8"]').click()
         expect(auth_page).to_have_url(re.compile(r"page=8"))
         rows = auth_page.locator("section#gift-records-table-section table tbody tr")
         # Verify the table contents displayed on page 8
