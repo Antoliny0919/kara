@@ -1,18 +1,25 @@
-from django.test import RequestFactory, TestCase
+from django.test import RequestFactory, TestCase, override_settings
 
 from kara.base.tables import Table
+from kara.base.templatetags.tables import table_headers
 
 from .models import Character, Fruit, Skill
 
 
 class FruitTable(Table):
-    pass
+    columns = ["name", "price", "expiration_date"]
+    ordering = []
 
 
 class CharacterTable(Table):
     pass
 
 
+class PostTable(Table):
+    pass
+
+
+@override_settings(ORDER_VAR="o")
 class TableTest(TestCase):
 
     @classmethod
@@ -23,13 +30,89 @@ class TableTest(TestCase):
         cls.model = Fruit
         cls.queryset = Fruit.objects.all()
 
-    def test_table_columns(self):
+    def test_table_headers(self):
         request = self.factory.get("/fake-url/")
         table = FruitTable(request, self.model, self.queryset)
-        self.assertEqual(table.columns, ["id", "name", "price", "expiration_date"])
+        table.ordering = ["price"]
+        headers = table_headers(table)
         self.assertEqual(
-            table.verbose_columns,
-            ["Who are you!!", "Price expensive!!", "expiration date"],
+            list(headers),
+            [
+                {
+                    "text": "name label",
+                    "sortable": False,
+                    "class_attr": ' class="column-name"',
+                },
+                {
+                    "text": "price label",
+                    "sortable": True,
+                    "sorted": False,
+                    "order_type": "ascending",
+                    "sort": {"o": ["price"]},
+                    "class_attr": ' class="sortable column-price"',
+                },
+                {
+                    "text": "expiration date",
+                    "sortable": False,
+                    "class_attr": ' class="column-expiration_date"',
+                },
+            ],
+        )
+        request = self.factory.get("/fake-url?o=price")
+        table = FruitTable(request, self.model, self.queryset)
+        table.columns = ["price"]
+        table.ordering = ["price"]
+        headers = table_headers(table)
+        self.assertEqual(
+            list(headers),
+            [
+                {
+                    "text": "price label",
+                    "sortable": True,
+                    "sorted": True,
+                    "order_type": "descending",
+                    "remove_sort": {"o": []},
+                    "reverse_sort": {"o": ["-price"]},
+                    "class_attr": ' class="sorted column-price"',
+                }
+            ],
+        )
+        request = self.factory.get("/fake-url?o=-price&o=name&o=-expiration_date")
+        table = FruitTable(request, self.model, self.queryset)
+        table.columns = ["name", "price", "expiration_date"]
+        table.ordering = ["name", "price", "expiration_date"]
+        headers = table_headers(table)
+        self.assertEqual(
+            list(headers),
+            [
+                {
+                    "text": "name label",
+                    "sortable": True,
+                    "sorted": True,
+                    "order_type": "descending",
+                    "remove_sort": {"o": ["-price", "-expiration_date"]},
+                    "reverse_sort": {"o": ["-price", "-name", "-expiration_date"]},
+                    "class_attr": ' class="sorted column-name"',
+                },
+                {
+                    "text": "price label",
+                    "sortable": True,
+                    "sorted": True,
+                    "order_type": "ascending",
+                    "remove_sort": {"o": ["name", "-expiration_date"]},
+                    "reverse_sort": {"o": ["price", "name", "-expiration_date"]},
+                    "class_attr": ' class="sorted column-price"',
+                },
+                {
+                    "text": "expiration date",
+                    "sortable": True,
+                    "sorted": True,
+                    "order_type": "ascending",
+                    "remove_sort": {"o": ["-price", "name"]},
+                    "reverse_sort": {"o": ["-price", "name", "expiration_date"]},
+                    "class_attr": ' class="sorted column-expiration_date"',
+                },
+            ],
         )
 
 

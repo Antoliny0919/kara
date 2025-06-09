@@ -25,6 +25,7 @@ class Table:
     pagination_class = Pagination
     search_form_class = TableSearchForm
     search_fields = []
+    ordering = []
     columns = "__all__"
 
     def __init__(self, request, model, base_queryset, list_per_page=100):
@@ -33,14 +34,11 @@ class Table:
         self.list_per_page = list_per_page
         if self.columns == "__all__":
             # Displays all model fields if columns are not specified
-            self.columns = [field.name for field in self.opts.get_fields()]
-        # verbose_column contains the verbose_name of each column field
-        # to be rendered as the actual table column header
-        self.verbose_columns = [
-            self.opts.get_field(column).verbose_name
-            for column in self.columns
-            if self.opts.get_field(column).primary_key is not True
-        ]
+            self.columns = [
+                field.name
+                for field in self.opts.get_fields()
+                if field.primary_key is not True
+            ]
         search_form = self.search_form_class(request.GET)
         search_form.is_valid()
         self.search_form = search_form
@@ -119,6 +117,17 @@ class Table:
             )
         return queryset
 
+    def columns_ordering(self, queryset):
+        # Sorting prioritizes the field that was most recently selected.
+        # The most recently selected field is at the end of the array,
+        # and its order is reversed using [::-1]
+        # so that it is applied with the highest priority.
+        order_params = self.params.get(settings.ORDER_VAR, [])[::-1]
+        ordered_queryset = queryset
+        if order_params:
+            ordered_queryset = queryset.order_by(*order_params)
+        return ordered_queryset
+
     def get_pagination_result(self, request, queryset):
         pagination = self.pagination_class(
             request, self.model, self.list_per_page, queryset
@@ -128,5 +137,6 @@ class Table:
 
     def get_queryset(self, request, queryset):
         search_result = self.get_search_result(queryset, self.search_value)
-        pagination_result = self.get_pagination_result(request, search_result)
+        column_order_result = self.columns_ordering(search_result)
+        pagination_result = self.get_pagination_result(request, column_order_result)
         return pagination_result

@@ -192,6 +192,13 @@ input[type="search"] {
 
 /* TABLE */
 
+.table-container {
+    border-width: 2px;
+    border-color: var(--kara-strong);
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+
 table thead tr {
     border-bottom: 2px;
     border-color: var(--kara-strong);
@@ -199,6 +206,9 @@ table thead tr {
 
 table thead tr th {
     padding: 12px 8px;
+    transition: background-color 0.3s ease;
+    background-color: var(--kara-base);
+    color: white;
 }
 
 table tbody tr td {
@@ -211,6 +221,76 @@ tbody tr:nth-child(odd) {
 
 tbody tr:nth-child(even) {
     background-color: var(--kara-light-shallow);
+}
+
+/* TABLE SORT */
+
+table thead tr th.sortable {
+    padding: 0;
+}
+
+table thead tr th.sortable:hover,
+table thead tr th.sorted {
+    background-color: var(--kara-strong);
+}
+
+table thead tr th.sortable a {
+    display: block;
+    padding: 12px 8px;
+}
+
+table thead tr th.sorted {
+    position: relative;
+}
+
+table thead tr th div.sortoptions {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+table thead tr th .sortoptions a {
+    position: relative;
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    background: url(../img/sorting-icons.svg) 0 0 no-repeat;
+    background-size: 14px auto;
+}
+
+table thead tr th .sortoptions a.sortremove::after {
+    content: '\\';
+    position: absolute;
+    top: -6px;
+    left: 2px;
+    font-weight: 200;
+    font-size: 1.125rem;
+    color: white;
+    background-position: 0 0;
+}
+
+table thead tr th .sortoptions a.sortremove:hover {
+    background-position: 0 -14px;
+}
+
+table thead tr th a.ascending {
+    background-position: 0 -28px;
+    top: 2.5px;
+}
+
+table thead tr th a.ascending:hover {
+    background-position: 0 -42px;
+}
+
+table thead tr th a.descending {
+    background-position: 0 -56px;
+    top: -2.5px;
+}
+
+table thead tr th a.descending:hover {
+    background-position: 0 -70px;
 }
 
 /* PAGINATION */
