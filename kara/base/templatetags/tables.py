@@ -134,8 +134,9 @@ def table_headers(table):
 
 
 @register.inclusion_tag("base/tables/table.html", name="table")
-def render_table(table):
+def render_table(table, **kwargs):
     return {
         "table_headers": table_headers(table),
         "table": table,
+        **kwargs,
     }
