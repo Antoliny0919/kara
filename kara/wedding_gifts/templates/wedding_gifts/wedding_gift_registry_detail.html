@@ -60,7 +60,7 @@
                         {% if table.search_fields %}
                         {% search_form table htmx_target="#gift-records-table-section" %}
                         {% endif %}
-                        {% table table %}
+                        {% table table htmx_target="#gift-records-table-section" %}
                         {% pagination table.pagination htmx_target="#gift-records-table-section" %}
                     </section>
                     {% endpartialdef %}

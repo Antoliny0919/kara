@@ -2,23 +2,17 @@
 
 <div class="table-container">
     <table id="table" class="w-full text-left">
-        <thead class="uppercase">
+        <thead class="uppercase" {% if htmx_target %}hx-target="{{ htmx_target }}" hx-swap="outerHTML" hx-push-url="true"{% endif %}>
             <tr>
                 {% for header in table_headers %}
                 <th scope="col" {{ header.class_attr }}>
-                    <div class="text">{% if header.sort %}<a href="{% querystring table.params header.sort %}">{{ header.text }}</a>{% else %}{{ header.text }}{% endif %}</div>
+                    <div class="text">{% if header.sort %}<a {% if htmx_target %}hx-get{% else %}href{% endif %}="{% querystring table.params header.sort %}">{{ header.text }}</a>{% else %}{{ header.text }}{% endif %}</div>
                     {% if header.sortable and header.sorted %}
                     <div class="sortoptions">
                         {% blocktranslate asvar remove_sort_help_text with target=header.text %}Remove from sorting {{ target }}{% endblocktranslate %}
                         {% blocktranslate asvar sort_help_text with target=header.text direction=header.order_type %}Toggle sorting {{ target }} {{ direction }}{% endblocktranslate %}
-                        <a href="{% querystring table.params header.remove_sort %}" class="sortremove"
-                        title="{{ remove_sort_help_text }}"
-                        aria-label="{{ remove_sort_help_text }}"
-                        ></a>
-                        <a href="{% querystring table.params header.reverse_sort %}" class="toggle {{ header.order_type }}"
-                        title="{{ sort_help_text }}"
-                        aria-label="{{ sort_help_text }}"
-                        ></a>
+                        <a {% if htmx_target %}hx-get{% else %}href{% endif %}="{% querystring table.params header.remove_sort %}" class="sortremove" title="{{ remove_sort_help_text }}" aria-label="{{ remove_sort_help_text }}"></a>
+                        <a {% if htmx_target %}hx-get{% else %}href{% endif %}="{% querystring table.params header.reverse_sort %}" class="toggle {{ header.order_type }}" title="{{ sort_help_text }}" aria-label="{{ sort_help_text }}"></a>
                     </div>
                     {% endif %}
                 </th>
