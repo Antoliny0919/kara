@@ -9,7 +9,7 @@ register = template.Library()
 
 
 @register.simple_tag
-def pagination_number(pagination, i):
+def pagination_number(pagination, i, htmx):
     """
     Generate an individual page index link in a paginated list.
     """
@@ -19,9 +19,10 @@ def pagination_number(pagination, i):
         return format_html('<em class="current-page" aria-current="page">{}</em> ', i)
     else:
         link = querystring(None, pagination.params, {settings.PAGE_VAR: i})
+        link_key = "href" if htmx is None else "hx-get"
         return format_html(
-            '<a href="{}" hx-get="{}" aria-label="page {}" {}>{}</a> ',
-            link,
+            '<a {}="{}" aria-label="page {}" {}>{}</a> ',
+            link_key,
             link,
             i,
             mark_safe(' class="end"' if i == pagination.paginator.num_pages else ""),
