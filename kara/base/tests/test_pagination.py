@@ -16,10 +16,10 @@ class PaginationTest(TestCase):
 
     def test_pagination(self):
         request = self.factory.get("/fake-url/")
-        pagination = Pagination(request, 5, self.queryset)
+        pagination = Pagination(request, self.queryset, 5)
         self.assertEqual(pagination.result_count, 100)
         self.assertTrue(pagination.multi_page)
-        pagination = Pagination(request, 200, self.queryset)
+        pagination = Pagination(request, self.queryset, 200)
         self.assertFalse(pagination.multi_page)
 
     def test_pagination_page_range(self):
@@ -35,7 +35,7 @@ class PaginationTest(TestCase):
         ]
         for list_per_page, current_page, expected_page_range in case:
             with self.subTest(list_per_page=list_per_page, current_page=current_page):
-                pagination = Pagination(request, list_per_page, self.queryset)
+                pagination = Pagination(request, self.queryset, list_per_page)
                 pagination.page_num = current_page
                 self.assertEqual(list(pagination.page_range), expected_page_range)
 
@@ -54,7 +54,7 @@ class PaginationTest(TestCase):
             UserFactory.create(username=i)
         queryset = User.objects.all().order_by("id")
         for list_per_page, current_page, expect_object_names in case:
-            pagination = Pagination(request, list_per_page, queryset)
+            pagination = Pagination(request, queryset, list_per_page)
             pagination.page_num = current_page
             objects = pagination.get_objects()
             object_names = list(objects.values_list("username", flat=True))
