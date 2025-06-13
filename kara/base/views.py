@@ -28,12 +28,16 @@ class PartialTemplateFormMixin(FormMixin):
 
     @cached_property
     def form_name(self):
-        # Convert PascalCase form name to snake_case.
-        # To use a unified form_name across multiple forms,
-        # define it in the parent class(overwrite).
+        for cls in self.__class__.__mro__:
+            # Class attribute form_name takes precedence
+            if "form_name" in cls.__dict__ and isinstance(
+                cls.__dict__["form_name"], str
+            ):
+                return cls.form_name
+        # If form_name is not explicitly set,
+        # it defaults to the snake_case version of the form class name
         name = self.form_class.__name__
-        form_name = pascal_to_snake(name)
-        return form_name
+        return pascal_to_snake(name)
 
     def get_context_data(self, **kwargs):
         context = ContextMixin().get_context_data(**kwargs)
