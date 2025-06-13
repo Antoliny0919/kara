@@ -8,14 +8,14 @@ class Pagination:
     def __init__(
         self,
         request,
-        model,
-        list_per_page,
         queryset,
+        list_per_page,
     ):
-        self.list_per_page = list_per_page
         self.queryset = queryset
+        model = queryset.model
         self.model = model
         self.opts = model._meta
+        self.list_per_page = list_per_page
         try:
             # Get the current page from the query string.
             self.page_num = int(request.GET.get(settings.PAGE_VAR, 1))
