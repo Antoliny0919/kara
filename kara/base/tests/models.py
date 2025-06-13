@@ -17,6 +17,7 @@ class Cake(models.Model):
     kind = models.CharField(choices=KIND_CHOICES)
     kind_detail = models.TextField()
     price = models.IntegerField()
+    expiration_date = models.DateField()
 
 
 class Character(models.Model):

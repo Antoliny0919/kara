@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.contrib.humanize.templatetags.humanize import intcomma
-from django.db.models import CharField, TextField
+from django.db.models import CharField, DateField, DateTimeField, TextField
 from django.template.defaultfilters import truncatewords
+from django.utils.formats import date_format
 from django.utils.translation import gettext_lazy as _
 
 from kara.base.tables import Table, TableSearchForm
@@ -28,6 +29,8 @@ class GiftTable(Table):
             value = getattr(obj, f"get_{column}_display")()
         elif isinstance(field, (CharField, TextField)):
             value = truncatewords(value, 8)
+        elif isinstance(field, (DateField, DateTimeField)):
+            value = date_format(value)
         elif column in self.int_commas and isinstance(value, (int, float)):
             value = intcomma(value)
         return value
