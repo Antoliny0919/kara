@@ -130,7 +130,9 @@ class Table:
 
     def get_pagination_result(self, request, queryset):
         pagination = self.pagination_class(
-            request, self.model, self.list_per_page, queryset
+            request,
+            queryset,
+            self.list_per_page,
         )
         self.pagination = pagination
         return pagination.get_objects()
