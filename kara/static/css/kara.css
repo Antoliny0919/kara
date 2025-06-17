@@ -79,7 +79,7 @@ input:is(
     font-size: 1.125rem;
     line-height: 1.75rem;
     color: #111827;
-    background-color: transparent;
+    background-color: white;
     border-radius: 0.5rem;
     border-width: 2px;
     border-color: var(--kara-base);
@@ -183,11 +183,10 @@ input[type="radio"]:focus {
 }
 
 input[type="search"] {
-    width: auto;
     box-sizing: border-box;
     line-height: 1rem;
     padding: 0.75rem 1rem 0.75rem 2.5rem;
-    height: 50px;
+    height: inherit;
 }
 
 /* TABLE */
@@ -398,6 +397,8 @@ table thead tr th a.descending:hover {
 
 .search-container {
     position: relative;
+    height: 3rem;
+    overflow: hidden;
 }
 
 .search-container .search-icon {
