@@ -83,6 +83,7 @@ class GiftTag(models.Model):
                 Lower("name"), "owner", name="unique_lower_name_owner"
             )
         ]
+        verbose_name = _("Tag")
 
     def __str__(self):
         return self.name

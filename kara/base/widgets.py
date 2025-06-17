@@ -1,6 +1,6 @@
 from datetime import date
 
-from django.forms import NumberInput, TextInput
+from django.forms import CheckboxSelectMultiple, NumberInput, TextInput
 from django.forms.widgets import (
     CheckboxInput,
     EmailInput,
@@ -92,4 +92,9 @@ class UnitNumberInput(MultiWidget):
             # Initial data must be provided as a dictionary.
             # e.g. {"select": "10", "number": 1000}
             return [value.get("select"), value.get("number")]
+
         return [None, None]
+
+
+class DropdownCheckboxSelectMultiple(CheckboxSelectMultiple):
+    template_name = "base/widgets/dropdown_checkbox_select_multiple.html"

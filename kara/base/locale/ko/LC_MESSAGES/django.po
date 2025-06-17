@@ -101,6 +101,21 @@ msgstr "정렬 제거 %(target)s"
 msgid "Toggle sorting %(target)s %(direction)s"
 msgstr "정렬 전환 %(target)s %(direction)s"
 
+#: kara/base/templates/base/widgets/dropdown_multi_choose.html:15
+#, python-format
+msgid "Add %(label)s"
+msgstr "%(label)s 추가"
+
+#: kara/base/templates/base/widgets/dropdown_multi_choose.html:19
+#, python-format
+msgid "Selected %(label)s"
+msgstr "선택된 %(label)s"
+
+#: kara/base/templates/base/widgets/dropdown_multi_choose.html:23
+#, python-format
+msgid "Select %(label)s"
+msgstr "%(label)s 선택"
+
 #: kara/base/templates/base/widgets/unit_number_input.html:13
 msgid "Unit"
 msgstr "단위"
