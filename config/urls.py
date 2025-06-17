@@ -30,3 +30,9 @@ urlpatterns += [
     path("accounts/", include("kara.accounts.urls")),
     path("wedding_gifts/", include("kara.wedding_gifts.urls")),
 ]
+
+if settings.DEBUG:
+    if "debug_toolbar" in settings.INSTALLED_APPS:
+        import debug_toolbar
+
+        urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
