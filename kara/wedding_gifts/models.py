@@ -41,6 +41,25 @@ class WeddingGiftRegistry(models.Model):
     )
 
 
+class GiftTag(models.Model):
+    name = models.CharField(max_length=64, verbose_name=_("name"))
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="tags",
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                Lower("name"), "owner", name="unique_lower_name_owner"
+            )
+        ]
+
+    def __str__(self):
+        return self.name
+
+
 class Gift(models.Model):
     registry = models.ForeignKey(
         WeddingGiftRegistry,
@@ -52,7 +71,7 @@ class Gift(models.Model):
         default=timezone.now, verbose_name=_("date of receipt")
     )
     tags = models.ManyToManyField(
-        "GiftTag",
+        GiftTag,
         blank=True,
         verbose_name=_("tags"),
     )
@@ -97,22 +116,3 @@ class InKindGift(Gift):
         ]
         verbose_name = _("In-kind gift")
         verbose_name_plural = _("In-kind gifts")
-
-
-class GiftTag(models.Model):
-    name = models.CharField(max_length=64, verbose_name=_("name"))
-    owner = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name="tags",
-    )
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                Lower("name"), "owner", name="unique_lower_name_owner"
-            )
-        ]
-
-    def __str__(self):
-        return self.name
