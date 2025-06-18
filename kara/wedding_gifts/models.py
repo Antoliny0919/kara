@@ -1,5 +1,7 @@
 import uuid
+from random import randint
 
+from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models.functions import Lower
 from django.utils import timezone
@@ -41,12 +43,34 @@ class WeddingGiftRegistry(models.Model):
     )
 
 
+def get_random_hex_color():
+    """
+    Returns a random color.
+    The color is returned in hex code format.
+    """
+    r, g, b = randint(0, 255), randint(0, 255), randint(0, 255)
+    hex_color = "#{:02X}{:02X}{:02X}".format(r, g, b)
+    return hex_color
+
+
 class GiftTag(models.Model):
     name = models.CharField(max_length=64, verbose_name=_("name"))
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="tags",
+    )
+    description = models.TextField(null=True, blank=True)
+    hex_color = models.CharField(
+        max_length=7,
+        default=get_random_hex_color,
+        validators=[
+            RegexValidator(
+                regex=r"^#[0-9A-F]{6}$",
+                message=_("It is not in hex color code format."),
+                flags=0,
+            )
+        ],
     )
 
     class Meta:
