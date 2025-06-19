@@ -4,6 +4,7 @@ from random import randint
 from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models.functions import Lower
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -41,6 +42,9 @@ class WeddingGiftRegistry(models.Model):
         help_text="Specifies whether to include the details of in-kind gift received.",
         verbose_name=_("include in-kind gifts"),
     )
+
+    def get_absolute_url(self):
+        return reverse("detail_registry", kwargs={"pk": self.pk})
 
 
 def get_random_hex_color():
