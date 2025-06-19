@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-25 16:37+0900\n"
+"POT-Creation-Date: 2025-06-19 17:13+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,6 +90,16 @@ msgstr "검색 %(model_name)s"
 #: kara/base/templates/base/tables/search_form.html:9
 msgid "Search"
 msgstr "검색"
+
+#: kara/base/templates/base/tables/table.html:12
+#, python-format
+msgid "Remove from sorting %(target)s"
+msgstr "정렬 제거 %(target)s"
+
+#: kara/base/templates/base/tables/table.html:13
+#, python-format
+msgid "Toggle sorting %(target)s %(direction)s"
+msgstr "정렬 전환 %(target)s %(direction)s"
 
 #: kara/base/templates/base/widgets/unit_number_input.html:13
 msgid "Unit"
