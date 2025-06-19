@@ -39,7 +39,7 @@ class AddWeddingGiftRegistryView(LoginRequiredMixin, CreateView):
                 "Go ahead and record the gifts you've received!"
             ),
         )
-        return reverse("detail_registry", args=(self.object.pk,))
+        return self.object.get_absolute_url()
 
 
 class GiftViewMixin(PartialTemplateResponseMixin):
