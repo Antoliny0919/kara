@@ -38,7 +38,7 @@
                         </ul>
                     </nav>
                     <div class="px-12 pt-10 border-2 border-kara-strong rounded-b-xl">
-                        <form id="gift-form" method="post" hx-post="{{ gift_url }}" hx-target="#gift-records-section" hx-vals='{"gift_type": "{{ gift_type }}"}' hx-swap="outerHTML">
+                        <form id="gift-form" method="post" action="{{ gift_url }}">
                             {% csrf_token %}
                             {{ gift_form }}
                             <button type="submit" class="block py-4 my-6 bg-kara-base w-1/3 border-2 border-kara-base rounded-lg text-white transition-color duration-500 mx-auto hover:bg-white hover:text-kara-strong">{% trans 'Add' %}</button>

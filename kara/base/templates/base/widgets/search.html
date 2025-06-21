@@ -1,7 +1,7 @@
-<div class="search-container">
-    <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-      <circle cx="11" cy="11" r="8"/>
-      <path d="m21 21-4.35-4.35"/>
-    </svg>
-    <input type="{{ widget.type }}" name="{{ widget.name }}" {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %} {% include "django/forms/widgets/attrs.html" %} placeholder=" ">
-</div>
+<p class="search-container">
+  <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+    <circle cx="11" cy="11" r="8"/>
+    <path d="m21 21-4.35-4.35"/>
+  </svg>
+  <input {% if id != None %}id="{{ id }}"{% endif %}type="search" name="{{ widget.name }}" {% if value != None %}value="{{ value }}"{% elif widget.value != None %}value="{{ widget.value|stringformat:'s' }}"{% endif %} {% include "django/forms/widgets/attrs.html" %} placeholder=" ">
+</p>
