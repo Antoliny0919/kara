@@ -12,6 +12,7 @@ from kara.wedding_gifts.factories import (
     InKindGiftFactory,
     WeddingGiftRegistryFactory,
 )
+from kara.wedding_gifts.models import GiftTag
 
 
 class CashGiftAddViewTests(TestCase):
@@ -114,16 +115,49 @@ class TestPlaywright:
             yield
 
     @pytest.fixture
-    def setup_data(self, settings, user):
+    def setup_gifts(self, settings, user):
         registry = WeddingGiftRegistryFactory(owner=user)
         for i in range(1, 201):
             CashGiftFactory.create(registry_id=registry.id, name=f"cash-gift-{i}")
         self.registry_pk = registry.pk
 
+    @pytest.fixture
+    def setup_tags(self, user):
+        registry = WeddingGiftRegistryFactory(owner=user)
+        tags_data = [
+            (
+                {
+                    "name": "Friend",
+                    "description": "My best friend",
+                    "hex_color": "#34588E",
+                }
+            ),
+            (
+                {
+                    "name": "Family",
+                    "description": (
+                        "My family, including my relatives" "up to the fourth degree"
+                    ),
+                    "hex_color": "#527525",
+                }
+            ),
+            (
+                {
+                    "name": "Escape King",
+                    "description": "The best escape room club in Korea",
+                    "hex_color": "#1AACAE",
+                }
+            ),
+        ]
+        for tag_data in tags_data:
+            GiftTag.objects.create(owner=user, **tag_data)
+        self.registry = registry
+        self.tags_data = tags_data
+
     def get_table_rows(self, auth_page):
         return auth_page.locator("section#gift-records-table-section table tbody tr")
 
-    def test_pagination(self, auth_page, live_server, setup_data):
+    def test_pagination(self, auth_page, live_server, setup_gifts):
         url = reverse("detail_registry", args=(self.registry_pk,))
         auth_page.goto(live_server.url + f"{url}?page=5")
         current_page_button = auth_page.locator("nav.pagination em.current-page")
@@ -270,3 +304,109 @@ class TestPlaywright:
         expect(auth_page).to_have_url(re.compile(r"order=-receipt_date"))
         for i, text in enumerate(["Loopy", "Morgan", "Sam"]):
             expect(rows.nth(i).locator("td").first).to_have_text(text)
+
+    def test_tag_select_widget_dropdown_panel_visible(
+        self, auth_page, live_server, setup_tags
+    ):
+        auth_page.goto(live_server.url + self.registry.get_absolute_url())
+        # The dropdown panel is in a hidden state.
+        dropdown_panel = auth_page.locator("div#id_tags-dropdown-panel")
+        assert dropdown_panel.is_visible() is False
+        tag_select = auth_page.locator(
+            "form#gift-form div.field-container div#id_tags_select button"
+        )
+        tag_select.click()
+        # The dropdown panel becomes visible when a specific button is clicked.
+        dropdown_panel = auth_page.locator("div#id_tags-dropdown-panel")
+        expect(dropdown_panel).to_be_visible()
+
+    def test_tag_node_data(self, auth_page, live_server, setup_tags):
+        auth_page.goto(live_server.url + self.registry.get_absolute_url())
+        tag_select = auth_page.locator(
+            "form#gift-form div.field-container div#id_tags_select button"
+        )
+        tag_select.click()
+
+        from_block = auth_page.locator("div#id_tags-dropdown-panel ul li#id_tags_from")
+        tags = from_block.locator("ul li").all()
+        assert len(tags) == 3
+
+        gift_tags = list(GiftTag.objects.all())
+        # Rendering test for elements inside the dropdown panel.
+        for index, data in enumerate(zip(tags, self.tags_data)):
+            tag, expected = data
+            input = tag.locator("input[type=checkbox]")
+            label = tag.locator("label")
+            tag_symbol_color = label.locator("span.color")
+            tag_info = label.locator("span.info div")
+            expect(input).to_have_value(str(gift_tags[index].id))
+            expect(tag_symbol_color).to_have_attribute(
+                "style", f"background-color: {expected["hex_color"]}"
+            )
+            expect(tag_info.nth(0)).to_have_text(expected["name"])
+            expect(tag_info.nth(1)).to_have_text(expected["description"])
+
+    def test_tag_select_widget_move_tag(self, auth_page, live_server, setup_tags):
+        auth_page.goto(live_server.url + self.registry.get_absolute_url())
+        tag_select = auth_page.locator(
+            "form#gift-form div.field-container div#id_tags_select button"
+        )
+        tag_select.click()
+
+        from_block = auth_page.locator("div#id_tags-dropdown-panel ul li#id_tags_from")
+        from_block_tags = from_block.locator("ul li")
+        to_block = auth_page.locator("div#id_tags-dropdown-panel ul li#id_tags_to")
+        to_block_tags = to_block.locator("ul li")
+        # Currently, no tags are selected.
+        assert to_block_tags.count() == 0
+
+        # from -> to
+        from_first_tag = from_block_tags.first
+        moved_element_html = from_first_tag.inner_html()
+        from_first_tag.click()
+
+        # Specific tag was selected via click from the 'from' list.
+        assert to_block_tags.count() == 1
+
+        to_first_tag = to_block_tags.first
+        assert moved_element_html == str(to_first_tag.inner_html())
+
+        # to -> from
+        moved_element_html = to_first_tag.inner_html()
+        to_first_tag.click()
+
+        assert to_block_tags.count() == 0
+        assert from_block_tags.count() == 3
+
+        # Moved tag is added as the last element of the block.
+        from_last_tag = from_block_tags.last
+        assert moved_element_html == str(from_last_tag.inner_html())
+
+    def test_selected_tags_display(self, auth_page, live_server, setup_tags):
+        auth_page.goto(live_server.url + self.registry.get_absolute_url())
+        tag_select = auth_page.locator(
+            "form#gift-form div.field-container div#id_tags_select button"
+        )
+        tag_select.click()
+
+        from_block = auth_page.locator("div#id_tags-dropdown-panel ul li#id_tags_from")
+        tags = from_block.locator("ul li")
+
+        expected_label = []
+        # Select the last two tags.
+        for _ in range(2):
+            tag = tags.last
+            label = tag.locator("label")
+            tag_info = label.locator("span.info div")
+            expected_label.append(tag_info.nth(0).inner_text())
+            tag.click()
+
+        # Close dropdown panel
+        tag_select.click()
+
+        # Selected tags are present in the selected tags area.
+        selected_tags = auth_page.locator(
+            "form#gift-form div.field-container ul#id_tags_selected li"
+        ).all()
+        for tag in selected_tags:
+            assert tag.inner_text() in expected_label

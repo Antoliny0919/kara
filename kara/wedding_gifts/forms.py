@@ -6,6 +6,7 @@ from kara.base.forms import KaraModelForm
 
 from .fields import UnitPriceField
 from .models import CashGift, Gift, InKindGift, WeddingGiftRegistry
+from .widgets import TagSelectWidget
 
 
 class WeddingGiftRegistryForm(KaraModelForm):
@@ -50,11 +51,14 @@ class GiftForm(KaraModelForm):
             "name",
             "price",
             "receipt_date",
+            "tags",
         ]
         help_texts = {
             "name": _("Enter the name of the person who gave the wedding gift."),
             "receipt_date": _("Enter the date the wedding gift was received."),
+            "tags": _("Add tags to categorize your gifts."),
         }
+        widgets = {"tags": TagSelectWidget()}
 
 
 class CashGiftForm(GiftForm):

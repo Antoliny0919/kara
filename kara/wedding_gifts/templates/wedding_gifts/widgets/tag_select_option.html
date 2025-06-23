@@ -1,0 +1,13 @@
+<li data-label="{{ widget.label }}" data-hex-color="{{ widget.attrs.hex_color }}">
+    <div class="tag-select-container">
+        <input id="{{ widget.attrs.id }}" name={{ widget.name }} type="checkbox" value={{ widget.value }}></input>
+        <label class="tag" for="{{ widget.attrs.id }}">
+            <span class="checkbox"></span>
+            <span class="color" style="background-color: {{ widget.attrs.hex_color }}"></span>
+            <span class="info">
+                <div>{{ widget.label }}</div>
+                <div>{{ widget.attrs.description }}</div>
+            </span>
+        </label>
+    </div>
+</li>

@@ -29,3 +29,19 @@ class Character(models.Model):
 class Skill(models.Model):
     name = models.CharField(max_length=100)
     damage = models.IntegerField()
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=64)
+    description = models.TextField(null=True, blank=True)
+    hex_color = models.CharField()
+
+    def __str__(self):
+        return self.name
+
+
+class Comment(models.Model):
+    title = models.CharField(max_length=100)
+    author = models.CharField(max_length=30)
+    content = models.TextField()
+    tags = models.ManyToManyField(Tag, blank=True)
