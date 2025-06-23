@@ -32,9 +32,9 @@
                 <div class="flex-1">
                     <h2 class="text-2xl text-center my-4">{% translate 'Add Cash Gift Record' %}</h2>
                     <nav class="tab-selector gift-form">
-                        <ul hx-target="#gift-records-section" hx-swap="outerHTML" hx-push-url="true">
-                            <li><a class="{% if gift_type == 'cash' %}active{% endif %}" hx-get="{% querystring gift_type='cash' %}">{% trans 'Cash Gift' %}</a></li>
-                            <li><a class="{% if gift_type == 'in_kind' %}active{% endif %}" hx-get="{% querystring gift_type='in_kind' %}">{% trans 'In Kind Gift' %}</a></li>
+                        <ul>
+                            <li><a class="{% if gift_type == 'cash' %}active{% endif %}" href="{% querystring gift_type='cash' %}">{% trans 'Cash Gift' %}</a></li>
+                            <li><a class="{% if gift_type == 'in_kind' %}active{% endif %}" href="{% querystring gift_type='in_kind' %}">{% trans 'In Kind Gift' %}</a></li>
                         </ul>
                     </nav>
                     <div class="px-12 pt-10 border-2 border-kara-strong rounded-b-xl">
@@ -49,9 +49,9 @@
             </div>
             <div class="my-20">
                 <nav class="tab-selector gift-table">
-                    <ul hx-target="#gift-records-section" hx-swap="outerHTML" hx-push-url="true">
-                        <li><a class="{% if gift_type == 'cash' %}active{% endif %}" hx-get="{% querystring gift_type='cash' %}">{% trans 'Cash Gift' %}</a></li>
-                        <li><a class="{% if gift_type == 'in_kind' %}active{% endif %}" hx-get="{% querystring gift_type='in_kind' %}">{% trans 'In Kind Gift' %}</a></li>
+                    <ul >
+                        <li><a class="{% if gift_type == 'cash' %}active{% endif %}" href="{% querystring gift_type='cash' %}">{% trans 'Cash Gift' %}</a></li>
+                        <li><a class="{% if gift_type == 'in_kind' %}active{% endif %}" href="{% querystring gift_type='in_kind' %}">{% trans 'In Kind Gift' %}</a></li>
                     </ul>
                 </nav>
                 <div class="py-8 px-12 border-2 border-kara-strong">
