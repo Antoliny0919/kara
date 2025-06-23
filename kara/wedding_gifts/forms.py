@@ -93,6 +93,7 @@ class InKindGiftForm(GiftForm):
             "kind_detail",
             "price",
             "receipt_date",
+            "tags",
         ]
         help_texts = {
             **GiftForm.Meta.help_texts,
