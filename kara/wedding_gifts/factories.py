@@ -3,7 +3,15 @@ from factory import fuzzy
 
 from kara.accounts.factories import UserFactory
 
-from .models import CashGift, InKindGift, WeddingGiftRegistry
+from .models import CashGift, GiftTag, InKindGift, WeddingGiftRegistry
+
+
+class GiftTagFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = GiftTag
+
+    owner = factory.SubFactory(UserFactory)
+    name = factory.Faker("name")
 
 
 class WeddingGiftRegistryFactory(factory.django.DjangoModelFactory):
