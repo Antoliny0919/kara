@@ -210,8 +210,25 @@ table thead tr th {
     color: white;
 }
 
+table tbody tr {
+    height: 60px;
+}
+
 table tbody tr td {
     padding: 8px;
+}
+
+table tbody tr td ul.tags {
+    display: flex;
+    gap: 10px;
+    max-width: 20rem;
+    overflow: scroll;
+}
+
+table tbody tr td ul.tags li {
+    padding: 8px 14px;
+    border-radius: 15px;
+    white-space: nowrap;
 }
 
 tbody tr:nth-child(odd) {
