@@ -11,9 +11,6 @@
         <ul id="{{ widget.attrs.id }}_selected" class="result"></ul>
     </div>
     <div x-show="dropdownPanel" id="{{ widget.attrs.id }}-dropdown-panel" class="dropdown-panel">
-        <div class="panel-title">
-            <h3>{% blocktranslate with label=widget.attrs.label %}Add {{ label }}{% endblocktranslate %}</h3>
-        </div>
         <ul>
             <li id="{{ widget.attrs.id }}_to" class="choose-block">
                 <h3>{% blocktranslate with label=widget.attrs.label %}Selected {{ label }}{% endblocktranslate %}</h3>

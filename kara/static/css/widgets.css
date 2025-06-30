@@ -71,11 +71,8 @@
     border-radius: 0.5rem;
     border-color: var(--kara-base);
     border-width: 2px;
+    overflow: hidden;
     z-index: 100;
-}
-
-.dropdown-multi-choose .dropdown-panel .panel-title {
-    padding: 10px;
 }
 
 .dropdown-multi-choose .dropdown-panel .choose-block {
@@ -86,10 +83,18 @@
 
 .dropdown-multi-choose .dropdown-panel .choose-block h3 {
     padding: 5px 10px;
-    border-top: 2px solid var(--kara-strong);
     border-bottom: 2px solid var(--kara-strong);
     background-color: var(--kara-base);
     color: white;
+}
+
+.dropdown-multi-choose .dropdown-panel .choose-block:last-of-type h3 {
+    border-top: 2px solid var(--kara-strong);
+}
+
+.dropdown-multi-choose .dropdown-panel .choose-block ul:has(li:nth-child(4)) {
+    height: 250px;
+    overflow: scroll;
 }
 
 /* GIFT TAG SELECT OPTION */
