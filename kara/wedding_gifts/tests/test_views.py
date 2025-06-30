@@ -305,29 +305,12 @@ class TestPlaywright:
         for i, text in enumerate(["Loopy", "Morgan", "Sam"]):
             expect(rows.nth(i).locator("td").first).to_have_text(text)
 
-    def test_tag_select_widget_dropdown_panel_visible(
-        self, auth_page, live_server, setup_tags
-    ):
-        auth_page.goto(live_server.url + self.registry.get_absolute_url())
-        # The dropdown panel is in a hidden state.
-        dropdown_panel = auth_page.locator("div#id_tags-dropdown-panel")
-        assert dropdown_panel.is_visible() is False
-        tag_select = auth_page.locator(
-            "form#gift-form div.field-container div#id_tags_select button"
-        )
-        tag_select.click()
-        # The dropdown panel becomes visible when a specific button is clicked.
-        dropdown_panel = auth_page.locator("div#id_tags-dropdown-panel")
-        expect(dropdown_panel).to_be_visible()
-
     def test_tag_node_data(self, auth_page, live_server, setup_tags):
         auth_page.goto(live_server.url + self.registry.get_absolute_url())
-        tag_select = auth_page.locator(
-            "form#gift-form div.field-container div#id_tags_select button"
-        )
-        tag_select.click()
 
-        from_block = auth_page.locator("div#id_tags-dropdown-panel ul li#id_tags_from")
+        from_block = auth_page.locator(
+            "div#id_tags-choose-block-container ul li#id_tags_from"
+        )
         tags = from_block.locator("ul li").all()
         assert len(tags) == 3
 
@@ -348,14 +331,14 @@ class TestPlaywright:
 
     def test_tag_select_widget_move_tag(self, auth_page, live_server, setup_tags):
         auth_page.goto(live_server.url + self.registry.get_absolute_url())
-        tag_select = auth_page.locator(
-            "form#gift-form div.field-container div#id_tags_select button"
-        )
-        tag_select.click()
 
-        from_block = auth_page.locator("div#id_tags-dropdown-panel ul li#id_tags_from")
+        from_block = auth_page.locator(
+            "div#id_tags-choose-block-container ul li#id_tags_from"
+        )
         from_block_tags = from_block.locator("ul li")
-        to_block = auth_page.locator("div#id_tags-dropdown-panel ul li#id_tags_to")
+        to_block = auth_page.locator(
+            "div#id_tags-choose-block-container ul li#id_tags_to"
+        )
         to_block_tags = to_block.locator("ul li")
         # Currently, no tags are selected.
         assert to_block_tags.count() == 0
@@ -381,32 +364,3 @@ class TestPlaywright:
         # Moved tag is added as the last element of the block.
         from_last_tag = from_block_tags.last
         assert moved_element_html == str(from_last_tag.inner_html())
-
-    def test_selected_tags_display(self, auth_page, live_server, setup_tags):
-        auth_page.goto(live_server.url + self.registry.get_absolute_url())
-        tag_select = auth_page.locator(
-            "form#gift-form div.field-container div#id_tags_select button"
-        )
-        tag_select.click()
-
-        from_block = auth_page.locator("div#id_tags-dropdown-panel ul li#id_tags_from")
-        tags = from_block.locator("ul li")
-
-        expected_label = []
-        # Select the last two tags.
-        for _ in range(2):
-            tag = tags.last
-            label = tag.locator("label")
-            tag_info = label.locator("span.info div")
-            expected_label.append(tag_info.nth(0).inner_text())
-            tag.click()
-
-        # Close dropdown panel
-        tag_select.click()
-
-        # Selected tags are present in the selected tags area.
-        selected_tags = auth_page.locator(
-            "form#gift-form div.field-container ul#id_tags_selected li"
-        ).all()
-        for tag in selected_tags:
-            assert tag.inner_text() in expected_label

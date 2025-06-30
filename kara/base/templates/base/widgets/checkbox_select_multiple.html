@@ -1,19 +1,7 @@
 {% load i18n static %}
 
-<div id="{{ widget.attrs.id }}" class="dropdown-multi-choose" x-data="{ dropdownPanel: false }" @click.away="dropdownPanel = false">
-    <div id="{{ widget.attrs.id }}_select" class="opener">
-        <button type="button" aria-expanded="false" @click="dropdownPanel = !dropdownPanel" :class="{ 'active': dropdownPanel }">
-            <span>{{ widget.attrs.label }}</span>
-            <span class="dropdown-control-button-svg"></span>
-        </button>
-    </div>
-    <div>
-        <ul id="{{ widget.attrs.id }}_selected" class="result"></ul>
-    </div>
-    <div x-show="dropdownPanel" id="{{ widget.attrs.id }}-dropdown-panel" class="dropdown-panel">
-        <div class="panel-title">
-            <h3>{% blocktranslate with label=widget.attrs.label %}Add {{ label }}{% endblocktranslate %}</h3>
-        </div>
+<div id="{{ widget.attrs.id }}" class="checkbox-select-multiple">
+    <div id="{{ widget.attrs.id }}-choose-block-container" class="choose-block-container">
         <ul>
             <li id="{{ widget.attrs.id }}_to" class="choose-block">
                 <h3>{% blocktranslate with label=widget.attrs.label %}Selected {{ label }}{% endblocktranslate %}</h3>

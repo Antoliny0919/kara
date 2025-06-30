@@ -39,6 +39,8 @@ class WeddingGiftRegistryForm(KaraModelForm):
 
 
 class GiftForm(KaraModelForm):
+    template_name = "wedding_gifts/forms/gift_form.html"
+
     price = UnitPriceField(
         choices=[("1", 1), ("10000", 10000)],
         label=CashGift._meta.get_field("price").verbose_name,

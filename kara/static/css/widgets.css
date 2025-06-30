@@ -20,76 +20,41 @@
 
 /* DROPDOWN MULTI CHOOSE */
 
-.dropdown-multi-choose {
-    position: relative;
+.checkbox-select-multiple .title {
+    font-size: 24px;
+    text-align: center;
+    color: var(--kara-strong);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.checkbox-select-multiple .choose-block-container {
     border-width: 2px;
     border-color: var(--kara-strong);
     border-radius: 0.5rem;
-    padding: 10px;
+    overflow: hidden;
 }
 
-.dropdown-multi-choose .opener button {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1.5px solid var(--kara-strong);
-    color: var(--kara-strong);
-    padding: 4px;
-    width: 100%;
-    height: 100%;
-    transition: background-color 0.3s ease;
-}
-
-.dropdown-multi-choose .opener button .dropdown-control-button-svg {
-    background: url("../img/gear.svg");
-    width: 16px;
-    height: 16px;
-}
-
-.dropdown-multi-choose .opener button:hover,
-.dropdown-multi-choose .opener button.active
-{
-    background-color: var(--dropdown-hover);
-}
-
-.dropdown-multi-choose .result {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px; 
-}
-
-.dropdown-multi-choose .dropdown-panel {
-    position: absolute;
-    left: 0;
-    top: 110%;
-    min-height: 20em;
-    width: 100%;
-    background-color: white;
-    border-radius: 0.5rem;
-    border-color: var(--kara-base);
-    border-width: 2px;
-    z-index: 100;
-}
-
-.dropdown-multi-choose .dropdown-panel .panel-title {
-    padding: 10px;
-}
-
-.dropdown-multi-choose .dropdown-panel .choose-block {
+.checkbox-select-multiple .choose-block {
     display: flex;
     flex-direction: column;
     justify-items: flex-start;
 }
 
-.dropdown-multi-choose .dropdown-panel .choose-block h3 {
+.checkbox-select-multiple .choose-block h3 {
     padding: 5px 10px;
-    border-top: 2px solid var(--kara-strong);
     border-bottom: 2px solid var(--kara-strong);
     background-color: var(--kara-base);
     color: white;
+}
+
+.checkbox-select-multiple .choose-block:last-of-type h3 {
+    border-top: 2px solid var(--kara-strong);
+}
+
+.checkbox-select-multiple .choose-block ul {
+    height: 250px;
+    overflow: scroll;
 }
 
 /* GIFT TAG SELECT OPTION */

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-19 17:13+0900\n"
+"POT-Creation-Date: 2025-06-30 20:31+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,23 +36,23 @@ msgstr "현물 선물 기록을 포함하려면 체크해주세요."
 msgid "Select Groom's or Bride's Side"
 msgstr "신랑 / 신부 측 선택"
 
-#: kara/wedding_gifts/forms.py:57
+#: kara/wedding_gifts/forms.py:59
 msgid "Enter the name of the person who gave the wedding gift."
 msgstr "결혼 선물을 선물한 사람의 이름을 입력해주세요."
 
-#: kara/wedding_gifts/forms.py:58
+#: kara/wedding_gifts/forms.py:60
 msgid "Enter the date the wedding gift was received."
 msgstr "결혼 선물을 받은 날짜를 입력해주세요."
 
-#: kara/wedding_gifts/forms.py:59
+#: kara/wedding_gifts/forms.py:61
 msgid "Add tags to categorize your gifts."
 msgstr "태그를 추가하여 선물들을 분류해보세요."
 
-#: kara/wedding_gifts/forms.py:69
+#: kara/wedding_gifts/forms.py:71
 msgid "Enter the amount of the cash gift received."
 msgstr "축의금 금액을 입력해주세요."
 
-#: kara/wedding_gifts/forms.py:82
+#: kara/wedding_gifts/forms.py:84
 msgid ""
 "Enter the price of the gift.<br>(It's okay if you're not sure of the exact "
 "amount, please provide an estimated value.)"
@@ -60,110 +60,111 @@ msgstr ""
 "선물금액을 입력해주세요.<br>(정확한 금액이 아니더라도 괜찮습니다. 추정되는 금"
 "액이라도 입력해주세요.)"
 
-#: kara/wedding_gifts/forms.py:99
+#: kara/wedding_gifts/forms.py:102
 msgid "What kind of gift did you receive?"
 msgstr "어떤 종류의 선물을 받았나요?"
 
-#: kara/wedding_gifts/forms.py:101
+#: kara/wedding_gifts/forms.py:104
 msgid "Do you know exactly which gift you received?If so, please enter it!"
 msgstr "정확히 어떤 선물인지 아시나요? 알고 있다면, 입력해 주세요!"
 
-#: kara/wedding_gifts/models.py:17
+#: kara/wedding_gifts/models.py:18
 msgid "Groom's side"
 msgstr "신랑측"
 
-#: kara/wedding_gifts/models.py:18
+#: kara/wedding_gifts/models.py:19
 msgid "Bride's side"
 msgstr "신부측"
 
-#: kara/wedding_gifts/models.py:30
+#: kara/wedding_gifts/models.py:31
 msgid "receiver"
 msgstr "수령인"
 
-#: kara/wedding_gifts/models.py:35
+#: kara/wedding_gifts/models.py:36
 msgid "receptionist"
 msgstr "기록인"
 
-#: kara/wedding_gifts/models.py:37
+#: kara/wedding_gifts/models.py:38
 msgid "wedding date"
 msgstr "결혼식 날짜"
 
-#: kara/wedding_gifts/models.py:42
+#: kara/wedding_gifts/models.py:43
 msgid "include in-kind gifts"
 msgstr "현물 선물 포함 여부"
 
+#: kara/wedding_gifts/models.py:61 kara/wedding_gifts/models.py:97
 msgid "name"
 msgstr "이름"
 
-#: kara/wedding_gifts/models.py:70
+#: kara/wedding_gifts/models.py:74
 msgid "It is not in hex color code format."
 msgstr "헥스 색상 코드 형식에 맞지 않습니다."
 
-#: kara/wedding_gifts/models.py:82
+#: kara/wedding_gifts/models.py:86
 msgid "Tag"
 msgstr "태그"
 
-#: kara/wedding_gifts/models.py:94
+#: kara/wedding_gifts/models.py:98
 msgid "price"
 msgstr "금액"
 
-#: kara/wedding_gifts/models.py:96
+#: kara/wedding_gifts/models.py:100
 msgid "date of receipt"
 msgstr "수령일"
 
-#: kara/wedding_gifts/models.py:101
+#: kara/wedding_gifts/models.py:105
 msgid "tags"
 msgstr "태그"
 
-#: kara/wedding_gifts/models.py:116
+#: kara/wedding_gifts/models.py:120
 msgid "Appliance"
 msgstr "가전제품"
 
-#: kara/wedding_gifts/models.py:117
+#: kara/wedding_gifts/models.py:121
 msgid "Kitchenware"
 msgstr "주방용품"
 
-#: kara/wedding_gifts/models.py:118
+#: kara/wedding_gifts/models.py:122
 msgid "Furniture"
 msgstr "가구"
 
-#: kara/wedding_gifts/models.py:119
+#: kara/wedding_gifts/models.py:123
 msgid "Decor"
 msgstr "인테리어 소품"
 
-#: kara/wedding_gifts/models.py:120
+#: kara/wedding_gifts/models.py:124
 msgid "Bedding"
 msgstr "침구류"
 
-#: kara/wedding_gifts/models.py:121
+#: kara/wedding_gifts/models.py:125
 msgid "Food or Drink"
 msgstr "와인 및 식료품"
 
-#: kara/wedding_gifts/models.py:122
+#: kara/wedding_gifts/models.py:126
 msgid "Daily Goods"
 msgstr "생활용품"
 
-#: kara/wedding_gifts/models.py:123
+#: kara/wedding_gifts/models.py:127
 msgid "Other"
 msgstr "기타"
 
-#: kara/wedding_gifts/models.py:126
+#: kara/wedding_gifts/models.py:130
 msgid "Gift Kind"
 msgstr "선물 종류"
 
-#: kara/wedding_gifts/models.py:129
+#: kara/wedding_gifts/models.py:133
 msgid "Gift Detail"
 msgstr "상세 설명"
 
-#: kara/wedding_gifts/models.py:142
+#: kara/wedding_gifts/models.py:146
 msgid "In-kind gift"
 msgstr "현물 선물"
 
-#: kara/wedding_gifts/models.py:143
+#: kara/wedding_gifts/models.py:147
 msgid "In-kind gifts"
 msgstr "현물 선물"
 
-#: kara/wedding_gifts/tables.py:15
+#: kara/wedding_gifts/tables.py:23
 msgid ""
 "Looking for someone? Enter a name to find records that match it exactly."
 msgstr "찾고 싶은 이름을 입력해보세요. 정확히 일치하는 기록이 검색됩니다."
@@ -188,7 +189,7 @@ msgid "Adding a wedding gift registry!"
 msgstr "결혼 선물 저장소를 추가합니다!"
 
 #: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_add.html:18
-#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:44
+#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:43
 msgid "Add"
 msgstr "추가하기"
 
@@ -211,17 +212,17 @@ msgstr "결혼식 날짜"
 msgid "Receptionist"
 msgstr "기록인"
 
-#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:33
+#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:32
 msgid "Add Cash Gift Record"
 msgstr "축의금 기록 추가"
 
-#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:36
-#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:53
+#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:35
+#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:50
 msgid "Cash Gift"
 msgstr "축의금"
 
-#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:37
-#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:54
+#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:36
+#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:51
 msgid "In Kind Gift"
 msgstr "현물 선물"
 

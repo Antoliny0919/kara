@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="{% static 'css/dist/fonts.css' %}">
         <link rel="stylesheet" href="{% static 'css/kara.css' %}">
         <link rel="stylesheet" href="{% static 'css/widgets.css' %}">
+        <link rel="stylesheet" href="{% static 'css/form.css' %}">
         {% htmx_script %}
 	</head>
     <body class="flex flex-col h-screen font-common {% block body_class %}{% endblock %}" hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>

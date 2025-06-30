@@ -1,0 +1,12 @@
+.gift-form {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+.gift-form > div {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    flex: 1;
+}
