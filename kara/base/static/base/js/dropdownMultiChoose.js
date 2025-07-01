@@ -40,7 +40,7 @@
         and therefore needs to be separated through inheritance.
         */
         display_selected: function(id) {
-            const box = document.getElementById(`${id}_selected`)
+            const box = document.getElementById(`${id}-dropdown-result`)
             box.innerHTML = '';
             const selectedOptions = ChooseBox.cache[`${id}_to`]
             for (const option of selectedOptions) {
@@ -49,7 +49,6 @@
                 const hexColorCode = nodeData['hexColor'];
                 const label = nodeData['label'];
                 const li = document.createElement('li');
-                li.className = 'tag';
                 li.style.backgroundColor = hexColorCode;
                 li.style.color = this.get_inner_color(hexColorCode);
                 li.innerHTML = label;

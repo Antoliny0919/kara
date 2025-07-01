@@ -96,4 +96,4 @@ class UnitNumberInput(MultiWidget):
 
 
 class DropdownCheckboxSelectMultiple(CheckboxSelectMultiple):
-    template_name = "base/widgets/dropdown_checkbox_select_multiple.html"
+    template_name = "base/widgets/dropdown/dropdown_checkbox_select_multiple.html"

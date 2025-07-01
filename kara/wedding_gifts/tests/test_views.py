@@ -313,7 +313,7 @@ class TestPlaywright:
         dropdown_panel = auth_page.locator("div#id_tags-dropdown-panel")
         assert dropdown_panel.is_visible() is False
         tag_select = auth_page.locator(
-            "form#gift-form div.field-container div#id_tags_select button"
+            "form#gift-form div.field-container div#id_tags-dropdown-trigger button"
         )
         tag_select.click()
         # The dropdown panel becomes visible when a specific button is clicked.
@@ -323,7 +323,7 @@ class TestPlaywright:
     def test_tag_node_data(self, auth_page, live_server, setup_tags):
         auth_page.goto(live_server.url + self.registry.get_absolute_url())
         tag_select = auth_page.locator(
-            "form#gift-form div.field-container div#id_tags_select button"
+            "form#gift-form div.field-container div#id_tags-dropdown-trigger button"
         )
         tag_select.click()
 
@@ -349,7 +349,7 @@ class TestPlaywright:
     def test_tag_select_widget_move_tag(self, auth_page, live_server, setup_tags):
         auth_page.goto(live_server.url + self.registry.get_absolute_url())
         tag_select = auth_page.locator(
-            "form#gift-form div.field-container div#id_tags_select button"
+            "form#gift-form div.field-container div#id_tags-dropdown-trigger button"
         )
         tag_select.click()
 
@@ -385,7 +385,7 @@ class TestPlaywright:
     def test_selected_tags_display(self, auth_page, live_server, setup_tags):
         auth_page.goto(live_server.url + self.registry.get_absolute_url())
         tag_select = auth_page.locator(
-            "form#gift-form div.field-container div#id_tags_select button"
+            "form#gift-form div.field-container div#id_tags-dropdown-trigger button"
         )
         tag_select.click()
 
@@ -406,7 +406,7 @@ class TestPlaywright:
 
         # Selected tags are present in the selected tags area.
         selected_tags = auth_page.locator(
-            "form#gift-form div.field-container ul#id_tags_selected li"
+            "form#gift-form div.field-container ul#id_tags-dropdown-result li"
         ).all()
         for tag in selected_tags:
             assert tag.inner_text() in expected_label

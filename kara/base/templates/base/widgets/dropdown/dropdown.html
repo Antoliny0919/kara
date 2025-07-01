@@ -1,0 +1,25 @@
+{% load static %}
+
+{% block start_wrapper %}
+<div>
+{% endblock %}
+    <div id="{{ widget.attrs.id }}-dropdown-trigger" class="trigger">
+        {% block dropdown_trigger %}
+        <button type="button" aria-expanded="false" @click="dropdownPanel = !dropdownPanel" :class="{ 'active': dropdownPanel }">
+            <span>{{ widget.attrs.label }}</span>
+        </button>
+        {% endblock %}
+    </div>
+    {% comment %} To display the result externally, include this template. {% endcomment %}
+    <div id="{{ widget.attrs.id }}-dropdown-result" class="result">
+        {% block dropdown_result %}
+        {% endblock %}
+    </div>
+    <div x-show="dropdownPanel" id="{{ widget.attrs.id }}-dropdown-panel" class="panel">
+        {% block dropdown_content %}
+        {% endblock %}
+    </div>
+{% block end_wrapper %}
+</div>
+{% endblock %}
+{% block extra_js %}{% endblock %}
