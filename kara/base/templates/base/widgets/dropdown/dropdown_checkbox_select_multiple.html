@@ -1,0 +1,40 @@
+{% extends "base/widgets/dropdown/dropdown.html" %}
+{% load i18n static %}
+
+{% block start_wrapper %}
+<div id="{{ widget.attrs.id }}" class="dropdown-multi-choose" x-data="{ dropdownPanel: false }" @click.away="dropdownPanel = false">
+{% endblock %}
+    {% block dropdown_trigger %}
+    <button type="button" aria-expanded="false" @click="dropdownPanel = !dropdownPanel" :class="{ 'active': dropdownPanel }">
+        <span>{{ widget.attrs.label }}</span>
+        <span></span>
+    </button>
+    {% endblock %}
+    {% block dropdown_result %}
+        <ul></ul>
+    {% endblock %}
+    {% block dropdown_content %}
+    <ul>
+        <li id="{{ widget.attrs.id }}_to" class="choose-block">
+            <h3>{% blocktranslate with label=widget.attrs.label %}Selected {{ label }}{% endblocktranslate %}</h3>
+            <ul id="{{ widget.attrs.id }}_to_options"></ul>
+        </li>
+        <li id="{{ widget.attrs.id }}_from" class="choose-block">
+            <h3>{% blocktranslate with label=widget.attrs.label %}Select {{ label }}{% endblocktranslate %}</h3>
+            <ul id="{{ widget.attrs.id }}_from_options">
+            {% for group_name, group_choices, group_index in widget.optgroups %}
+            {% for option in group_choices %}
+                {% include option.template_name with widget=option %}
+            {% endfor %}
+            {% endfor %}
+            </ul>
+        </li>
+    </ul>
+    {% endblock %}
+{% block endwrapper %}
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{% static "base/js/chooseBox.js" %}"></script>
+<script src="{% static "base/js/dropdownMultiChoose.js" %}"></script>
+{% endblock %}
