@@ -19,14 +19,9 @@ urlpatterns = [
         name="detail_registry",
     ),
     path(
-        "registry/<uuid:pk>/cash_gift/",
-        views.CashGiftView.as_view(),
-        name="cash_gift",
-    ),
-    path(
-        "registry/<uuid:pk>/in_kind_gift/",
-        views.InKindGiftView.as_view(),
-        name="in_kind_gift",
+        "registry/<uuid:pk>/add/",
+        views.GiftAddView.as_view(),
+        name="add_gift",
     ),
     # The detail logic(PUT, PATCH, DELETE) will be provided at a later time.
     # path(
