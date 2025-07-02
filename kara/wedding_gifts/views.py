@@ -172,3 +172,38 @@ class InKindGiftView(GiftViewMixin, PartialTemplateCreateView):
     def form_valid(self, form):
         form.instance.registry_id = self.kwargs.get("pk")
         return super().form_valid(form)
+
+
+class GiftAddView(LoginRequiredMixin, PartialTemplateCreateView):
+    template_name = "wedding_gifts/gift_add.html"
+    form_name = "gift_form"
+    forms = {
+        "cash": CashGiftForm,
+        "in_kind": InKindGiftForm,
+    }
+    model = {
+        "cash": CashGift,
+        "in_kind": InKindGift,
+    }
+
+    def dispatch(self, request, *args, **kwargs):
+        gift_type = self.request.GET.get("gift_type", None) or self.request.POST.get(
+            "gift_type", None
+        )
+        self.gift_type = gift_type or "cash"
+        self.form_class = self.forms[self.gift_type]
+        self.queryset = self.model[self.gift_type].objects.all().order_by("-id")
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        form.instance.registry_id = self.kwargs.get("pk")
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            {
+                "gift_type": self.gift_type,
+            }
+        )
+        return context
