@@ -21,7 +21,7 @@ DATABASES["default"] = dj_database_url.config(
 # ------------------------------------------------------------------------------
 MEDIA_URL = "test_media/"
 
-MEDIA_ROOT = "/test_media"
+MEDIA_ROOT = "test_media/"
 
 
 # STORAGE

@@ -7,6 +7,11 @@ class Fruit(models.Model):
     expiration_date = models.DateField()
 
 
+class Fish(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.IntegerField()
+
+
 class Cake(models.Model):
     KIND_CHOICES = [
         ("cheese", "Cheese"),

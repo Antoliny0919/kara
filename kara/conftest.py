@@ -8,6 +8,11 @@ from kara.accounts.factories import UserFactory
 expect.set_options(timeout=5_000)
 
 
+@pytest.fixture(autouse=True)
+def _media_storage(settings, tmpdir):
+    settings.MEDIA_ROOT = tmpdir.strpath + "/" + settings.MEDIA_ROOT
+
+
 @pytest.fixture(scope="session")
 def playwright():
     with sync_playwright() as playwright:

@@ -43,16 +43,23 @@ module.exports = {
     ],
     theme: {
         extend: {
+            fontFamily: {
+                'title': ['iceHimchan-Rg', 'sans-serif'],
+                'sub-title': ['ChosunGu', 'sans-serif'],
+                'common': ['Pretendard-Regular', 'sans-serif'],
+            },
             colors: {
                 kara: {
                     'light': '#F3AFC2',
                     'base': '#E46A88',
                     'strong': '#C44B6B',
+                    'title': '#212121',
+                    'sub-title': '#343232',
                 },
-            },
-            fontFamily: {
-                title: ['LeeSeoyun'],
-                common: ['Pretendard-Regular'],
+                registry: {
+                    'select-color': '#591f30',
+                    'select-title-color': '#6f3143',
+                }
             },
             keyframes: {
                 'slide-down': {
