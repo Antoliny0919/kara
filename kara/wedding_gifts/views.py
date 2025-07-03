@@ -1,9 +1,11 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Case, Count, IntegerField, When
 from django.urls import NoReverseMatch, reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, TemplateView
+from django.views.generic.base import ContextMixin
 
 from kara.base.utils import pascal_to_snake
 from kara.base.views import (
@@ -174,7 +176,38 @@ class InKindGiftView(GiftViewMixin, PartialTemplateCreateView):
         return super().form_valid(form)
 
 
-class GiftAddView(LoginRequiredMixin, PartialTemplateCreateView):
+class WeddingGiftRegistryContextMixin(ContextMixin):
+    partial_template = ["registry-selector"]
+
+    def dispatch(self, request, *args, **kwargs):
+        htmx_target = self.request.headers.get("Hx-Target", None)
+        if request.htmx and htmx_target in self.partial_template:
+            self.template_name = "wedding_gifts/base.html"
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        current_registry = self.kwargs.get("pk")
+        context = super().get_context_data(**kwargs)
+        objects = (
+            WeddingGiftRegistry.objects.filter(owner=self.request.user)
+            .annotate(
+                cash_gift_cnt=Count("cash_gifts", distinct=True),
+                in_kind_gift_cnt=Count("in_kind_gifts", distinct=True),
+                current_is_first=Case(
+                    When(pk=current_registry, then=0),
+                    default=1,
+                    output_field=IntegerField(),
+                ),
+            )
+            .order_by("current_is_first", "updated_at")
+        )
+        context["registries"] = objects
+        return context
+
+
+class GiftAddView(
+    LoginRequiredMixin, WeddingGiftRegistryContextMixin, PartialTemplateCreateView
+):
     template_name = "wedding_gifts/gift_add.html"
     form_name = "gift_form"
     forms = {

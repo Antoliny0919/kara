@@ -1,0 +1,64 @@
+{% extends "base/base.html" %}
+
+{% load static i18n partials %}
+
+{% block content %}
+<nav class="w-screen my-20">
+    <div>
+        <div class="my-20 px-32">
+            <div class="flex items-end text-8xl gap-x-10 tracking-widest">
+                <img src="{% static 'wedding_gifts/img/pencil.png' %}" class="h-[8rem] y-[8rem]"></img>
+                <h1 class="font-title text-kara-title">{% translate 'Select Registry' %}</h1>
+            </div>
+            <h2 class="text-xl font-sub-title text-kara-sub-title px-8 my-6">{% translate 'Please select a repository before saving your record. Your saved records will be stored in the selected repository.'%}</h2>
+        </div>
+        <div class="relative border-t-4 border-b-4 border-kara-strong overflow-x-scroll">
+            {% partialdef registry-selector inline %}
+            <ul id="registry-selector" class="flex gap-10 pt-12 pb-20" hx-target="#registry-selector" hx-push-url="true" hx-swap="outerHTML">
+            {% for registry in registries %}
+                <li>
+                    <a hx-get="{% url 'add_gift' pk=registry.pk %}" class="group relative flex flex-col gap-8 items-center p-4 w-[28rem] rounded-md font-bold cursor-pointer text-registry-select-title-color duration-500 {% if registry.pk|stringformat:"s" in request.path %}shadow-[1px_1px_0px_2px_rgba(189,_68,_103,_0.75),_0_20px_65px_rgba(189,_68,_103,_0.6)] translate-x-[2px] translate-y-[2px]{% else %}shadow-[3px_3px_0px_5px_rgba(189,_68,_103,_0.75)] hover:shadow-[1px_1px_0px_2px_rgba(189,_68,_103,_0.75)] hover:translate-x-[2px] hover:translate-y-[2px]{% endif %} first:ml-40 last:ml-40">
+                        <img class="absolute w-[30px] h-[30px] top-3 right-8 group-hover:opacity-100 {% if registry.pk|stringformat:"s" in request.path %}opacity-100{% else %}opacity-0{% endif %}" src="{% static 'wedding_gifts/img/check.png' %}"></img>
+                        <p class="text-xl font-sub-title relative z-10 before:content-[''] before:absolute before:top-[60%] before:left-0 before:w-0 before:h-[40%] before:bg-gradient-to-r before:from-yellow-200 before:to-yellow-300 before:transition-all before:duration-500 before:-z-10 {% if registry.pk|stringformat:"s" in request.path %}before:w-full{% else %}group-hover:before:w-full{% endif %}">
+                            {% blocktranslate with receiver=registry.receiver side=registry.get_side_display %}{{ side }} {{ receiver }}'s wedding gift records{% endblocktranslate %}
+                        </p>
+                        <div class="w-full flex flex-col items-end font-medium">
+                            <img class="m-auto w-[20rem] h-[20rem] mb-8" alt="registry-cover-image" src="{% static registry.cover_image %}"/>
+                            <div class="ml-auto">
+                                <div class="grid grid-cols-[80px_20px_1fr] gap-1">
+                                    <span>{% trans 'Wedding Date' %}</span>
+                                    <span>:</span>
+                                    <span>{{ registry.wedding_date }}</span>
+                                </div>
+                                <div class="grid grid-cols-[80px_20px_1fr] gap-1">
+                                    <span>{% trans 'Receptionist' %}</span>
+                                    <span>:</span>
+                                    <span>{{ registry.receptionist }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col font-medium">
+                            <div class="flex items-center">
+                                <img class="w-[35px] h-[35px] mr-4" alt="cash-gift" src="{% static 'wedding_gifts/img/money.png' %}"/>
+                                <span>{% blocktranslate with cash_gift_cnt=registry.cash_gift_cnt %}There are {{ cash_gift_cnt }} records of cash gifts{% endblocktranslate %}</span>
+                            </div>
+                            <div class="flex items-center mr-4">
+                                <img class="w-[35px] h-[35px] mr-4" alt="in-kind-gift" src="{% static 'wedding_gifts/img/gift-card.png' %}"/>
+                                <span>{% blocktranslate with in_kind_gift_cnt=registry.in_kind_gift_cnt %}There are {{ in_kind_gift_cnt }} records of in kind gifts{% endblocktranslate %}</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+            {% endpartialdef %}
+            <div class="sticky left-0 right-0 bottom-4 flex justify-center">
+                <div class="flex flex-col font-sub-title items-center justify-center gap-2 px-4 py-2">
+                    <span class="text-4xl text-kara-strong">⟷</span>
+                    <span class="text-sm">{% translate 'You can scroll to explore all repositories' %}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}

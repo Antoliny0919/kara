@@ -1,6 +1,9 @@
+import random
 import uuid
+from pathlib import Path
 from random import randint
 
+from django.conf import settings
 from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models.functions import Lower
@@ -9,6 +12,20 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from kara.accounts.models import User
+
+WEDDING_GIFT_REGISTRY_IMAGE_ROOT = Path(
+    f"{settings.MAIN_DIR}/wedding_gifts/static/wedding_gifts/img/registry"
+)
+
+
+def get_random_registry_image():
+    files = [
+        file.name
+        for file in WEDDING_GIFT_REGISTRY_IMAGE_ROOT.iterdir()
+        if file.is_file()
+    ]
+    random_file = random.choice(files)
+    return f"wedding_gifts/img/registry/{random_file}"
 
 
 class WeddingGiftRegistry(models.Model):
@@ -19,6 +36,10 @@ class WeddingGiftRegistry(models.Model):
         (BRIDE, _("Bride's side")),
     )
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    cover_image = models.CharField(
+        max_length=256,
+        default=get_random_registry_image,
+    )
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="wedding_gift_registries"
     )

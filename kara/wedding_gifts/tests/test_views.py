@@ -1,18 +1,22 @@
 import re
 
 import pytest
+from django.db.models.query import QuerySet
 from django.template.defaultfilters import urlencode
-from django.test import TestCase, override_settings
+from django.test import RequestFactory, TestCase, override_settings
 from django.urls import reverse
+from django.views.generic import ListView
 from playwright.sync_api import expect
 
 from kara.accounts.factories import UserFactory
+from kara.base.tests.models import Fish
 from kara.wedding_gifts.factories import (
     CashGiftFactory,
     InKindGiftFactory,
     WeddingGiftRegistryFactory,
 )
 from kara.wedding_gifts.models import GiftTag
+from kara.wedding_gifts.views import WeddingGiftRegistryContextMixin
 
 
 class CashGiftAddViewTests(TestCase):
@@ -104,6 +108,44 @@ class WeddingGiftRegistryDetailViewTests(TestCase):
             response.context["gift_url"],
             reverse("in_kind_gift", args=(self.registry_pk,)),
         )
+
+
+class FishView(WeddingGiftRegistryContextMixin, ListView):
+    template_name = "blue_fish.html"
+    model = Fish
+
+
+class TestWeddingGiftRegistryContextMixin(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.factory = RequestFactory()
+        cls.view = FishView.as_view()
+        cls.user = UserFactory(
+            username="lazy777", email="lazy777@mong.com", password="password"
+        )
+
+    def test_dynamic_add_template_name(self):
+        case = [
+            ("some_htmx_target", "blue_fish.html", "wedding_gifts/base.html"),
+            ("registry-selector", "wedding_gifts/base.html", "blue_fish.html"),
+        ]
+        for hx_target, expected_exist, expected_not_exist in case:
+            request = self.factory.get("/fake-url/", HTTP_HX_TARGET=hx_target)
+            request.htmx = True
+            request.user = self.user
+            response = self.view(request)
+            self.assertIn(expected_exist, response.template_name)
+            self.assertNotIn(expected_not_exist, response.template_name)
+
+    def test_context_data(self):
+        request = self.factory.get("/fake-url/")
+        request.htmx = False
+        request.user = self.user
+        response = self.view(request)
+        self.assertIn("registries", response.context_data)
+        registries = response.context_data["registries"]
+        self.assertTrue(isinstance(registries, QuerySet))
 
 
 @pytest.mark.playwright

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-19 17:13+0900\n"
+"POT-Creation-Date: 2025-07-02 19:05+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,17 +101,12 @@ msgstr "정렬 제거 %(target)s"
 msgid "Toggle sorting %(target)s %(direction)s"
 msgstr "정렬 전환 %(target)s %(direction)s"
 
-#: kara/base/templates/base/widgets/dropdown_multi_choose.html:15
-#, python-format
-msgid "Add %(label)s"
-msgstr "%(label)s 추가"
-
-#: kara/base/templates/base/widgets/dropdown_multi_choose.html:19
+#: kara/base/templates/base/widgets/dropdown/dropdown_checkbox_select_multiple.html:19
 #, python-format
 msgid "Selected %(label)s"
 msgstr "선택된 %(label)s"
 
-#: kara/base/templates/base/widgets/dropdown_multi_choose.html:23
+#: kara/base/templates/base/widgets/dropdown/dropdown_checkbox_select_multiple.html:23
 #, python-format
 msgid "Select %(label)s"
 msgstr "%(label)s 선택"
@@ -123,3 +118,7 @@ msgstr "단위"
 #: kara/base/templates/base/widgets/unit_number_input.html:23
 msgid "Result"
 msgstr "최종"
+
+#, python-format
+#~ msgid "Add %(label)s"
+#~ msgstr "%(label)s 추가"

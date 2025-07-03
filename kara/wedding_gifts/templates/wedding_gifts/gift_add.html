@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "wedding_gifts/base.html" %}
 
 {% load i18n partials tables %}
 
@@ -9,7 +9,8 @@
 {% block body_width %}w-full{% endblock %}
 
 {% block content %}
-<main>
+{{ block.super }}
+<main class="px-20">
     <content>
         <div class="flex">
             <div class="flex-1">
