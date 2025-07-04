@@ -346,18 +346,7 @@ table thead tr th a.descending:hover {
 
 .tab-selector ul li a {
     display: block;
-    border: 2px solid var(--kara-strong);
-    border-bottom: 0;
     padding: 16px 0;
-}
-
-.tab-selector ul li:last-child a {
-    border-left: 0;
-    border-top-right-radius: 10px;
-}
-
-.tab-selector ul li:first-child a {
-    border-top-left-radius: 10px;
 }
 
 .tab-selector ul li a:hover {
