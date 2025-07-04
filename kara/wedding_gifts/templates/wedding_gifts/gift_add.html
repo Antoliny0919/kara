@@ -1,6 +1,6 @@
 {% extends "wedding_gifts/base.html" %}
 
-{% load i18n partials tables %}
+{% load i18n partials tables components %}
 
 {% block title %}{% blocktranslate with receiver=object.receiver %}Add Gift Record | Kara{% endblocktranslate %}{% endblock %}
 
@@ -10,6 +10,7 @@
 
 {% block content %}
 {{ block.super }}
+{% section_header 'wedding_gifts/img/writing.png' 'Add Wedding Gift Record' 'Record the wedding gifts you received.' %}
 <main class="px-20">
     <content>
         <div class="flex">
