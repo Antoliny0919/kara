@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-04 17:05+0900\n"
+"POT-Creation-Date: 2025-07-04 20:04+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -203,24 +203,19 @@ msgstr "스크롤을 사용하여 모든 저장소를 탐색할 수 있습니다
 msgid "Add Gift Record | Kara"
 msgstr "축의금 기록 추가"
 
-#: kara/wedding_gifts/templates/wedding_gifts/gift_add.html:18
-#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:33
-msgid "Add Cash Gift Record"
-msgstr "축의금 기록 추가"
-
-#: kara/wedding_gifts/templates/wedding_gifts/gift_add.html:21
+#: kara/wedding_gifts/templates/wedding_gifts/gift_add.html:20
 #: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:36
 #: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:53
 msgid "Cash Gift"
 msgstr "축의금"
 
-#: kara/wedding_gifts/templates/wedding_gifts/gift_add.html:22
+#: kara/wedding_gifts/templates/wedding_gifts/gift_add.html:21
 #: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:37
 #: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:54
 msgid "In Kind Gift"
 msgstr "현물 선물"
 
-#: kara/wedding_gifts/templates/wedding_gifts/gift_add.html:29
+#: kara/wedding_gifts/templates/wedding_gifts/gift_add.html:28
 #: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_add.html:18
 #: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:44
 msgid "Add"
@@ -256,6 +251,10 @@ msgstr "%(receiver)s님의 결혼 선물 저장소 | Kara"
 msgid "Congratulations on your wedding, %(receiver)s!"
 msgstr "결혼을 축하드립니다, %(receiver)s님!"
 
+#: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:33
+msgid "Add Cash Gift Record"
+msgstr "축의금 기록 추가"
+
 #: kara/wedding_gifts/templates/wedding_gifts/widgets/unit_price_input.html:5
 msgid "Result Price"
 msgstr "최종 금액"
@@ -264,11 +263,11 @@ msgstr "최종 금액"
 msgid "$"
 msgstr "원"
 
-#: kara/wedding_gifts/translation.py:5
+#: kara/wedding_gifts/translation.py:7
 msgid "Select Registry"
 msgstr "저장소 선택"
 
-#: kara/wedding_gifts/translation.py:7
+#: kara/wedding_gifts/translation.py:9
 msgid ""
 "Please select a repository before saving your record. Your saved records "
 "will be stored in the selected repository."
@@ -276,13 +275,21 @@ msgstr ""
 "기록을 저장하기전에 저장소를 먼저 선택해주세요. 저장한 기록들은 선택한 저장소"
 "에 저장됩니다."
 
-#: kara/wedding_gifts/translation.py:10
+#: kara/wedding_gifts/translation.py:12
 msgid "Add Wedding Gift Record"
 msgstr "결혼 선물 기록 추가"
 
-#: kara/wedding_gifts/translation.py:11
+#: kara/wedding_gifts/translation.py:13
 msgid "Record the wedding gifts you received."
 msgstr "받은 결혼 선물들을 기록해 보세요."
+
+#: kara/wedding_gifts/translation.py:14
+msgid "My Registry"
+msgstr "내 저장소"
+
+#: kara/wedding_gifts/translation.py:15
+msgid "View Records"
+msgstr "기록 보기"
 
 #: kara/wedding_gifts/views.py:40
 msgid ""

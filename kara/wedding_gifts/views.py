@@ -176,6 +176,10 @@ class InKindGiftView(GiftViewMixin, PartialTemplateCreateView):
         return super().form_valid(form)
 
 
+class MyWeddingGiftRegistryView(TemplateView):
+    template_name = "wedding_gifts/my_wedding_gifts_registry.html"
+
+
 class WeddingGiftRegistryContextMixin(ContextMixin):
     partial_template = ["registry-selector"]
 
@@ -237,6 +241,11 @@ class GiftAddView(
         context.update(
             {
                 "gift_type": self.gift_type,
+                "current_registry_pk": self.kwargs.get("pk"),
             }
         )
         return context
+
+
+class GiftTableView(TemplateView):
+    template_name = "wedding_gifts/gift_table.html"
