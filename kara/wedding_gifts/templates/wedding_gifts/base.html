@@ -1,17 +1,11 @@
 {% extends "base/base.html" %}
 
-{% load static i18n partials %}
+{% load static i18n partials components %}
 
 {% block content %}
 <nav class="w-screen my-20">
     <div>
-        <div class="my-20 px-32">
-            <div class="flex items-end text-8xl gap-x-10 tracking-widest">
-                <img src="{% static 'wedding_gifts/img/pencil.png' %}" class="h-[8rem] y-[8rem]"></img>
-                <h1 class="font-title text-kara-title">{% translate 'Select Registry' %}</h1>
-            </div>
-            <h2 class="text-xl font-sub-title text-kara-sub-title px-8 my-6">{% translate 'Please select a repository before saving your record. Your saved records will be stored in the selected repository.'%}</h2>
-        </div>
+        {% section_header 'wedding_gifts/img/pencil.png' 'Select Registry' 'Please select a repository before saving your record. Your saved records will be stored in the selected repository.' %}
         <div class="relative border-t-4 border-b-4 border-kara-strong overflow-x-scroll">
             {% partialdef registry-selector inline %}
             <ul id="registry-selector" class="flex gap-10 pt-12 pb-20" hx-target="#registry-selector" hx-push-url="true" hx-swap="outerHTML">
