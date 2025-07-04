@@ -1,21 +1,20 @@
 {% extends "wedding_gifts/base.html" %}
 
-{% load i18n partials tables components %}
+{% load static i18n partials tables components %}
 
 {% block title %}{% blocktranslate with receiver=object.receiver %}Add Gift Record | Kara{% endblocktranslate %}{% endblock %}
 
 {% block meta_title %}{% blocktranslate with receiver=object.receiver %}Add Gift Record | Kara{% endblocktranslate %}{% endblock %}
 
-{% block body_width %}w-full{% endblock %}
+{% block body_width %}w-screen{% endblock %}
 
 {% block content %}
 {{ block.super }}
 {% section_header 'wedding_gifts/img/writing.png' 'Add Wedding Gift Record' 'Record the wedding gifts you received.' %}
-<main class="px-20">
+<main class="my-32">
     <content>
-        <div class="flex">
-            <div class="flex-1">
-                <h2 class="text-2xl text-center my-4">{% translate 'Add Cash Gift Record' %}</h2>
+        <div class="w-[50%] mx-auto">
+            <div>
                 <nav class="tab-selector gift-form">
                     <ul>
                         <li><a class="{% if gift_type == 'cash' %}active{% endif %}" href="{% querystring gift_type='cash' %}">{% trans 'Cash Gift' %}</a></li>
@@ -30,7 +29,6 @@
                     </form>
                 </div>
             </div>
-            <div class="flex-1"></div>
         </div>
     </content>
 </main>
