@@ -11,4 +11,6 @@ SECTION_HEADER_TRANSLATIONS = [
     ),
     _("Add Wedding Gift Record"),
     _("Record the wedding gifts you received."),
+    _("My Registry"),
+    _("View Records"),
 ]

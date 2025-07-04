@@ -1,6 +1,6 @@
 {% extends "wedding_gifts/base.html" %}
 
-{% load static i18n partials tables components %}
+{% load static i18n partials tables base_components wedding_gifts_components %}
 
 {% block title %}{% blocktranslate with receiver=object.receiver %}Add Gift Record | Kara{% endblocktranslate %}{% endblock %}
 
@@ -11,7 +11,7 @@
 {% block content %}
 {{ block.super }}
 {% section_header 'wedding_gifts/img/writing.png' 'Add Wedding Gift Record' 'Record the wedding gifts you received.' %}
-<main class="my-32">
+<section class="my-32">
     <content>
         <div class="w-[50%] mx-auto">
             <div>
@@ -31,5 +31,8 @@
             </div>
         </div>
     </content>
-</main>
+    {% url 'gift_table' pk=current_registry_pk as next_page_link %}
+    {% url 'my_registry' as previous_page_link %}
+    {% footer_navigation 'My Registry' 'View Records' previous_page_link next_page_link %}
+</section>
 {% endblock %}

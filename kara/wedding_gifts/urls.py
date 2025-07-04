@@ -9,6 +9,11 @@ urlpatterns = [
         name="registry_action_select",
     ),
     path(
+        "registry/",
+        views.MyWeddingGiftRegistryView.as_view(),
+        name="my_registry",
+    ),
+    path(
         "registry/add/",
         views.AddWeddingGiftRegistryView.as_view(),
         name="add_registry",
@@ -22,6 +27,11 @@ urlpatterns = [
         "registry/<uuid:pk>/add/",
         views.GiftAddView.as_view(),
         name="add_gift",
+    ),
+    path(
+        "registry/<uuid:pk>/gift/table/",
+        views.GiftTableView.as_view(),
+        name="gift_table",
     ),
     # The detail logic(PUT, PATCH, DELETE) will be provided at a later time.
     # path(
