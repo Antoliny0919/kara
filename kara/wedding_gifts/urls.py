@@ -24,7 +24,7 @@ urlpatterns = [
         name="detail_registry",
     ),
     path(
-        "registry/<uuid:pk>/add/",
+        "registry/<uuid:pk>/gift/add/",
         views.GiftAddView.as_view(),
         name="add_gift",
     ),
