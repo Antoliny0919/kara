@@ -19,11 +19,6 @@ urlpatterns = [
         name="add_registry",
     ),
     path(
-        "registry/<uuid:pk>/",
-        views.WeddingGiftRegistryDetailView.as_view(),
-        name="detail_registry",
-    ),
-    path(
         "registry/<uuid:pk>/gift/add/",
         views.GiftAddView.as_view(),
         name="add_gift",
