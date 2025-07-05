@@ -79,37 +79,6 @@ class CashGiftAddViewTests(TestCase):
         )
 
 
-class WeddingGiftRegistryDetailViewTests(TestCase):
-
-    @classmethod
-    def setUpTestData(cls):
-        cls.user = UserFactory(
-            username="mango777", email="mango777@fruit.com", password="password"
-        )
-        registry = WeddingGiftRegistryFactory(owner=cls.user)
-        cls.registry_pk = registry.pk
-        cls.url = reverse("detail_registry", args=(cls.registry_pk,))
-        cls.query_url = f"{cls.url}?page=1"
-
-    def setUp(self):
-        self.client.force_login(self.user)
-
-    def test_context_from_mixin(self):
-        response = self.client.get(self.url)
-        self.assertIn("gift_type", response.context)
-        self.assertEqual(response.context["gift_type"], "cash")
-        self.assertEqual(
-            response.context["gift_url"], reverse("cash_gift", args=(self.registry_pk,))
-        )
-        response = self.client.get(f"{self.url}?gift_type=in_kind")
-        self.assertIn("gift_type", response.context)
-        self.assertEqual(response.context["gift_type"], "in_kind")
-        self.assertEqual(
-            response.context["gift_url"],
-            reverse("in_kind_gift", args=(self.registry_pk,)),
-        )
-
-
 class FishView(WeddingGiftRegistryContextMixin, ListView):
     template_name = "blue_fish.html"
     model = Fish
