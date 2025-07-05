@@ -5,7 +5,8 @@
 {% block content %}
 <nav class="w-screen my-20">
     <div>
-        {% section_header 'wedding_gifts/img/pencil.png' 'Select Registry' 'Please select a repository before saving your record. Your saved records will be stored in the selected repository.' %}
+        {% block registry_select_header %}
+        {% endblock %}
         <div class="relative border-t-4 border-b-4 border-kara-strong overflow-x-scroll">
             {% partialdef registry-selector inline %}
             <ul id="registry-selector" class="flex gap-10 pt-12 pb-20" hx-target="#registry-selector" hx-push-url="true" hx-swap="outerHTML">

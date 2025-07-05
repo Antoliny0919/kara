@@ -19,4 +19,5 @@ SECTION_HEADER_TRANSLATIONS = [
         "want by searching or using filters."
     ),
     _("View Insights"),
+    _("Select a registry to view records."),
 ]
