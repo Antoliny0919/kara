@@ -13,4 +13,10 @@ SECTION_HEADER_TRANSLATIONS = [
     _("Record the wedding gifts you received."),
     _("My Registry"),
     _("View Records"),
+    _("Wedding Gift Records"),
+    _(
+        "View the wedding gift records and find the gifts you "
+        "want by searching or using filters."
+    ),
+    _("View Insights"),
 ]

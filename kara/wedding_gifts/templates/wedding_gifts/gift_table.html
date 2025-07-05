@@ -1,1 +1,40 @@
-<h1>Gift Table</h1>
+{% extends 'wedding_gifts/base.html' %}
+
+{% load i18n static base_components partials tables wedding_gifts_components %}
+
+{% block title %}{% endblock %}
+
+{% block meta_title %}{% endblock %}
+
+{% block body_width %}w-screen{% endblock %}
+
+{% block content %}
+{{ block.super }}
+<section>
+    <header>
+        {% section_header 'wedding_gifts/img/love-giftbox.png' 'Wedding Gift Records' 'View the wedding gift records and find the gifts you want by searching or using filters.' %}
+    </header>
+    <content>
+        <div class="w-[80%] mx-auto border-2 rounded-lg border-kara-strong">
+            <nav class="tab-selector gift-table border-b-2 border-kara-strong">
+                <ul >
+                    <li><a class="{% if gift_type == 'cash' %}active{% endif %}" href="{% querystring gift_type='cash' %}">{% trans 'Cash Gift' %}</a></li>
+                    <li><a class="{% if gift_type == 'in_kind' %}active{% endif %}" href="{% querystring gift_type='in_kind' %}">{% trans 'In Kind Gift' %}</a></li>
+                </ul>
+            </nav>
+            <div class="py-8 px-12">
+                {% if table.search_fields %}
+                {% search_form table htmx_target='#table' %}
+                {% endif %}
+                {% partialdef table inline %}
+                {% table table htmx_target='#table' %}
+                {% pagination table.pagination htmx_target='#table' %}
+                {% endpartialdef %}
+            </div>
+        </div>
+    </content>
+    {% url 'my_registry' as previous_page_link %}
+    {% url 'gift_insight' pk=current_registry_pk as next_page_link %}
+    {% footer_navigation 'My Registry' 'View Insights' previous_page_link next_page_link %}
+</section>
+{% endblock %}

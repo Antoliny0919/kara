@@ -33,6 +33,11 @@ urlpatterns = [
         views.GiftTableView.as_view(),
         name="gift_table",
     ),
+    path(
+        "registry/<uuid:pk>/gift/insight/",
+        views.GiftInsightsView.as_view(),
+        name="gift_insight",
+    ),
     # The detail logic(PUT, PATCH, DELETE) will be provided at a later time.
     # path(
     #     "registry/<uuid:pk>/cash_gift/<int:pk>/",

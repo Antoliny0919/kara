@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-04 20:04+0900\n"
+"POT-Creation-Date: 2025-07-05 08:52+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -204,12 +204,14 @@ msgid "Add Gift Record | Kara"
 msgstr "축의금 기록 추가"
 
 #: kara/wedding_gifts/templates/wedding_gifts/gift_add.html:20
+#: kara/wedding_gifts/templates/wedding_gifts/gift_table.html:21
 #: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:36
 #: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:53
 msgid "Cash Gift"
 msgstr "축의금"
 
 #: kara/wedding_gifts/templates/wedding_gifts/gift_add.html:21
+#: kara/wedding_gifts/templates/wedding_gifts/gift_table.html:22
 #: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:37
 #: kara/wedding_gifts/templates/wedding_gifts/wedding_gift_registry_detail.html:54
 msgid "In Kind Gift"
@@ -290,6 +292,21 @@ msgstr "내 저장소"
 #: kara/wedding_gifts/translation.py:15
 msgid "View Records"
 msgstr "기록 보기"
+
+#: kara/wedding_gifts/translation.py:16
+msgid "Wedding Gift Records"
+msgstr "결혼 선물 기록"
+
+#: kara/wedding_gifts/translation.py:18
+msgid ""
+"View the wedding gift records and find the gifts you want by searching or "
+"using filters."
+msgstr ""
+"결혼 선물 기록들을 확인하고, 검색하거나 필터를 사용해 원하는 선물 기록을 찾아보세요."
+
+#: kara/wedding_gifts/translation.py:21
+msgid "View Insights"
+msgstr "통계 보기"
 
 #: kara/wedding_gifts/views.py:40
 msgid ""

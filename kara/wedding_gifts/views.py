@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Case, Count, IntegerField, When
 from django.urls import NoReverseMatch, reverse
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, View
 from django.views.generic.base import ContextMixin
 
 from kara.base.utils import pascal_to_snake
@@ -218,10 +218,6 @@ class GiftAddView(
         "cash": CashGiftForm,
         "in_kind": InKindGiftForm,
     }
-    model = {
-        "cash": CashGift,
-        "in_kind": InKindGift,
-    }
 
     def dispatch(self, request, *args, **kwargs):
         gift_type = self.request.GET.get("gift_type", None) or self.request.POST.get(
@@ -229,7 +225,6 @@ class GiftAddView(
         )
         self.gift_type = gift_type or "cash"
         self.form_class = self.forms[self.gift_type]
-        self.queryset = self.model[self.gift_type].objects.all().order_by("-id")
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
@@ -247,5 +242,44 @@ class GiftAddView(
         return context
 
 
-class GiftTableView(TemplateView):
+class GiftTableView(
+    WeddingGiftRegistryContextMixin, PartialTemplateResponseMixin, View
+):
     template_name = "wedding_gifts/gift_table.html"
+    model = {
+        "cash": CashGift,
+        "in_kind": InKindGift,
+    }
+    table = {"cash": CashGiftTable, "in_kind": InKindGiftTable}
+
+    def dispatch(self, request, *args, **kwargs):
+        gift_type = self.request.GET.get("gift_type", None) or self.request.POST.get(
+            "gift_type", None
+        )
+        self.gift_type = gift_type or "cash"
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        queryset = self.model[self.gift_type].objects.all()
+        return queryset
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        return self.render_to_response(context)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        table = self.table[self.gift_type](
+            self.request,
+            model=self.model[self.gift_type],
+            base_queryset=self.get_queryset(),
+            list_per_page=settings.WEDDING_GIFT_REGISTRY_TABLE_LIST_PER_PAGE,
+        )
+        context["table"] = table
+        context["gift_type"] = self.gift_type
+        context["current_registry_pk"] = self.kwargs.get("pk")
+        return context
+
+
+class GiftInsightsView(TemplateView):
+    tempalte_name = "wedding_gifts/gift_insights.html"
