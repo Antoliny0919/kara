@@ -1,7 +1,7 @@
 {% load i18n tables base_templatetags %}
 
 <div class="table-container">
-    <table id="table" class="w-full text-left">
+    <table class="w-full text-left">
         <thead class="uppercase" {% if htmx_target %}hx-target="{{ htmx_target }}" hx-swap="outerHTML" hx-push-url="true"{% endif %}>
             <tr>
                 {% for header in table_headers %}
