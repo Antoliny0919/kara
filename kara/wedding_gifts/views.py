@@ -1,12 +1,27 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Case, Count, IntegerField, When
+from django.db.models import (
+    Case,
+    Count,
+    F,
+    IntegerField,
+    OuterRef,
+    Subquery,
+    Sum,
+    Value,
+    When,
+)
+from django.db.models.functions import Coalesce
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, TemplateView, View
 from django.views.generic.base import ContextMixin
 
-from kara.base.views import PartialTemplateCreateView, PartialTemplateResponseMixin
+from kara.base.views import (
+    PartialTemplateCreateView,
+    PartialTemplateListView,
+    PartialTemplateResponseMixin,
+)
 
 from .forms import CashGiftForm, InKindGiftForm, WeddingGiftRegistryForm
 from .models import CashGift, InKindGift, WeddingGiftRegistry
@@ -38,8 +53,79 @@ class AddWeddingGiftRegistryView(LoginRequiredMixin, CreateView):
         return self.object.get_absolute_url()
 
 
-class MyWeddingGiftRegistryView(TemplateView):
-    template_name = "wedding_gifts/my_wedding_gifts_registry.html"
+class WeddingGiftRegistryDetailView(TemplateView):
+    template_name = "wedding_gifts/registry_detail.html"
+
+
+class MyWeddingGiftDashboardView(LoginRequiredMixin, PartialTemplateListView):
+    template_name = "wedding_gifts/my_wedding_gift_dashboard.html"
+    paginate = {WeddingGiftRegistry._meta.model_name: {"list_per_page": 2}}
+    context_object_name = {WeddingGiftRegistry._meta.model_name: "registries"}
+
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        cash_gift_cnt = Count("cash_gifts", distinct=True)
+        in_kind_gift_cnt = Count("in_kind_gifts", distinct=True)
+        self.queryset = [
+            WeddingGiftRegistry.objects.filter(owner=user).annotate(
+                cash_gift_cnt=cash_gift_cnt,
+                in_kind_gift_cnt=in_kind_gift_cnt,
+            )
+        ]
+        self.my_wedding_gift_items_cnt = WeddingGiftRegistry.objects.filter(
+            owner=user
+        ).aggregate(
+            my_registry_cnt=Count("id", distinct=True),
+            my_cash_gift_cnt=cash_gift_cnt,
+            my_in_kind_gift_cnt=in_kind_gift_cnt,
+        )
+        self.top_gift_cnt_registry = (
+            WeddingGiftRegistry.objects.filter(owner=user)
+            .annotate(
+                cash_gift_cnt=cash_gift_cnt,
+                in_kind_gift_cnt=in_kind_gift_cnt,
+                total_gift_cnt=F("cash_gift_cnt") + F("in_kind_gift_cnt"),
+            )
+            .order_by("-total_gift_cnt")
+            .first()
+        )
+        self.top_total_price_registry = (
+            WeddingGiftRegistry.objects.filter(owner=user)
+            .annotate(
+                total_price=Coalesce(
+                    Subquery(
+                        CashGift.objects.filter(registry=OuterRef("pk"))
+                        .values("registry")
+                        .annotate(total=Sum("price"))
+                        .values("total")[:1]
+                    ),
+                    Value(0),
+                )
+                + Coalesce(
+                    Subquery(
+                        InKindGift.objects.filter(registry=OuterRef("pk"))
+                        .values("registry")
+                        .annotate(total=Sum("price"))
+                        .values("total")[:1]
+                    ),
+                    Value(0),
+                )
+            )
+            .order_by("-total_price")
+            .first()
+        )
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        extra_context = {
+            "top_gift_cnt_registry": self.top_gift_cnt_registry,
+            "top_total_price_registry": self.top_total_price_registry,
+        }
+        context.update(extra_context)
+        context.update(self.my_wedding_gift_items_cnt)
+        print(context)
+        return context
 
 
 class WeddingGiftRegistryContextMixin(ContextMixin):
@@ -144,4 +230,4 @@ class GiftTableView(
 
 
 class GiftInsightsView(TemplateView):
-    tempalte_name = "wedding_gifts/gift_insights.html"
+    template_name = "wedding_gifts/gift_insights.html"

@@ -11,3 +11,11 @@ def section_header_tag(image, title, subtitle):
         "title": _(title),
         "subtitle": _(subtitle),
     }
+
+
+@register.inclusion_tag("base/components/count_up_number.html")
+def count_up_number(purpose, extra_css=""):
+    return {
+        "purpose": purpose,
+        "extra_css": extra_css,
+    }

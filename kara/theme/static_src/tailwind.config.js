@@ -46,7 +46,11 @@ module.exports = {
             fontFamily: {
                 'title': ['iceHimchan-Rg', 'sans-serif'],
                 'sub-title': ['ChosunGu', 'sans-serif'],
+                'question-title': ['Gowun Dodum', 'monospace'],
+                'question-answer': ['iceHimchan-Rg', 'sans-serif'],
+                'sub-text': ['ChosunGu', 'sans-serif'],
                 'common': ['Pretendard-Regular', 'sans-serif'],
+                'number': ['Orbitron', 'monospace'],
             },
             colors: {
                 kara: {

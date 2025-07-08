@@ -2,9 +2,11 @@ from django import forms
 from django.core.exceptions import ImproperlyConfigured
 from django.template.response import TemplateResponse
 from django.test import RequestFactory, SimpleTestCase, TestCase
+from django.views.generic.base import View
 
-from kara.base.tests.models import Fruit
+from kara.base.tests.models import Fruit, Skill, Tag
 from kara.base.views import (
+    MultipleObjectMixin,
     PartialTemplateFormMixin,
     PartialTemplateModelFormMixin,
     PartialTemplateResponseMixin,
@@ -132,3 +134,108 @@ class PartialTemplateModelFormMixinTests(TestCase):
         self.assertTrue(isinstance(context_form, FruitForm))
         self.assertFalse(context_form.is_bound)
         self.assertDictEqual(context_form.initial, {"name": "mango"})
+
+
+class SkillView(MultipleObjectMixin, View):
+    model = None
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        context = self.get_context_data()
+        return context
+
+
+class MultipleObjectMixinTests(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.skill = Skill.objects.create(name="fire", damage=30)
+        cls.tag1 = Tag.objects.create(
+            name="friend", description="my best friend", hex_color="#676767"
+        )
+        cls.tag2 = Tag.objects.create(
+            name="health", description="health people", hex_color="#121212"
+        )
+
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    def assertQueryEqual(self, queryset, *args):
+        id_list_1 = list(queryset.values_list("id", flat=True))
+        id_list_2 = [object.pk for object in args]
+        self.assertEqual(id_list_1, id_list_2)
+
+    def test_get_queryset(self):
+        view = SkillView.as_view()
+        request = RequestFactory().get("/fake-url/")
+        view.request = request
+        # Raise an error if either the queryset or the model is not set
+        with self.assertRaises(ImproperlyConfigured):
+            view(request)
+
+        SkillView.model = Skill
+        context = view(request)
+        self.assertIn("skill_list", context)
+        self.assertQueryEqual(context["skill_list"], self.skill)
+
+        # Supports multiple models via list or tuple
+        SkillView.model = [Skill, Tag]
+        context = view(request)
+        self.assertIn("skill_list", context)
+        self.assertIn("tag_list", context)
+        self.assertQueryEqual(context["skill_list"], self.skill)
+        self.assertQueryEqual(context["tag_list"], self.tag1, self.tag2)
+
+        SkillView.model = None
+        SkillView.queryset = Tag.objects.filter(id=self.tag1.pk)
+        context = view(request)
+        self.assertIn("tag_list", context)
+        self.assertQueryEqual(context["tag_list"], self.tag1)
+
+        # Supports multiple queryset via list or tuple
+        SkillView.queryset = (Skill.objects.all(), Tag.objects.filter(id=self.tag1.pk))
+        context = view(request)
+        self.assertIn("tag_list", context)
+        self.assertIn("skill_list", context)
+        self.assertQueryEqual(context["tag_list"], self.tag1)
+        self.assertQueryEqual(context["skill_list"], self.skill)
+
+    def test_get_context_object_name(self):
+        SkillView.model = Skill
+        view = SkillView.as_view()
+        request = RequestFactory().get("/fake-url/")
+        view.request = request
+        context = view(request)
+        self.assertIn("skill_list", context)
+        SkillView.context_object_name = {
+            Skill._meta.model_name: "skill_new_context_name"
+        }
+        context = view(request)
+        self.assertIn("skill_new_context_name", context)
+        self.assertQueryEqual(context["skill_new_context_name"], self.skill)
+
+    def test_paginate_object(self):
+        SkillView.model = Skill
+        view = SkillView.as_view()
+        request = RequestFactory().get("/fake-url/")
+        view.request = request
+        context = view(request)
+        self.assertNotIn("skill_pagination", context)
+        SkillView.paginate = {Skill._meta.model_name: {"list_per_page": 2}}
+        context = view(request)
+        self.assertIn("skill_list", context)
+        self.assertIn("skill_list_pagination", context)
+        pagination = context["skill_list_pagination"]
+        self.assertTrue(isinstance(pagination, SkillView.pagination_class))
+
+        # Pagination also supports multiple models and
+        # uses context_object_name as part of the context key
+        SkillView.queryset = [Skill.objects.all(), Tag.objects.filter(id=self.tag1.pk)]
+        SkillView.context_object_name = {Skill._meta.model_name: "skill_c_name"}
+        SkillView.paginate = {
+            Skill._meta.model_name: {"list_per_page": 2},
+            Tag._meta.model_name: {"list_per_page": 2, "page_kwarg": "tag_p"},
+        }
+        context = view(request)
+        self.assertIn("skill_c_name_pagination", context)
+        self.assertIn("tag_list_pagination", context)

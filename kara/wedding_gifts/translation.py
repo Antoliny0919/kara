@@ -20,4 +20,6 @@ SECTION_HEADER_TRANSLATIONS = [
     ),
     _("View Insights"),
     _("Select a registry to view records."),
+    _("Check out my wedding gift repositories and some fun insights"),
+    _("My Wedding Gift Registries"),
 ]

@@ -63,3 +63,7 @@ class CashGiftTable(GiftTable):
 
 class InKindGiftTable(GiftTable):
     columns = ["name", "kind", "kind_detail", "price", "receipt_date", "tags"]
+
+
+class GiftTagTable(Table):
+    columns = ["name", "description", "hex_color"]

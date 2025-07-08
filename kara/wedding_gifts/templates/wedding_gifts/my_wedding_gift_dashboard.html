@@ -1,0 +1,140 @@
+{% extends "base/base.html" %}
+{% load i18n static base_components tables partials wedding_gifts_components %}
+
+{% block title %}{% endblock %}
+{% block meta_title %}{% endblock %}
+
+{% block body_width %}w-screen{% endblock %}
+
+{% block content %}
+    <section>
+        <header>
+            {% section_header 'wedding_gifts/img/notebook.png' 'My Wedding Gift Registries' 'Check out my wedding gift repositories and some fun insights' %}
+        </header>
+        <div class="w-4/5 mx-auto py-12 px-8">
+            <section>
+                <header class="mb-40 tracking-[0.2rem]">
+                    <h3 class="font-question-title text-5xl">{% translate 'My Wedding Gift Record Registries' %}</h3>
+                    <div class="font-sub-text text-base my-8 px-4">{% translate 'Clicking on a registry lets you view or edit its detailed information.' %}</div>
+                </header>
+                {% partialdef my-registries inline %}
+                <div id="my-registries">
+                <ul class="flex justify-around">
+                    {% for registry in registries %}
+                    <li class="first:pl-40 last:pr-40" >{% registry_card registry 'detail_registry' %}</li>
+                    {% endfor %}
+                </ul>
+                {% pagination registries_pagination htmx_target='#my-registries' %}
+                </div>
+                {% endpartialdef %}
+            </section>
+            <section>
+                <header class="my-40 tracking-[0.2rem]">
+                    <h3 class="font-question-title text-5xl">{% translate 'How many repositories and records have I added and written?' %}</h3>
+                    <div class="font-sub-text text-base my-8 px-4">{% translate 'Total number of repositories and gift records I have.' %}</div>
+                </header>
+                <div>
+                    <div class="flex flex-col gap-y-32">
+                        <div class="flex flex-row px-32 items-center justify-between">
+                            <div class="flex flex-row items-end text-xl">
+                                <div class="w-[300px] h-[300px] flex flex-col items-center justify-center gap-4 border-4 rounded-full border-[#d4a237] bg-[#d4a237]/30">
+                                    <img class="w-[80px] h-[80px]" src="{% static 'wedding_gifts/img/notebook.png' %}">
+                                    <span>{% trans 'Wedding Gift Registry' %}</span>
+                                    {% count_up_number my_registry_cnt "tracking-widest" %}
+                                </div>
+                            </div>
+                            <div class="flex flex-row items-end text-xl">
+                                <div class="w-[300px] h-[300px] flex flex-col items-center justify-center gap-4 border-4 rounded-full border-[#3c8535] bg-[#3c8535]/30">
+                                    <img class="w-[80px] h-[80px]" src="{% static 'wedding_gifts/img/paper_money.png' %}">
+                                    <span>{% trans 'Cash Gift Record' %}</span>
+                                    {% count_up_number my_cash_gift_cnt "tracking-widest" %}
+                                </div>
+                            </div>
+                            <div class="flex flex-row items-end text-xl">
+                                <div class="w-[300px] h-[300px] flex flex-col items-center justify-center gap-4 border-4 rounded-full border-[#f5b2b2] bg-[#f5b2b2]/30">
+                                    <img class="w-[80px] h-[80px]" src="{% static 'wedding_gifts/img/gift_box.png' %}">
+                                    <span>{% trans 'In Kind Gift Record' %}</span>
+                                    {% count_up_number my_in_kind_gift_cnt "tracking-widest" %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mx-auto w-4/5 text-center">
+                            <div class="my-4 text-2xl font-sub-text">
+                            {% blocktranslate trimmed with registry_cnt=my_registry_cnt cash_gift_cnt=my_cash_gift_cnt in_kind_gift_cnt=my_in_kind_gift_cnt %}
+                                A total of <span class="font-number text-[#d4a237]"> {{ registry_cnt }} </span> repositories,
+                                <span class="font-number text-[#3c8535]"> {{ cash_gift_cnt }} </span> cash gift records
+                                and <span class="font-number text-[#f5b2b2]"> {{ in_kind_gift_cnt }} </span>in kind gift records are recorded!
+                            {% endblocktranslate %}
+                            </div>
+                            <div class="h-[4px] bg-kara-strong shadow-[0px_-24px_50px_8px_rgba(234,179,8,0.5)]"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <header class="my-40 tracking-[0.2rem]">
+                    <h3 class="font-question-title text-5xl">{% translate 'Who received the most gifts?' %}</h3>
+                    <div class="font-sub-text text-base my-8 px-4">{% translate 'Recipient in the registry with the most recorded gifts' %}</div>
+                </header>
+                <div>
+                    <h4 class="text-4xl font-question-answer text-center">{% blocktranslate with receiver=top_gift_cnt_registry.receiver%}{{ receiver }} received the most gifts!{% endblocktranslate %}</h4>
+                    <div class="flex flex-col my-20">
+                        <div class="flex flex-row justify-around mt-8 mb-24">
+                            <div class="flex flex-row gap-12 py-8 px-8 border-2 border-[#3c8535] rounded-lg bg-[#3c8535]/30">
+                                <img class="w-[16rem] h-[16rem]" src="{% static 'wedding_gifts/img/paper_money.png' %}">
+                                <div class="flex flex-col items-center justify-center text-2xl font-sub-text space-y-8">
+                                    <div>{% translate 'Number of cash gift records' %}</div>
+                                    <div>
+                                        {% count_up_number top_gift_cnt_registry.cash_gift_cnt %}
+                                        <span>{% trans 'record' %}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-row gap-12 py-8 px-8 border-2 border-[#f5b2b2] rounded-lg bg-[#f5b2b2]/30">
+                                <img class="w-[16rem] h-[16rem]" src="{% static 'wedding_gifts/img/gift_box.png' %}">
+                                <div class="flex flex-col items-center justify-center text-2xl font-sub-text space-y-8">
+                                    <div>{% translate 'Number of in kind gift records' %}</div>
+                                    <div>
+                                        {% count_up_number top_gift_cnt_registry.in_kind_gift_cnt %}
+                                        <span>{% trans 'record' %}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-row items-center justify-center my-4 text-center text-2xl font-sub-text">
+                            <span class="mr-6">
+                                {% blocktranslate with receiver=top_gift_cnt_registry.receiver %}{{ receiver }} has received{% endblocktranslate %}</span>
+                                {% count_up_number top_gift_cnt_registry.total_gift_cnt %}
+                            <span>{% translate 'wedding gifts in total' %}</span>
+                            <img class="inline-block w-[32px] h-[32px] ml-4" src="{% static 'wedding_gifts/img/celebrate.png' %}">
+                        </div>
+                        <div class="mx-auto w-4/5">
+                            <div class="h-[4px] bg-kara-strong shadow-[0px_-24px_50px_8px_rgba(234,179,8,0.5)]"></div>
+                            <a class="block text-end text-base my-2" href="{% url 'detail_registry' pk=top_gift_cnt_registry.pk %}">{% translate 'View detailed information' %}</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <header class="my-40 tracking-[0.2rem]">
+                    <h3 class="font-question-title text-5xl">{% translate 'Who received the largest amount in gifts?' %}</h3>
+                    <div class="font-sub-text text-base my-8 px-4">{% translate 'Recipient of the registry with the highest total gift amount recorded' %}</div>
+                </header>
+                <div>
+                    <div class="flex flex-col justify-center items-center">
+                        <div class="flex flex-col items-center space-y-20 font-title text-4xl mb-16 tracking-widest">
+                            <img class="w-[24rem] h-[24rem]" src="{% static 'wedding_gifts/img/take_money.png' %}">
+                            <span>{% blocktranslate with receiver=top_total_price_registry.receiver %}{{ receiver }} received the largest amount in gifts !{% endblocktranslate %}</span>
+                        </div>
+                        <div class="text-2xl w-[42rem] text-center">
+                            {% count_up_number top_total_price_registry.total_price %}
+                            <span>{% trans '$' %}</span>
+                            <div class="w-full h-[4px] bg-kara-strong shadow-[0px_-24px_50px_8px_rgba(234,179,8,0.5)]"></div>
+                            <a class="block text-end text-base my-2" href="{% url 'detail_registry' pk=top_total_price_registry.pk %}">{% translate 'View detailed information' %}</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+{% endblock %}

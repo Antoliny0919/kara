@@ -9,9 +9,14 @@ urlpatterns = [
         name="registry_action_select",
     ),
     path(
-        "registry/",
-        views.MyWeddingGiftRegistryView.as_view(),
-        name="my_registry",
+        "",
+        views.MyWeddingGiftDashboardView.as_view(),
+        name="my_wedding_gift_dashboard",
+    ),
+    path(
+        "registry/<uuid:pk>/",
+        views.WeddingGiftRegistryDetailView.as_view(),
+        name="detail_registry",
     ),
     path(
         "registry/add/",
