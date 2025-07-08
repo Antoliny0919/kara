@@ -25,11 +25,13 @@
             </nav>
             <div class="py-8 px-12">
                 {% if table.search_fields %}
-                {% search_form table htmx_target='#table' %}
+                {% search_form table htmx_target='#partial-table-area' %}
                 {% endif %}
-                {% partialdef table inline %}
-                {% table table htmx_target='#table' %}
-                {% pagination table.pagination htmx_target='#table' %}
+                {% partialdef partial-table-area inline %}
+                <div id="partial-table-area">
+                {% table table htmx_target='#partial-table-area' %}
+                {% pagination table.pagination htmx_target='#partial-table-area' %}
+                </div>
                 {% endpartialdef %}
             </div>
         </div>
