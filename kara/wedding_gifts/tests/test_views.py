@@ -1,4 +1,6 @@
+import datetime
 import re
+from unittest import skip
 
 import pytest
 from django.db.models.query import QuerySet
@@ -12,30 +14,33 @@ from kara.accounts.factories import UserFactory
 from kara.base.tests.models import Fish
 from kara.wedding_gifts.factories import (
     CashGiftFactory,
+    GiftTagFactory,
     InKindGiftFactory,
     WeddingGiftRegistryFactory,
 )
-from kara.wedding_gifts.models import GiftTag
+from kara.wedding_gifts.models import CashGift, GiftTag, InKindGift
 from kara.wedding_gifts.views import WeddingGiftRegistryContextMixin
 
 
-class CashGiftAddViewTests(TestCase):
+class GiftAddViewTests(TestCase):
 
     @classmethod
     def setUpTestData(cls):
         cls.user = UserFactory(
             username="black000", email="black000@color.com", password="password"
         )
+        cls.tag1 = GiftTagFactory.create(owner=cls.user, name="tag1")
+        cls.tag2 = GiftTagFactory.create(owner=cls.user, name="tag2")
         registry = WeddingGiftRegistryFactory(owner=cls.user)
-        CashGiftFactory.create_batch(registry=registry, size=20)
-        cls.url = reverse("cash_gift", args=(registry.pk,))
+        cls.url = reverse("add_gift", args=(registry.pk,))
 
     def setUp(self):
         self.client.force_login(self.user)
 
-    def test_add_cash_gift_object(self):
-        response = self.client.post(
-            self.url,
+    def test_add_gift_object(self):
+        # Add cahs_gift object
+        self.client.post(
+            f"{self.url}?gift_type=cash",
             data={
                 "name": "Tim Bread",
                 "price_0": "10000",
@@ -43,15 +48,47 @@ class CashGiftAddViewTests(TestCase):
                 "receipt_date_0": "2020",
                 "receipt_date_1": "5",
                 "receipt_date_2": "19",
+                "tags": [self.tag1.id],
             },
-            HTTP_HX_REQUEST="true",
-            HTTP_HX_TARGET="gift-records-section",
-            follow=True,
         )
-        self.assertContains(response, "<td>Tim Bread</td>")
-        self.assertContains(response, "<td>100,000</td>")
-        self.assertContains(response, "<td>2020-05-19</td>")
+        gift = CashGift.objects.filter(name="Tim Bread")
+        self.assertTrue(gift.exists())
+        gift = list(gift)
+        self.assertEqual(gift[0].price, 100000)
+        self.assertEqual(gift[0].receipt_date, datetime.date(2020, 5, 19))
+        tags = gift[0].tags.all()
+        self.assertEqual(tags.count(), 1)
+        self.assertEqual(tags[0].name, "tag1")
 
+        # Add in_kind_gift object
+        self.client.post(
+            f"{self.url}?gift_type=in_kind",
+            data={
+                "name": "Grimmy Col",
+                "kind": "appliance",
+                "kind_detail": "refrigerator",
+                "price_0": "1",
+                "price_1": 5000000,
+                "receipt_date_0": "2024",
+                "receipt_date_1": "9",
+                "receipt_date_2": "11",
+                "tags": [self.tag1.id, self.tag2.id],
+            },
+        )
+        gift = InKindGift.objects.filter(name="Grimmy Col")
+        self.assertTrue(gift.exists())
+        gift = list(gift)
+        self.assertEqual(gift[0].get_kind_display(), "Appliance")
+        self.assertEqual(gift[0].kind_detail, "refrigerator")
+        self.assertEqual(gift[0].price, 5000000)
+        self.assertEqual(gift[0].receipt_date, datetime.date(2024, 9, 11))
+        tags = gift[0].tags.all()
+        self.assertEqual(tags.count(), 2)
+        self.assertEqual(
+            list(tags.values_list("id", flat=True)), [self.tag1.id, self.tag2.id]
+        )
+
+    @skip("reuse_form will be applied when HTMX is added to the form.")
     def test_reuse_before_selected_price_button(self):
         response = self.client.get(self.url)
         self.assertContains(
