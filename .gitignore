@@ -10,3 +10,6 @@ venv/
 
 # style
 kara/theme/static/css/dist/styles.css
+
+# pycharm
+.idea
