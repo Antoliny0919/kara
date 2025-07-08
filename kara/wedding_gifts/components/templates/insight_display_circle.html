@@ -1,0 +1,9 @@
+{% load static %}
+
+<div class="flex flex-row items-end text-xl">
+    <div class="w-[300px] h-[300px] flex flex-col items-center justify-center gap-4 border-4 rounded-full border-{{ color }} bg-{{ color }}/30">
+        <img class="w-[80px] h-[80px]" src="{% static symbol_image %}">
+        <span>{{ object_name }}</span>
+        {% slot "insight_result" / %}
+    </div>
+</div>

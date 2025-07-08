@@ -11,6 +11,9 @@
         <link rel="stylesheet" href="{% static 'css/dist/fonts.css' %}">
         <link rel="stylesheet" href="{% static 'css/kara.css' %}">
         <link rel="stylesheet" href="{% static 'css/widgets.css' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
         {% htmx_script %}
 	</head>
     <body class="flex flex-col h-screen font-common {% block body_class %}{% endblock %}" hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>

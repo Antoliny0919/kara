@@ -6,6 +6,7 @@
  */
 
 module.exports = {
+    important: true,
     content: [
         /**
          * HTML. Paths to Django template files that will contain Tailwind CSS classes.
@@ -25,6 +26,8 @@ module.exports = {
          * Adjust the following line to match your project structure.
          */
         '../../**/templates/**/*.html',
+        /* Django-components */
+        '../../**/components/**/*.html',
 
         /**
          * JS: If you use Tailwind CSS in JavaScript, uncomment the following lines and make sure
@@ -46,7 +49,11 @@ module.exports = {
             fontFamily: {
                 'title': ['iceHimchan-Rg', 'sans-serif'],
                 'sub-title': ['ChosunGu', 'sans-serif'],
+                'question-title': ['Gowun Dodum', 'monospace'],
+                'question-answer': ['iceHimchan-Rg', 'sans-serif'],
+                'sub-text': ['ChosunGu', 'sans-serif'],
                 'common': ['Pretendard-Regular', 'sans-serif'],
+                'number': ['Orbitron', 'monospace'],
             },
             colors: {
                 kara: {
@@ -55,6 +62,11 @@ module.exports = {
                     'strong': '#C44B6B',
                     'title': '#212121',
                     'sub-title': '#343232',
+                },
+                'wedding-gifts': {
+                    'registry': '#d4a237',
+                    'cash-gift': '#3c8535',
+                    'in-kind-gift': '#f5b2b2',
                 },
                 registry: {
                     'select-color': '#591f30',

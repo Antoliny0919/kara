@@ -27,6 +27,7 @@ urlpatterns = [
 
 urlpatterns += [
     path("", include("kara.home.urls")),
+    path("components/", include("django_components.urls")),
     path("accounts/", include("kara.accounts.urls")),
     path("wedding_gifts/", include("kara.wedding_gifts.urls")),
 ]

@@ -20,4 +20,26 @@ SECTION_HEADER_TRANSLATIONS = [
     ),
     _("View Insights"),
     _("Select a registry to view records."),
+    _("Check out my wedding gift repositories and some fun insights"),
+    _("My Wedding Gift Registries"),
+]
+
+LINK_BUTTON_TRANSLATIONS = [
+    _("+ Add Registry"),
+]
+
+MY_WEDDING_GIFT_DASHBOARD_TRANSLATIONS = [
+    _("My Wedding Gift Record Registries"),
+    _("Clicking on a registry lets you view or edit its detailed information"),
+    _("How many repositories and records have I added and written?"),
+    _("Total number of repositories and gift records I have"),
+    _("Wedding Gift Registry"),
+    _("Cash Gift Record"),
+    _("In Kind Gift Record"),
+    _("Who received the most gifts?"),
+    _("Recipient in the registry with the most recorded gifts"),
+    _("Number of cash gift records"),
+    _("Number of in kind gift records"),
+    _("Who received the largest amount in gifts?"),
+    _("Recipient of the registry with the highest total gift amount recorded"),
 ]

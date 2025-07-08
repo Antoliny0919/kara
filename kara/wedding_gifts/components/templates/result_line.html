@@ -1,0 +1,8 @@
+<div class="mx-auto w-4/5 text-center">
+    <div class="my-4 text-2xl font-sub-text">
+    {% slot "result" %}
+    {% endslot %}
+    </div>
+    <div class="h-[4px] bg-{{ line_color }} shadow-[0px_-24px_50px_8px_rgba(234,179,8,0.5)]"></div>
+    {% slot "result_detail" / %}
+</div>
