@@ -122,7 +122,7 @@ class GiftTableView(
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
-        queryset = self.model[self.gift_type].objects.all()
+        queryset = self.model[self.gift_type].objects.all().order_by("-id")
         return queryset
 
     def get(self, request, *args, **kwargs):
