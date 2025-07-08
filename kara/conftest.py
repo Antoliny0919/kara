@@ -10,7 +10,9 @@ expect.set_options(timeout=5_000)
 
 @pytest.fixture(autouse=True)
 def _media_storage(settings, tmpdir):
-    settings.MEDIA_ROOT = tmpdir.strpath + "/" + settings.MEDIA_ROOT
+    # Skip in playwright tests.
+    if settings is not None:
+        settings.MEDIA_ROOT = tmpdir.strpath + "/" + settings.MEDIA_ROOT
 
 
 @pytest.fixture(scope="session")

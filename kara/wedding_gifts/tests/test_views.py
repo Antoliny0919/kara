@@ -163,15 +163,12 @@ class TestPlaywright:
             yield
 
     @pytest.fixture
-    def setup_gifts(self, settings, user):
+    def setup_registry(self, settings, user):
         registry = WeddingGiftRegistryFactory(owner=user)
-        for i in range(1, 201):
-            CashGiftFactory.create(registry_id=registry.id, name=f"cash-gift-{i}")
-        self.registry_pk = registry.pk
+        self.registry = registry
 
     @pytest.fixture
-    def setup_tags(self, user):
-        registry = WeddingGiftRegistryFactory(owner=user)
+    def setup_tags(self, setup_registry, user):
         tags_data = [
             (
                 {
@@ -199,27 +196,32 @@ class TestPlaywright:
         ]
         for tag_data in tags_data:
             GiftTag.objects.create(owner=user, **tag_data)
-        self.registry = registry
         self.tags_data = tags_data
 
     def get_table_rows(self, auth_page):
-        return auth_page.locator("section#gift-records-table-section table tbody tr")
+        return auth_page.locator("div#partial-table-area table tbody tr")
 
-    def test_pagination(self, auth_page, live_server, setup_gifts):
-        url = reverse("detail_registry", args=(self.registry_pk,))
+    def test_pagination(self, auth_page, live_server, setup_registry):
+        for i in range(1, 201):
+            CashGiftFactory.create(registry_id=self.registry.pk, name=f"cash-gift-{i}")
+
+        url = reverse("gift_table", args=(self.registry.pk,))
         auth_page.goto(live_server.url + f"{url}?page=5")
         current_page_button = auth_page.locator("nav.pagination em.current-page")
         expect(current_page_button).to_have_text("5")
-        rows = auth_page.locator("section#gift-records-table-section table tbody tr")
+        rows = self.get_table_rows(auth_page)
+
         # Verify the table contents displayed on page 5
         expect(rows.first.locator("td").first).to_have_text("cash-gift-160")
         expect(rows.last.locator("td").first).to_have_text("cash-gift-151")
         auth_page.locator('nav.pagination a[hx-get*="?page=8"]').click()
         expect(auth_page).to_have_url(re.compile(r"page=8"))
-        rows = auth_page.locator("section#gift-records-table-section table tbody tr")
+        rows = self.get_table_rows(auth_page)
+
         # Verify the table contents displayed on page 8
         expect(rows.first.locator("td").first).to_have_text("cash-gift-130")
         expect(rows.last.locator("td").first).to_have_text("cash-gift-121")
+
         # Verify navigation by clicking the "Previous"
         # and "Next" buttons to change pages
         auth_page.locator("nav.pagination a.previous-page").click()
@@ -228,77 +230,62 @@ class TestPlaywright:
         expect(auth_page).to_have_url(re.compile(r"page=8"))
         auth_page.goto(live_server.url + url)
         previous_button = auth_page.locator("nav.pagination span", has_text="Previous")
+
         # Disable the "Previous" button when on the first page.
         expect(previous_button).to_contain_class("disabled")
         auth_page.goto(live_server.url + f"{url}?page=20")
+
         # Disable the "Next" button when on the last page.
         next_button = auth_page.locator("nav.pagination span", has_text="Next")
         expect(next_button).to_contain_class("disabled")
 
-    def test_search(self, auth_page, live_server, user):
+    def test_search(self, auth_page, live_server, setup_registry):
         usernames = ["Mookie Betts", "Ohtani Shohei", "Frederick Charles Freeman"]
-        registry = WeddingGiftRegistryFactory(owner=user)
         for username in usernames:
-            CashGiftFactory.create(registry_id=registry.id, name=username)
+            CashGiftFactory.create(registry_id=self.registry.pk, name=username)
 
-        url = reverse("detail_registry", args=(registry.pk,))
+        url = reverse("gift_table", args=(self.registry.pk,))
         auth_page.goto(live_server.url + url)
-        search_input = auth_page.get_by_role("search").locator("input")
-        search_input.fill("mookie betts")
-        submit_button = auth_page.get_by_role("search").locator("button")
-        submit_button.click()
-        expect_url = f"search={urlencode("mookie betts")}"
-        expect(auth_page).to_have_url(re.compile(rf"{expect_url}"))
-        rows = auth_page.locator("section#gift-records-table-section table tbody tr")
-        assert rows.count() == 1
-        expect(rows.first.locator("td").first).to_have_text("Mookie Betts")
-        search_input.fill("Ohtani Shohei")
-        submit_button.click()
-        expect_url = f"search={urlencode("Ohtani Shohei")}"
-        expect(auth_page).to_have_url(re.compile(rf"{expect_url}"))
-        rows = auth_page.locator("section#gift-records-table-section table tbody tr")
-        assert rows.count() == 1
-        expect(rows.first.locator("td").first).to_have_text("Ohtani Shohei")
 
-    def test_change_gift_tab(self, auth_page, live_server, user):
-        registry = WeddingGiftRegistryFactory(owner=user)
-        CashGiftFactory.create(registry_id=registry.id, name="Kim Rich")
-        InKindGiftFactory.create(registry_id=registry.id, name="Jang Poor")
-        url = reverse("detail_registry", args=(registry.pk,))
+        cases = [("mookie betts", "Mookie Betts"), ("Ohtani Shohei", "Ohtani Shohei")]
+
+        for input_value, expected_row_text in cases:
+            search_input = auth_page.get_by_role("search").locator("input")
+            search_input.fill(input_value)
+            submit_button = auth_page.get_by_role("search").locator("button")
+            submit_button.click()
+            expect_url = f"search={urlencode(input_value)}"
+            expect(auth_page).to_have_url(re.compile(rf"{expect_url}"))
+            rows = self.get_table_rows(auth_page)
+            assert rows.count() == 1
+            expect(rows.first.locator("td").first).to_have_text(expected_row_text)
+
+    def test_change_gift_tab(self, auth_page, live_server, setup_registry):
+        CashGiftFactory.create(registry_id=self.registry.pk, name="Kim Rich")
+        InKindGiftFactory.create(registry_id=self.registry.pk, name="Jang Poor")
+        url = reverse("gift_table", args=(self.registry.pk,))
         auth_page.goto(live_server.url + url)
+
         # Click 'In Kind Gift' tab
-        # Verify that the InKindGift form and table are rendered correctly
-        form_in_kind_select = auth_page.locator(
-            "nav.tab-selector.gift-form ul li a:has-text('In Kind Gift')"
-        )
-        form_in_kind_select.click()
-        expect(form_in_kind_select).to_contain_class("active")
+        # Verify that the InKindGift table are rendered correctly
         table_in_kind_select = auth_page.locator(
             "nav.tab-selector.gift-table ul li a:has-text('In Kind Gift')"
         )
+        table_in_kind_select.click()
         expect(table_in_kind_select).to_contain_class("active")
-        form = auth_page.locator("form#gift-form")
-        form_hx_post = form.get_attribute("hx-post")
-        assert "in_kind_gift" in form_hx_post
-        rows = auth_page.locator("section#gift-records-table-section table tbody tr")
+        rows = self.get_table_rows(auth_page)
         expect(rows.first.locator("td").first).to_have_text("Jang Poor")
+
         # Click 'Cash Gift' tab
-        # Verify that the CashGift form and table are rendered correctly
+        # Verify that the CashGift table are rendered correctly
         table_cash_select = auth_page.locator(
             "nav.tab-selector.gift-table ul li a:has-text('Cash Gift')"
         )
         table_cash_select.click()
         expect(table_cash_select).to_contain_class("active")
-        form_cash_select = auth_page.locator(
-            "nav.tab-selector.gift-form ul li a:has-text('Cash Gift')"
-        )
-        expect(form_cash_select).to_contain_class("active")
-        form_hx_post = form.get_attribute("hx-post")
-        assert "cash_gift" in form_hx_post
         expect(rows.first.locator("td").first).to_have_text("Kim Rich")
 
-    def test_table_columns_ordering(self, auth_page, live_server, user):
-        registry = WeddingGiftRegistryFactory(owner=user)
+    def test_table_columns_ordering(self, auth_page, live_server, setup_registry):
         cases = [
             {"name": "Alex", "price": 10000, "receipt_date": "2010-10-14"},
             {"name": "Sam", "price": 10000, "receipt_date": "2010-10-15"},
@@ -310,9 +297,11 @@ class TestPlaywright:
             {"name": "Loopy", "price": 9998, "receipt_date": "2010-10-17"},
         ]
         for case in cases:
-            CashGiftFactory(registry_id=registry.id, **case)
-        url = reverse("detail_registry", args=(registry.pk,))
+            CashGiftFactory(registry_id=self.registry.pk, **case)
+
+        url = reverse("gift_table", args=(self.registry.pk,))
         auth_page.goto(live_server.url + url)
+
         # order price ascending
         price_sort_button = auth_page.locator(
             "table thead tr th.sortable.column-price div a"
@@ -322,6 +311,7 @@ class TestPlaywright:
         rows = self.get_table_rows(auth_page)
         for i, text in enumerate(["Loopy", "Casey"]):
             expect(rows.nth(i).locator("td").first).to_have_text(text)
+
         # order price ascending & receipt_date(priority) ascending
         receipt_date_sort_button = auth_page.locator(
             "table thead tr th.sortable.column-receipt_date div a"
@@ -331,6 +321,7 @@ class TestPlaywright:
         rows = self.get_table_rows(auth_page)
         for i, text in enumerate(["Jordan", "Taylor", "Casey", "Alex", "Burdy"]):
             expect(rows.nth(i).locator("td").first).to_have_text(text)
+
         # order price descending & receipt_date(priority) ascending
         price_desc_button = auth_page.locator(
             "table thead tr th.sorted.column-price div.sortoptions a.toggle.descending"
@@ -339,6 +330,7 @@ class TestPlaywright:
         expect(auth_page).to_have_url(re.compile(r"order=-price&order=receipt_date"))
         for i, text in enumerate(["Taylor", "Jordan", "Burdy", "Alex", "Casey"]):
             expect(rows.nth(i).locator("td").first).to_have_text(text)
+
         # order receipt_date descending
         receipt_date_desc_button = auth_page.locator(
             "table thead tr th.sorted.column-receipt_date div.sortoptions "
@@ -356,7 +348,8 @@ class TestPlaywright:
     def test_tag_select_widget_dropdown_panel_visible(
         self, auth_page, live_server, setup_tags
     ):
-        auth_page.goto(live_server.url + self.registry.get_absolute_url())
+        url = reverse("add_gift", args=(self.registry.pk,))
+        auth_page.goto(live_server.url + url)
         # The dropdown panel is in a hidden state.
         dropdown_panel = auth_page.locator("div#id_tags-dropdown-panel")
         assert dropdown_panel.is_visible() is False
@@ -369,7 +362,8 @@ class TestPlaywright:
         expect(dropdown_panel).to_be_visible()
 
     def test_tag_node_data(self, auth_page, live_server, setup_tags):
-        auth_page.goto(live_server.url + self.registry.get_absolute_url())
+        url = reverse("add_gift", args=(self.registry.pk,))
+        auth_page.goto(live_server.url + url)
         tag_select = auth_page.locator(
             "form#gift-form div.field-container div#id_tags-dropdown-trigger button"
         )
@@ -395,7 +389,8 @@ class TestPlaywright:
             expect(tag_info.nth(1)).to_have_text(expected["description"])
 
     def test_tag_select_widget_move_tag(self, auth_page, live_server, setup_tags):
-        auth_page.goto(live_server.url + self.registry.get_absolute_url())
+        url = reverse("add_gift", args=(self.registry.pk,))
+        auth_page.goto(live_server.url + url)
         tag_select = auth_page.locator(
             "form#gift-form div.field-container div#id_tags-dropdown-trigger button"
         )
@@ -431,7 +426,8 @@ class TestPlaywright:
         assert moved_element_html == str(from_last_tag.inner_html())
 
     def test_selected_tags_display(self, auth_page, live_server, setup_tags):
-        auth_page.goto(live_server.url + self.registry.get_absolute_url())
+        url = reverse("add_gift", args=(self.registry.pk,))
+        auth_page.goto(live_server.url + url)
         tag_select = auth_page.locator(
             "form#gift-form div.field-container div#id_tags-dropdown-trigger button"
         )

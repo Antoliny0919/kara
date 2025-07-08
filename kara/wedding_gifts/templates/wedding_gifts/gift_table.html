@@ -19,8 +19,8 @@
         <div class="w-[80%] mx-auto border-2 rounded-lg border-kara-strong">
             <nav class="tab-selector gift-table border-b-2 border-kara-strong">
                 <ul >
-                    <li><a class="{% if gift_type == 'cash' %}active{% endif %}" href="{% querystring gift_type='cash' %}">{% trans 'Cash Gift' %}</a></li>
-                    <li><a class="{% if gift_type == 'in_kind' %}active{% endif %}" href="{% querystring gift_type='in_kind' %}">{% trans 'In Kind Gift' %}</a></li>
+                    <li><a {% if gift_type == 'cash' %}class="active"{% endif %} href="{% querystring gift_type='cash' %}">{% trans 'Cash Gift' %}</a></li>
+                    <li><a {% if gift_type == 'in_kind' %}class="active"{% endif %} href="{% querystring gift_type='in_kind' %}">{% trans 'In Kind Gift' %}</a></li>
                 </ul>
             </nav>
             <div class="py-8 px-12">
