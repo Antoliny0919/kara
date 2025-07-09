@@ -1,7 +1,7 @@
 {% load i18n tables base_templatetags %}
 
 {% if pagination.multi_page %}
-<div class="paginate-container">
+<div class="paginate-container my-6">
     <nav class="pagination" aria-labelledby="pagination" {% if htmx_target %}hx-target="{{ htmx_target }}" hx-swap="outerHTML" hx-push-url="true"{% endif %}>
         <h2 id="pagination" class="sr-only">{% blocktranslate with name=pagination.opts.verbose_name_plural %}Pagination {{ name }}{% endblocktranslate %}</h2>
         {% if pagination.page.has_previous %}
