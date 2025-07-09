@@ -4,6 +4,15 @@ from django.utils.translation import gettext_lazy as _
 register = Library()
 
 
+@register.inclusion_tag("wedding_gifts/components/registry_card.html")
+def registry_card(registry, url_name, htmx=False):
+    return {
+        "registry": registry,
+        "url_name": url_name,
+        "htmx": htmx,
+    }
+
+
 @register.inclusion_tag(
     "wedding_gifts/components/footer_navigation.html", name="footer_navigation"
 )
