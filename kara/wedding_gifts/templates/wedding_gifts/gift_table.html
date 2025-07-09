@@ -23,7 +23,7 @@
                     <li><a {% if gift_type == 'in_kind' %}class="active"{% endif %} href="{% querystring gift_type='in_kind' %}">{% trans 'In Kind Gift' %}</a></li>
                 </ul>
             </nav>
-            <div class="py-8 px-12">
+            <div class="px-12 {% if table.pagination.multi_page %}pt-8{% else %}py-8{% endif %}">
                 {% if table.search_fields %}
                 {% search_form table htmx_target='#partial-table-area' %}
                 {% endif %}
