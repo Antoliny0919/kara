@@ -271,7 +271,6 @@ NPM_BIN_PATH = "/usr/bin/npm"
 
 # QUERYSTRING
 # ------------------------------------------------------------------------------
-PAGE_VAR = "page"
 SEARCH_VAR = "search"
 ORDER_VAR = "order"
 
