@@ -18,7 +18,7 @@ def pagination_number(pagination, i, htmx):
     elif i == pagination.page_num:
         return format_html('<em class="current-page" aria-current="page">{}</em> ', i)
     else:
-        link = querystring(None, pagination.params, {settings.PAGE_VAR: i})
+        link = querystring(None, pagination.params, {pagination.page_var: i})
         link_key = "href" if htmx is None else "hx-get"
         return format_html(
             '<a {}="{}" aria-label="page {}" {}>{}</a> ',
@@ -36,8 +36,8 @@ def pagination_tag(pagination, **kwargs):
     next_page_num = pagination.page_num + 1
     return {
         "pagination": pagination,
-        "previous_page": {settings.PAGE_VAR: previous_page_num},
-        "next_page": {settings.PAGE_VAR: next_page_num},
+        "previous_page": {pagination.page_var: previous_page_num},
+        "next_page": {pagination.page_var: next_page_num},
         **kwargs,
     }
 

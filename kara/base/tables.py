@@ -28,10 +28,13 @@ class Table:
     ordering = []
     columns = "__all__"
 
-    def __init__(self, request, model, base_queryset, list_per_page=100):
+    def __init__(
+        self, request, model, base_queryset, list_per_page=100, page_var="page"
+    ):
         self.model = model
         self.opts = model._meta
         self.list_per_page = list_per_page
+        self.page_var = page_var
         if self.columns == "__all__":
             # Displays all model fields if columns are not specified
             self.columns = [
@@ -44,8 +47,8 @@ class Table:
         self.search_form = search_form
         self.search_value = self.search_form.cleaned_data.get(settings.SEARCH_VAR) or ""
         self.params = dict(request.GET.lists())
-        if settings.PAGE_VAR in self.params:
-            del self.params[settings.PAGE_VAR]
+        if self.page_var in self.params:
+            del self.params[self.page_var]
         self.result_objects = self.get_queryset(request, base_queryset)
 
     def display_for_value(self, obj, column):
@@ -133,6 +136,7 @@ class Table:
             request,
             queryset,
             self.list_per_page,
+            self.page_var,
         )
         self.pagination = pagination
         return pagination.get_objects()

@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.core.paginator import InvalidPage, Paginator
 
 from .exceptions import IncorectLookupParameter
@@ -10,15 +9,17 @@ class Pagination:
         request,
         queryset,
         list_per_page,
+        page_var="page",
     ):
         self.queryset = queryset
         model = queryset.model
         self.model = model
         self.opts = model._meta
         self.list_per_page = list_per_page
+        self.page_var = page_var
         try:
             # Get the current page from the query string.
-            self.page_num = int(request.GET.get(settings.PAGE_VAR, 1))
+            self.page_num = int(request.GET.get(self.page_var, 1))
         except ValueError:
             self.page_num = 1
         self.params = request.GET.copy()
