@@ -82,6 +82,7 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    "django_components",
     "django_htmx",
     "template_partials",
     "tailwind",
@@ -164,6 +165,7 @@ STATIC_ROOT = os.path.join(MAIN_DIR, "staticfiles")
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "django_components.finders.ComponentsFileSystemFinder",
 ]
 
 STATICFILES_DIRS = [
@@ -184,7 +186,6 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [os.path.join(MAIN_DIR, "templates")],
-        "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
@@ -195,6 +196,19 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
+            ],
+            "loaders": [
+                (
+                    "django.template.loaders.cached.Loader",
+                    [
+                        "django.template.loaders.filesystem.Loader",
+                        "django.template.loaders.app_directories.Loader",
+                        "django_components.template_loader.Loader",
+                    ],
+                )
+            ],
+            "builtins": [
+                "django_components.templatetags.component_tags",
             ],
         },
     },
@@ -267,7 +281,6 @@ DEFAULT_FROM_EMAIL = "antoliny@kara.com"
 # ------------------------------------------------------------------------------
 TAILWIND_APP_NAME = "kara.theme"
 NPM_BIN_PATH = "/usr/bin/npm"
-
 
 # QUERYSTRING
 # ------------------------------------------------------------------------------
