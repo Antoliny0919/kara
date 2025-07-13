@@ -1,4 +1,5 @@
 psycopg2-binary==2.9.10  # https://github.com/psycopg/psycopg2
+pydantic==2.11.7  # https://github.com/pydantic/pydantic
 python-slugify==8.0.4  # https://github.com/un33k/python-slugify
 Pillow==11.0.0  # https://github.com/python-pillow/Pillow
 argon2-cffi==23.1.0  # https://github.com/hynek/argon2_cffi
