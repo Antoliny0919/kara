@@ -1,0 +1,134 @@
+{% extends "base/base.html" %}
+{% load i18n allauth static base_components tables partials wedding_gifts_components %}
+
+{% block title %}{% endblock %}
+{% block meta_title %}{% endblock %}
+
+{% block body_width %}w-screen{% endblock %}
+
+{% block content %}
+    <div class="hidden border-wedding-gifts-registry border-wedding-gifts-cash-gift border-wedding-gifts-in-kind-gift bg-wedding-gifts-registry/30 bg-wedding-gifts-cash-gift/30 bg-wedding-gifts-in-kind-gift/30 before:to-kara-light before:from-kara-light before:duration-[1s] duration-[1s] -translate-y-20 transition-all translate-y-0"></div>
+    {% setvar star_open %}
+        <img class="inline-block w-[30px] h-[30px] mx-1" src="{% static 'base/img/star.png' %}">
+    {% endsetvar %}
+    {% setvar star_close %}
+        <img class="inline-block w-[30px] h-[30px] mx-1" src="{% static 'base/img/star.png' %}">
+    {% endsetvar %}
+    <section>
+        <header>
+            {% section_header 'wedding_gifts/img/notebook.png' 'My Wedding Gift Registries' 'Check out my wedding gift repositories and some fun insights' %}
+        </header>
+        <div class="flex flex-col gap-y-32 w-4/5 mx-auto py-12 px-8">
+            {% component "dashboard_section" header_title="My Wedding Gift Record Registries" header_title_description="Clicking on a registry lets you view or edit its detailed information" header_layout_extra_css="mb-20" %}
+                {% fill "content" %}
+                    {% url "add_registry" as add_registry_link %}
+                    <div class="text-right">
+                        {% component "button" text="+ Add Registry" link=add_registry_link extra_css="my-0 mb-12" / %}
+                    </div>
+                    {% partialdef my-registries inline %}
+                    <div id="my-registries">
+                    <ul class="flex justify-around">
+                        {% for registry in registries %}
+                        <li class="first:pl-40 last:pr-40" >{% registry_card registry 'detail_registry' %}</li>
+                        {% endfor %}
+                    </ul>
+                    {% pagination registries_pagination htmx_target='#my-registries' %}
+                    </div>
+                    {% endpartialdef %}
+                {% endfill %}
+            {% endcomponent %}
+            {% component "dashboard_section" header_title="How many repositories and records have I added and written?" header_title_description="Total number of repositories and gift records I have" %}
+                {% fill "content" %}
+                    <div class="before:from-kara-purple-200 before:to-kara-purple-200 flex flex-col gap-y-32">
+                        <div class="flex flex-row px-32 items-center justify-between">
+                            {% component "insight_display_circle" symbol_image="wedding_gifts/img/notebook.png" title="Wedding Gift Registry" color="wedding-gifts-registry" %}
+                                {% fill "insight_result" %}
+                                    {% component "count_up_number" purpose=my_registry_cnt extra_css="tracking-widest" / %}
+                                {% endfill %}
+                            {% endcomponent %}
+                            {% component "insight_display_circle" symbol_image="wedding_gifts/img/paper_money.png" title="Cash Gift Record" color="wedding-gifts-cash-gift" %}
+                                {% fill "insight_result" %}
+                                    {% component "count_up_number" purpose=my_cash_gift_cnt extra_css="tracking-widest" / %}
+                                {% endfill %}
+                            {% endcomponent %}
+                            {% component "insight_display_circle" symbol_image="wedding_gifts/img/gift_box.png" title="In Kind Gift Record" color="wedding-gifts-in-kind-gift" %}
+                                {% fill "insight_result" %}
+                                    {% component "count_up_number" purpose=my_in_kind_gift_cnt extra_css="tracking-widest" / %}
+                                {% endfill %}
+                            {% endcomponent %}
+                        </div>
+                        {% component "result_line" %}
+                            {% fill "result" %}
+                                {% blocktranslate trimmed with registry_cnt=my_registry_cnt cash_gift_cnt=my_cash_gift_cnt in_kind_gift_cnt=my_in_kind_gift_cnt %}
+                                A total of <span class="font-number text-wedding-gifts-registry"> {{ registry_cnt }} </span> repositories,
+                                <span class="font-number text-wedding-gifts-cash-gift"> {{ cash_gift_cnt }} </span> cash gift records
+                                and <span class="font-number text-wedding-gifts-in-kind-gift"> {{ in_kind_gift_cnt }} </span>in kind gift records are recorded!
+                                {% endblocktranslate %}
+                            {% endfill %}
+                        {% endcomponent %}
+                    </div>
+                {% endfill %}
+            {% endcomponent %}
+            {% component "dashboard_section" header_title="Who received the most gifts?" header_title_description="Recipient in the registry with the most recorded gifts" %}
+                {% fill "content" %}
+                    <h4 class="text-4xl font-question-answer flex justify-center" data-trigger="fade-in-down">{% blocktranslate with receiver=top_gift_cnt_registry.receiver%}{{ star_open }}{{ receiver }}{{ star_close }} received the most gifts!{% endblocktranslate %}</h4>
+                    <div class="flex flex-col my-20">
+                        <div class="flex flex-row justify-around mt-8 mb-24">
+                            {% component "insight_display_box" symbol_image="wedding_gifts/img/paper_money.png" title="Number of cash gift records" color="wedding-gifts-cash-gift" %}
+                                {% fill "insight_result" %}
+                                    <div>
+                                        {% component "count_up_number" purpose=top_gift_cnt_registry.cash_gift_cnt extra_css="tracking-widest" / %}
+                                        <span>{% trans 'record' %}</span>
+                                    </div>
+                                {% endfill %}
+                            {% endcomponent %}
+                            {% component "insight_display_box" symbol_image="wedding_gifts/img/gift_box.png" title="Number of in kind gift records" color="wedding-gifts-in-kind-gift" %}
+                                {% fill "insight_result" %}
+                                    <div>
+                                        {% component "count_up_number" purpose=top_gift_cnt_registry.in_kind_gift_cnt extra_css="tracking-widest" / %}
+                                        <span>{% trans 'record' %}</span>
+                                    </div>
+                                {% endfill %}
+                            {% endcomponent %}
+                        </div>
+                        {% setvar total_cnt_open %}
+                            <span class="font-number text-wedding-gifts-registry">
+                        {% endsetvar %}
+                        {% setvar total_cnt_close %}
+                            </span>
+                        {% endsetvar %}
+                        {% component "result_line" %}
+                            {% fill "result" %}
+                                {% blocktranslate trimmed with receiver=top_gift_cnt_registry.receiver total_gift_cnt=top_gift_cnt_registry.total_gift_cnt %}
+                                    {{ receiver }} has received {{ total_cnt_open }}{{ total_gift_cnt }}{{ total_cnt_close }} gifts in total!
+                                {% endblocktranslate %}
+                            {% endfill %}
+                            {% fill "result_detail" %}
+                            <a class="block text-end text-base my-2" href="{% url 'detail_registry' pk=top_gift_cnt_registry.pk %}">{% translate 'View detailed information' %}</a>
+                            {% endfill %}
+                        {% endcomponent %}
+                    </div>
+                {% endfill %}
+            {% endcomponent %}
+            {% component "dashboard_section" header_title="Who received the largest amount in gifts?" header_title_description="Recipient of the registry with the highest total gift amount recorded" %}
+                {% fill "content" %}
+                    <div class="flex flex-col justify-center items-center">
+                        <div class="flex flex-col items-center space-y-20 font-title text-4xl mb-16 tracking-widest">
+                            <img class="w-[24rem] h-[24rem]" src="{% static 'wedding_gifts/img/take_money.png' %}">
+                            <span class="flex justify-center" data-trigger="fade-in-down">{% blocktranslate with receiver=top_total_price_registry.receiver %}{{ star_open }}{{ receiver }}{{ star_close }} received the largest amount in gifts !{% endblocktranslate %}</span>
+                        </div>
+                        {% component "result_line" line_color="wedding-gifts-cash-gift" %}
+                            {% fill "result" %}
+                                {% component "count_up_number" purpose=top_total_price_registry.total_price / %}
+                                <span>{% trans '$' %}</span>
+                            {% endfill %}
+                            {% fill "result_detail" %}
+                                <a class="block text-end text-base my-2" href="{% url 'detail_registry' pk=top_total_price_registry.pk %}">{% translate 'View detailed information' %}</a>
+                            {% endfill %}
+                        {% endcomponent %}
+                    </div>
+                {% endfill %}
+            {% endcomponent %}
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,11 @@
+<section>
+    <header class="mb-40 tracking-[0.2rem] {{ header_layout_extra_css }}">
+        {% slot "header" %}
+        <h3 class="inline-block relative whitespace-nowrap font-question-title text-5xl" data-trigger="underline">{{ header_title }}</h3>
+        <div class="font-sub-text text-base my-8 px-4">{{ header_title_description }}</div>
+        {% endslot %}
+    </header>
+    <div>
+        {% slot "content" / %}
+    </div>
+</section>
