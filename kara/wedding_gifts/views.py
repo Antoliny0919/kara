@@ -144,4 +144,4 @@ class GiftTableView(
 
 
 class GiftInsightsView(TemplateView):
-    tempalte_name = "wedding_gifts/gift_insights.html"
+    template_name = "wedding_gifts/gift_insights.html"
