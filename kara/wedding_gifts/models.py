@@ -58,11 +58,6 @@ class WeddingGiftRegistry(models.Model):
     )
     wedding_date = models.DateField(verbose_name=_("wedding date"))
     updated_at = models.DateField(auto_now=True)
-    in_kind_gifts_allow = models.BooleanField(
-        default=True,
-        help_text="Specifies whether to include the details of in-kind gift received.",
-        verbose_name=_("include in-kind gifts"),
-    )
 
     def get_absolute_url(self):
         return reverse("detail_registry", kwargs={"pk": self.pk})
