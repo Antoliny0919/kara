@@ -18,7 +18,6 @@ class WeddingGiftRegistryForm(KaraModelForm):
             "receiver",
             "receptionist",
             "wedding_date",
-            "in_kind_gifts_allow",
         ]
         help_texts = {
             "receiver": _(
@@ -27,9 +26,6 @@ class WeddingGiftRegistryForm(KaraModelForm):
             "receptionist": _(
                 "Please enter the name of the person who is recording "
                 "the wedding gift details."
-            ),
-            "in_kind_gifts_allow": _(
-                "Please select this option to include records of in-kind gifts."
             ),
         }
         widgets = {
