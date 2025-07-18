@@ -3,6 +3,27 @@ from django_components import Component, register
 from pydantic import BaseModel
 
 
+@register("header")
+class Header(Component):
+    template_file = "templates/header.html"
+
+    class Kwargs(BaseModel):
+        title: str
+        image_path: str
+        animate: bool = True
+        detail_animate: str = "fade-in-down"
+        subtitle: str = ""
+
+    def get_template_data(self, args, kwargs, slots, context):
+        return {
+            "title": _(kwargs.title),
+            "image_path": kwargs.image_path,
+            "animate": kwargs.animate,
+            "detail_animate": kwargs.detail_animate,
+            "subtitle": _(kwargs.subtitle),
+        }
+
+
 @register("dashboard_section")
 class DashboardSection(Component):
     template_file = "templates/dashboard_section.html"
