@@ -62,6 +62,7 @@ module.exports = {
                     'strong': '#C44B6B',
                     'title': '#212121',
                     'sub-title': '#343232',
+                    'white': '#FBFBFB',
                 },
                 'wedding-gifts': {
                     'registry': '#d4a237',

@@ -3,6 +3,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from kara.base.forms import KaraModelForm
+from kara.base.widgets import StaticImageSelect
 
 from .fields import UnitPriceField
 from .models import CashGift, Gift, InKindGift, WeddingGiftRegistry
@@ -14,6 +15,7 @@ class WeddingGiftRegistryForm(KaraModelForm):
     class Meta:
         model = WeddingGiftRegistry
         fields = [
+            "cover_image",
             "side",
             "receiver",
             "receptionist",
@@ -29,6 +31,11 @@ class WeddingGiftRegistryForm(KaraModelForm):
             ),
         }
         widgets = {
+            "cover_image": StaticImageSelect(
+                location="wedding_gifts/static/wedding_gifts/img/",
+                folder="registry",
+                attrs={"help_text": _("Try selecting a featured image.")},
+            ),
             "side": RadioSelect,
         }
         labels = {"side": _("Select Groom's or Bride's Side")}

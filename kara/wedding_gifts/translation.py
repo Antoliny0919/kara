@@ -43,3 +43,12 @@ MY_WEDDING_GIFT_DASHBOARD_TRANSLATIONS = [
     _("Who received the largest amount in gifts?"),
     _("Recipient of the registry with the highest total gift amount recorded"),
 ]
+
+WEDDING_GIFT_REGISTRY_ADD = [
+    _("Add Wedding Gift Record Registry"),
+    _(
+        "You can keep track of the wedding gifts you've received"
+        " by adding a wedding gift registry! "
+        "Try adding your wedding gift registry now"
+    ),
+]
