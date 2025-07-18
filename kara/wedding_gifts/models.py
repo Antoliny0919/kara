@@ -39,6 +39,7 @@ class WeddingGiftRegistry(models.Model):
     cover_image = models.CharField(
         max_length=256,
         default=get_random_registry_image,
+        verbose_name=_("Featured Image"),
     )
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="wedding_gift_registries"

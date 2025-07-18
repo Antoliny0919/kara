@@ -4,8 +4,6 @@
 {% block title %}{% endblock %}
 {% block meta_title %}{% endblock %}
 
-{% block body_width %}w-screen{% endblock %}
-
 {% block content %}
     <div class="hidden border-wedding-gifts-registry border-wedding-gifts-cash-gift border-wedding-gifts-in-kind-gift bg-wedding-gifts-registry/30 bg-wedding-gifts-cash-gift/30 bg-wedding-gifts-in-kind-gift/30 before:to-kara-light before:from-kara-light before:duration-[1s] duration-[1s] -translate-y-20 transition-all translate-y-0"></div>
     {% setvar star_open %}
@@ -16,7 +14,7 @@
     {% endsetvar %}
     <section>
         {% component 'header' image_path='wedding_gifts/img/notebook.png' title='My Wedding Gift Registries' subtitle='Check out my wedding gift repositories and some fun insights' / %}
-        <div class="flex flex-col gap-y-32 w-4/5 mx-auto py-12 px-8">
+        <div class="flex flex-col gap-y-32 mx-auto py-12 px-8">
             {% component "dashboard_section" header_title="My Wedding Gift Record Registries" header_title_description="Clicking on a registry lets you view or edit its detailed information" header_layout_extra_css="mb-20" %}
                 {% fill "content" %}
                     {% url "add_registry" as add_registry_link %}

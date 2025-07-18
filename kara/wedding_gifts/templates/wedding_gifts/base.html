@@ -3,15 +3,15 @@
 {% load static i18n partials base_components wedding_gifts_components %}
 
 {% block content %}
-<nav class="w-screen my-20">
+<nav class="my-20">
     <div>
         {% block registry_select_header %}
         {% endblock %}
-        <div class="relative border-t-4 border-b-4 border-kara-strong overflow-x-scroll">
+        <div class="relative border-4 border-kara-strong overflow-x-scroll rounded-xl">
             {% partialdef registry-selector inline %}
-            <ul id="registry-selector" class="flex gap-40 pt-12 pb-20" hx-target="#registry-selector" hx-push-url="true" hx-swap="outerHTML">
+            <ul id="registry-selector" class="flex gap-40 p-20" hx-target="#registry-selector" hx-push-url="true" hx-swap="outerHTML">
             {% for registry in registries %}
-                <li class="first:pl-40 last:pr-40">{% registry_card registry 'add_gift' %}</li>
+                <li class="first:pl-24 last:pr-24">{% registry_card registry 'add_gift' %}</li>
             {% endfor %}
             </ul>
             {% endpartialdef %}

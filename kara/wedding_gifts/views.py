@@ -32,27 +32,6 @@ class WeddingGiftRegistryActionSelectView(TemplateView):
     template_name = "wedding_gifts/wedding_gift_registry_action_select.html"
 
 
-class AddWeddingGiftRegistryView(LoginRequiredMixin, CreateView):
-    template_name = "wedding_gifts/wedding_gift_registry_add.html"
-    form_class = WeddingGiftRegistryForm
-
-    def form_valid(self, form):
-        form.instance.owner_id = self.request.user.pk
-        self.object = form.save()
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        messages.add_message(
-            self.request,
-            messages.INFO,
-            _(
-                "The wedding gift registry has been added. "
-                "Go ahead and record the gifts you've received!"
-            ),
-        )
-        return self.object.get_absolute_url()
-
-
 class WeddingGiftRegistryDetailView(TemplateView):
     template_name = "wedding_gifts/registry_detail.html"
 
@@ -128,6 +107,27 @@ class MyRegistryDashboardView(LoginRequiredMixin, PartialTemplateListView):
         context.update(extra_context)
         context.update(self.my_wedding_gift_items_cnt)
         return context
+
+
+class WeddingGiftRegistryAddView(LoginRequiredMixin, CreateView):
+    template_name = "wedding_gifts/registry_add.html"
+    form_class = WeddingGiftRegistryForm
+
+    def form_valid(self, form):
+        form.instance.owner_id = self.request.user.pk
+        self.object = form.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        messages.add_message(
+            self.request,
+            messages.INFO,
+            _(
+                "The wedding gift registry has been added. "
+                "Go ahead and record the gifts you've received!"
+            ),
+        )
+        return self.object.get_absolute_url()
 
 
 class WeddingGiftRegistryContextMixin(ContextMixin):

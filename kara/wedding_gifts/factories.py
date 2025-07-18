@@ -23,7 +23,6 @@ class WeddingGiftRegistryFactory(factory.django.DjangoModelFactory):
     receiver = factory.Faker("name")
     receptionist = factory.Faker("name")
     wedding_date = factory.Faker("date_between", start_date="-10y", end_date="today")
-    in_kind_gifts_allow = factory.Faker("pybool")
 
 
 class CashGiftFactory(factory.django.DjangoModelFactory):
