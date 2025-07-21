@@ -1,8 +1,12 @@
+import os
 from datetime import date
 
+from django.conf import settings
+from django.core.files.storage import default_storage
 from django.forms import CheckboxSelectMultiple, NumberInput, TextInput
 from django.forms.widgets import (
     CheckboxInput,
+    ChoiceWidget,
     EmailInput,
     MultiWidget,
     NumberInput,
@@ -49,6 +53,23 @@ class KaraCheckboxInput(CheckboxInput):
 class KaraSearchInput(TextInput):
     input_type = "search"
     template_name = "base/widgets/search.html"
+
+
+class StaticImageSelect(ChoiceWidget):
+    template_name = "base/widgets/image_select.html"
+
+    class Media:
+        js = ["base/js/imageSelect.js"]
+
+    def __init__(self, location, folder, attrs=None):
+        # The current logic for retrieving the image target is temporary.
+        # It may change later as the design will need to consider S3 integration.
+        storage = default_storage.__class__(
+            location=os.path.join(settings.STATIC_LOCATION, location)
+        )
+        _, files = storage.listdir(folder)
+        choices = (("wedding_gifts/img/registry/" + file, None) for file in files)
+        super().__init__(attrs=attrs, choices=choices)
 
 
 class KaraSplitDateInput(MultiWidget):

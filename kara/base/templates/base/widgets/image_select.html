@@ -1,0 +1,31 @@
+{% load static %}
+
+<div id="{{ widget.attrs.id }}" class="image-select" x-data="{ showImageSelectDialog: false }">
+    <div class="relative flex flex-col items-center justify-center gap-2">
+        <span class="text-lg text-kara-strong">{{ widget.attrs.label }}</span>
+        <button type="button" @click="showImageSelectDialog = !showImageSelectDialog" :aria-expanded="showImageSelectDialog" aria-controls="featured image select dialog" @click.away="showImageSelectDialog = false" class="w-[22rem] h-[22rem] p-12 border-4 rounded-full text-center border-kara-strong cursor-pointer">
+            <img class="selected-image" alt="selected image" src="{% static 'base/img/add_photo.png' %}"/>
+        </button>
+        <span>{{ widget.attrs.help_text }}</span>
+        <div
+        class="absolute top-full z-[100]"
+        x-show="showImageSelectDialog"
+        x-transition:enter="transition ease-out duration-500"
+        x-transition:enter-start="opacity-0 -translate-y-12"
+        x-transition:enter-end="opacity-100 translate-y-0"
+        >
+            <ul class="image-select-list flex flex-row flex-wrap justify-center">
+            {% for group_name, group_choices, group_index in widget.optgroups %}
+                {% for option in group_choices %}
+                    <li class="border-[1.5px] border-kara-base bg-kara-white" @click="showImageSelectDialog = false">
+                        <input class="peer hidden w-full h-full" id="{{ option.attrs.id }}" type="radio" name={{ option.name }} value="{{ option.value }}" data-static-url="{% static option.value %}">
+                        <label class="block p-4 peer-checked:bg-kara-strong cursor-pointer hover:bg-kara-base" for="{{ option.attrs.id }}">
+                            <img class="w-[4rem] h-[4rem]" src="{% static option.value %}"/>
+                        </label>
+                    </li>
+                {% endfor %}
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
