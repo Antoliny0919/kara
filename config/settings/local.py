@@ -51,3 +51,8 @@ INTERNAL_IPS = ["127.0.0.1"]
 # ------------------------------------------------------------------------------
 # https://django-extensions.readthedocs.io/en/latest/installation_instructions.html#configuration
 INSTALLED_APPS += ["django_extensions"]
+
+# STATIC IMAGE SELECT
+# Static location set to MAIN_DIR.
+# In the local environment, static files exist in various directions.
+STATIC_LOCATION = MAIN_DIR
