@@ -1,6 +1,6 @@
 {% extends "wedding_gifts/base.html" %}
 
-{% load static i18n partials tables base_components wedding_gifts_components %}
+{% load static i18n partials tables wedding_gifts_components %}
 
 {% block title %}{% blocktranslate with receiver=object.receiver %}Add Gift Record | Kara{% endblocktranslate %}{% endblock %}
 
@@ -8,7 +8,7 @@
 
 {% block body_width %}w-screen{% endblock %}
 
-{% block registry_select_header %}{% section_header 'wedding_gifts/img/pencil.png' 'Select Registry' 'Please select a repository before saving your record. Your saved records will be stored in the selected repository.' %}{% endblock %}
+{% block registry_select_header %}{% component 'header' image_path='wedding_gifts/img/pencil.png' title='Select Registry' subtitle='Please select a repository before saving your record. Your saved records will be stored in the selected repository.' / %}{% endblock %}
 
 {% block content %}
 {{ block.super }}

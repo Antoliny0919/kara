@@ -1,0 +1,10 @@
+{% load static %}
+
+<header class="my-28" {% if animate %}data-trigger="{{ detail_animate }}"{% endif %}>
+    <div class="flex items-end text-8xl gap-x-10 tracking-widest">
+        <img src="{% static image_path %}" class="h-[8rem] w-[8rem]"/>
+        <h1 class="font-title text-kara-title">{{ title }}</h1>
+    </div>
+    <h2 class="text-xl font-sub-title text-kara-sub-title px-8 my-6">{{ subtitle }}</h2>
+    {% slot 'sub_header' / %}
+</header>
