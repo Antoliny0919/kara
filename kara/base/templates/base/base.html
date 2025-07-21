@@ -19,14 +19,15 @@
     <body class="flex flex-col h-screen font-common {% block body_class %}{% endblock %}" hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
         {% block navbar %}{% include 'base/includes/nav.html' %}{% endblock %}
         {% include 'base/includes/messages.html' %}
-        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-        <script src="{% static 'base/js/observeAnimate.js' %}"></script>
         <div class="container mb-auto max-w-screen-xl">
             <div class="{% block body_width %}w-4/5{% endblock %}">
                 {% block content %}
                 {% endblock %}
             </div>
         </div>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="{% static 'base/js/observeAnimate.js' %}"></script>
+        {% block extra_media %}{% endblock %}
     </body>
 </html>
