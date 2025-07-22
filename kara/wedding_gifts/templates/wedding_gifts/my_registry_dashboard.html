@@ -1,5 +1,5 @@
 {% extends "base/base.html" %}
-{% load i18n allauth static base_components tables partials wedding_gifts_components %}
+{% load i18n allauth static tables partials wedding_gifts_components %}
 
 {% block title %}{% endblock %}
 {% block meta_title %}{% endblock %}
@@ -15,9 +15,7 @@
         <img class="inline-block w-[30px] h-[30px] mx-1" src="{% static 'base/img/star.png' %}">
     {% endsetvar %}
     <section>
-        <header>
-            {% section_header 'wedding_gifts/img/notebook.png' 'My Wedding Gift Registries' 'Check out my wedding gift repositories and some fun insights' %}
-        </header>
+        {% component 'header' image_path='wedding_gifts/img/notebook.png' title='My Wedding Gift Registries' subtitle='Check out my wedding gift repositories and some fun insights' / %}
         <div class="flex flex-col gap-y-32 w-4/5 mx-auto py-12 px-8">
             {% component "dashboard_section" header_title="My Wedding Gift Record Registries" header_title_description="Clicking on a registry lets you view or edit its detailed information" header_layout_extra_css="mb-20" %}
                 {% fill "content" %}

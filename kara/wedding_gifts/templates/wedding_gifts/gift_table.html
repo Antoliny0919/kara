@@ -1,6 +1,6 @@
 {% extends 'wedding_gifts/base.html' %}
 
-{% load i18n static base_components partials tables wedding_gifts_components %}
+{% load i18n static partials tables wedding_gifts_components %}
 
 {% block title %}{% endblock %}
 
@@ -8,13 +8,11 @@
 
 {% block body_width %}w-screen{% endblock %}
 
-{% block registry_select_header %}{% section_header 'wedding_gifts/img/pencil.png' 'Select Registry' 'Select a registry to view records.' %}{% endblock %}
+{% block registry_select_header %}{% component 'header' image_path='wedding_gifts/img/pencil.png' title='Select Registry' subtitle='Select a registry to view records.' / %}{% endblock %}
 {% block content %}
 {{ block.super }}
 <section>
-    <header>
-        {% section_header 'wedding_gifts/img/love-giftbox.png' 'Wedding Gift Records' 'View the wedding gift records and find the gifts you want by searching or using filters.' %}
-    </header>
+    {% component 'header' image_path='wedding_gifts/img/love-giftbox.png' title='Wedding Gift Records' subtitle='View the wedding gift records and find the gifts you want by searching or using filters.' / %}
     <content>
         <div class="w-[80%] mx-auto border-2 rounded-lg border-kara-strong">
             <nav class="tab-selector gift-table border-b-2 border-kara-strong">
