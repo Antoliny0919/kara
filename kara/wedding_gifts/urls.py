@@ -20,7 +20,7 @@ urlpatterns = [
     ),
     path(
         "registry/add/",
-        views.AddWeddingGiftRegistryView.as_view(),
+        views.WeddingGiftRegistryAddView.as_view(),
         name="add_registry",
     ),
     path(

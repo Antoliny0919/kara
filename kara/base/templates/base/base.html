@@ -19,8 +19,8 @@
     <body class="flex flex-col h-screen font-common {% block body_class %}{% endblock %}" hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
         {% block navbar %}{% include 'base/includes/nav.html' %}{% endblock %}
         {% include 'base/includes/messages.html' %}
-        <div class="container mb-auto max-w-screen-xl">
-            <div class="{% block body_width %}w-4/5{% endblock %}">
+        <div class="mb-auto flex justify-center">
+            <div class="container mb-auto mx-auto w-7/8 {% block extra_top_css %}{% endblock %}">
                 {% block content %}
                 {% endblock %}
             </div>

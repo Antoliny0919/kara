@@ -1,6 +1,6 @@
 {% extends 'wedding_gifts/base.html' %}
 
-{% load i18n static partials tables wedding_gifts_components %}
+{% load i18n static base_components partials tables wedding_gifts_components %}
 
 {% block title %}{% endblock %}
 
@@ -12,7 +12,9 @@
 {% block content %}
 {{ block.super }}
 <section>
-    {% component 'header' image_path='wedding_gifts/img/love-giftbox.png' title='Wedding Gift Records' subtitle='View the wedding gift records and find the gifts you want by searching or using filters.' / %}
+    <header>
+        {% component 'header' image_path='wedding_gifts/img/love-giftbox.png' title='Wedding Gift Records' subtitle='View the wedding gift records and find the gifts you want by searching or using filters.' / %}
+    </header>
     <content>
         <div class="w-[80%] mx-auto border-2 rounded-lg border-kara-strong">
             <nav class="tab-selector gift-table border-b-2 border-kara-strong">
