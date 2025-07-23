@@ -1,1 +1,89 @@
-<h1>There is registry detail page</h1>
+{% extends "wedding_gifts/base.html" %}
+
+{% load allauth static i18n partials tables wedding_gifts_components %}
+
+{% block title %}{% blocktranslate with receiver=object.receiver %}{{ receiver }}'s Wedding Gift Registry | Kara{% endblocktranslate %}{% endblock %}
+
+{% block meta_title %}{% blocktranslate with receiver=object.receiver %}{{ receiver }}'s Wedding Gift Registry | Kara{% endblocktranslate %}{% endblock %}
+
+{% block extra_media %}{{ form.media }}{% endblock %}
+
+{% block content %}
+{% setvar star_open %}
+    <img class="inline-block w-[50px] h-[50px] mx-2" src="{% static 'base/img/star.png' %}">
+{% endsetvar %}
+{% setvar star_close %}
+    <img class="inline-block w-[50px] h-[50px] mx-2" src="{% static 'base/img/star.png' %}">
+{% endsetvar %}
+<section>
+    {% component 'header' image_path='wedding_gifts/img/notebook.png' title='Edit Registry' subtitle='Try editing the repository' / %}
+    <form method="post" class="w-2/3 ml-auto mx-auto">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="block w-1/3 mx-auto py-3 px-8 my-6 bg-kara-strong border-2 border-kara-strong rounded-md text-white transtion-color duration-300 hover:bg-white hover:text-kara-strong">{% trans 'Edit' %}</button>
+    </form>
+<section>
+<section>
+    {% component 'header' image_path='wedding_gifts/img/notebook.png' title='Simple Registry Insights' subtitle='See the simple insights for the currently selected registry' / %}
+    <article class="flex flex-col w-2/3 px-32 space-y-8 text-2xl mx-auto">
+        <div class="py-4 flex items-center border-b-4 border-r-4 border-kara-green-400 bg-kara-green-400/30 rounded-lg" data-trigger="fade-in-down">
+            <img class="w-[80px] h-[80px] mx-8" alt="cash gift icon" src="{% static 'wedding_gifts/img/paper_money.png' %}">
+            <span class="font-sub-title">{% translate 'Number of cash gift records' %}</span>
+            <span class="mx-4">:</span>
+            {% component "count_up_number" purpose=123 extra_css="tracking-widest" / %}
+        </div>
+        <div class="py-4 flex items-center border-b-4 border-r-4 border-kara-pink-400 bg-kara-pink-400/30 rounded-lg" data-trigger="fade-in-down">
+            <img class="w-[80px] h-[80px] mx-8" alt="gift box icon" src="{% static 'wedding_gifts/img/gift_box.png' %}">
+            <span class="font-sub-title">{% translate 'Number of in kind gift records'%}</span>
+            <span class="mx-4">:</span>
+            {% component "count_up_number" purpose=86 extra_css="tracking-widest" / %}
+        </div>
+        <div class="py-4 flex items-center border-b-4 border-r-4 border-kara-green-800 bg-kara-green-800/30 rounded-lg" data-trigger="fade-in-down">
+            <img class="w-[80px] h-[80px] mx-8" alt="bundle of cash icon" src="{% static 'wedding_gifts/img/bundle_cash.png' %}">
+            <span class="font-sub-title">{% translate 'Total amount of cash gifts' %}</span>
+            <span class="mx-4">:</span>
+            {% component "count_up_number" purpose=24323192 extra_css="tracking-widest" / %}
+        </div>
+        <div class="py-4 flex items-center border-b-4 border-r-4 border-kara-pink-800 bg-kara-pink-800/30 rounded-lg" data-trigger="fade-in-down">
+            <img class="w-[80px] h-[80px] mx-8" alt="many gift" src="{% static 'wedding_gifts/img/multiple_gift_box.png' %}">
+            <span class="font-sub-title">{% translate 'Total amount of in kind gifts' %}</span>
+            <span class="mx-4">:</span>
+            {% component "count_up_number" purpose=9827312 extra_css="tracking-widest" / %}
+        </div>
+        <div class="py-4 flex items-center border-b-4 border-r-4 border-kara-yellow-800 bg-kara-yellow-800/30 rounded-lg" data-trigger="fade-in-down">
+            <img class="w-[80px] h-[80px] mx-8" alt="total-gift-price-image" src="{% static 'wedding_gifts/img/take_money.png' %}">
+            <span class="font-sub-title">{% translate 'Total amount of gifts received' %}</span>
+            <span class="mx-4">:</span>
+            {% component "count_up_number" purpose=32912032 extra_css="tracking-widest" / %}
+        </div>
+    </article>
+</section>
+<section class="mt-60">
+    <h2 class="text-6xl font-title text-center" data-trigger="fade-in-down">{% blocktranslate %}{{ star_open }}Registry Related Menu{{ star_close }}{% endblocktranslate %}</h2>
+    <div class="relative w-full h-[55rem] overflow-hidden">
+        <div class="absolute -bottom-[12rem] left-1/2 transform -translate-x-1/2 w-[40rem] h-[40rem]" >
+            <div class="relative h-full">
+                <img class="absolute left-1/2 transform -translate-x-1/2" src="{% static 'wedding_gifts/img/give_hand.png' %}">
+                <div class="relative px-12 w-full h-full flex justify-between font-sub-title text-lg">
+                    <a href="" class="absolute -left-1/2 bottom-1/2 w-[18rem] h-[18rem] flex flex-col items-center justify-center p-4 border-4 rounded-full border-kara-pink-800 bg-kara-pink-800/30 hover:bg-kara-pink-800 hover:text-kara-white duration-500 space-y-4 z-20">
+                        <img class="w-[100px] h-[100px]" src="{% static 'wedding_gifts/img/writing.png' %}">
+                        <span class="px-2 text-center">{% translate 'There are still more gifts left to record!' %}</span>
+                    </a>
+                    <a href="" class="absolute right-3/4 -top-1/2 w-[18rem] h-[18rem] flex flex-col items-center justify-center p-4 border-4 rounded-full border-kara-purple-400 bg-kara-purple-400/30 hover:bg-kara-purple-400 hover:text-kara-white duration-500 space-y-4 z-20">
+                        <img class="w-[100px] h-[100px]" src="{% static 'wedding_gifts/img/table.png' %}">
+                        <span class="px-2 text-center">{% translate 'I want to edit the gift record!' %}</span>
+                    </a>
+                    <a href="" class="absolute left-3/4 -top-1/2 w-[18rem] h-[18rem] flex flex-col items-center justify-center p-4 border-4 rounded-full border-kara-ocean-400 bg-kara-ocean-400/30 hover:bg-kara-ocean-400 hover:text-kara-white duration-500 space-y-4">
+                        <img class="w-[100px] h-[100px]" src="{% static 'wedding_gifts/img/insight.png' %}">
+                        <span class="px-2 text-center">{% translate 'I want to see more detailed insights!' %}</span>
+                    </a>
+                    <a href="" class="absolute -right-1/2 bottom-1/2 w-[18rem] h-[18rem] flex flex-col items-center justify-center p-4 border-4 rounded-full border-kara-green-400 bg-kara-green-400/30 hover:bg-kara-green-400 hover:text-kara-white duration-500 space-y-4">
+                        <img class="w-[100px] h-[100px]" src="{% static 'wedding_gifts/img/excel.png' %}">
+                        <span class="px-2 text-center">{% translate 'I want to save the records as an Excel file!' %}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
