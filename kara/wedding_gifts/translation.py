@@ -52,3 +52,10 @@ WEDDING_GIFT_REGISTRY_ADD = [
         "Try adding your wedding gift registry now"
     ),
 ]
+
+WEDDING_GIFT_REGISTRY_DETAIL = [
+    _("Edit Registry"),
+    _("Try editing the repository"),
+    _("Simple Registry Insights"),
+    _("See the simple insights for the currently selected registry"),
+]

@@ -14,7 +14,7 @@ from django.db.models import (
 )
 from django.db.models.functions import Coalesce
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import CreateView, TemplateView, View
+from django.views.generic import CreateView, TemplateView, UpdateView, View
 from django.views.generic.base import ContextMixin
 
 from kara.base.views import (
@@ -32,8 +32,33 @@ class WeddingGiftRegistryActionSelectView(TemplateView):
     template_name = "wedding_gifts/wedding_gift_registry_action_select.html"
 
 
-class WeddingGiftRegistryDetailView(TemplateView):
-    template_name = "wedding_gifts/registry_detail.html"
+class WeddingGiftRegistryContextMixin(ContextMixin):
+    partial_template = ["registry-selector"]
+
+    def dispatch(self, request, *args, **kwargs):
+        htmx_target = self.request.headers.get("Hx-Target", None)
+        if request.htmx and htmx_target in self.partial_template:
+            self.template_name = "wedding_gifts/base.html"
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        current_registry = self.kwargs.get("pk")
+        context = super().get_context_data(**kwargs)
+        objects = (
+            WeddingGiftRegistry.objects.filter(owner=self.request.user)
+            .annotate(
+                cash_gift_cnt=Count("cash_gifts", distinct=True),
+                in_kind_gift_cnt=Count("in_kind_gifts", distinct=True),
+                current_is_first=Case(
+                    When(pk=current_registry, then=0),
+                    default=1,
+                    output_field=IntegerField(),
+                ),
+            )
+            .order_by("current_is_first", "updated_at")
+        )
+        context["registries"] = objects
+        return context
 
 
 class MyRegistryDashboardView(LoginRequiredMixin, PartialTemplateListView):
@@ -130,32 +155,37 @@ class WeddingGiftRegistryAddView(LoginRequiredMixin, CreateView):
         return self.object.get_absolute_url()
 
 
-class WeddingGiftRegistryContextMixin(ContextMixin):
-    partial_template = ["registry-selector"]
+class WeddingGiftRegistryDetailView(UpdateView):
+    template_name = "wedding_gifts/registry_detail.html"
+    form_class = WeddingGiftRegistryForm
+    queryset = WeddingGiftRegistry.objects.all()
 
-    def dispatch(self, request, *args, **kwargs):
-        htmx_target = self.request.headers.get("Hx-Target", None)
-        if request.htmx and htmx_target in self.partial_template:
-            self.template_name = "wedding_gifts/base.html"
-        return super().dispatch(request, *args, **kwargs)
+    def get_success_url(self):
+        messages.add_message(
+            self.request,
+            messages.INFO,
+            _("The wedding gift registry has been successfully updated!"),
+        )
+        return ""
 
     def get_context_data(self, **kwargs):
-        current_registry = self.kwargs.get("pk")
         context = super().get_context_data(**kwargs)
-        objects = (
-            WeddingGiftRegistry.objects.filter(owner=self.request.user)
-            .annotate(
-                cash_gift_cnt=Count("cash_gifts", distinct=True),
-                in_kind_gift_cnt=Count("in_kind_gifts", distinct=True),
-                current_is_first=Case(
-                    When(pk=current_registry, then=0),
-                    default=1,
-                    output_field=IntegerField(),
-                ),
-            )
-            .order_by("current_is_first", "updated_at")
+        registry = WeddingGiftRegistry.objects.filter(pk=self.object.pk)
+        cash_gift_insight = registry.aggregate(
+            cash_gift_cnt=Count("cash_gifts"),
+            cash_gift_total_price=Coalesce(Sum("cash_gifts__price"), 0),
         )
-        context["registries"] = objects
+        in_kind_gift_insight = registry.aggregate(
+            in_kind_gift_cnt=Count("in_kind_gifts"),
+            in_kind_gift_total_price=Coalesce(Sum("in_kind_gifts__price"), 0),
+        )
+        context.update(cash_gift_insight)
+        context.update(in_kind_gift_insight)
+        context["gift_total_price"] = (
+            cash_gift_insight["cash_gift_total_price"]
+            + in_kind_gift_insight["in_kind_gift_total_price"]
+        )
+
         return context
 
 
