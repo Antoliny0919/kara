@@ -18,7 +18,7 @@
             {% for group_name, group_choices, group_index in widget.optgroups %}
                 {% for option in group_choices %}
                     <li class="border-[1.5px] border-kara-base bg-kara-white" @click="showImageSelectDialog = false">
-                        <input class="peer hidden w-full h-full" id="{{ option.attrs.id }}" type="radio" name={{ option.name }} value="{{ option.value }}" data-static-url="{% static option.value %}">
+                        <input class="peer hidden w-full h-full" id="{{ option.attrs.id }}" type="radio" name={{ option.name }} value="{{ option.value }}" {% if option.attrs.checked %}checked="true"{% endif %} data-static-url="{% static option.value %}">
                         <label class="block p-4 peer-checked:bg-kara-strong cursor-pointer hover:bg-kara-base" for="{{ option.attrs.id }}">
                             <img class="w-[4rem] h-[4rem]" src="{% static option.value %}"/>
                         </label>

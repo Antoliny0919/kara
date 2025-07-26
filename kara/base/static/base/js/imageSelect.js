@@ -9,3 +9,12 @@ options.forEach((option) => {
         }
     })
 })
+
+// Apply the initial value (checked) when rendering the page.
+window.addEventListener("load", () => {
+    options.forEach((option) => {
+        if (option.checked) {
+            selectedImage.src = option.dataset.staticUrl;
+        }
+    })
+})
