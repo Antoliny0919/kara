@@ -168,6 +168,26 @@ class WeddingGiftRegistryDetailView(UpdateView):
         )
         return ""
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        registry = WeddingGiftRegistry.objects.filter(pk=self.object.pk)
+        cash_gift_insight = registry.aggregate(
+            cash_gift_cnt=Count("cash_gifts"),
+            cash_gift_total_price=Coalesce(Sum("cash_gifts__price"), 0),
+        )
+        in_kind_gift_insight = registry.aggregate(
+            in_kind_gift_cnt=Count("in_kind_gifts"),
+            in_kind_gift_total_price=Coalesce(Sum("in_kind_gifts__price"), 0),
+        )
+        context.update(cash_gift_insight)
+        context.update(in_kind_gift_insight)
+        context["gift_total_price"] = (
+            cash_gift_insight["cash_gift_total_price"]
+            + in_kind_gift_insight["in_kind_gift_total_price"]
+        )
+
+        return context
+
 
 class GiftAddView(
     LoginRequiredMixin, WeddingGiftRegistryContextMixin, PartialTemplateCreateView
